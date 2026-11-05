@@ -4,7 +4,7 @@ import { drawings, officialCatalog } from '../src/games/coloring/data/drawings'
 import { activeColor, paint, decodeProgress, storageKey } from '../src/games/coloring/engine'
 
 async function gallery(page:Page){await page.goto('./');await page.getByRole('button',{name:'순서대로 색칠놀이',exact:true}).click();await expect(page.locator('.drawing-card')).toHaveCount(5)}
-async function open(page:Page,id:string){await gallery(page);await page.getByRole('button',{name:`${drawings[id].title}, 28색, 색칠하기`,exact:true}).click()}
+async function open(page:Page,id:string){await gallery(page);await page.getByRole('button',{name:`${drawings[id].title}, ${drawings[id].colors.length}색, 색칠하기`,exact:true}).click()}
 async function tapHint(page:Page){
   await page.getByRole('button',{name:'힌트',exact:true}).click()
   const path=page.locator('[data-region][data-hint=true]')
@@ -33,7 +33,7 @@ for(const item of officialCatalog){
   expect(paint(drawing,history,later.id)).toBe(history)
   for(const color of drawing.colors){for(const region of drawing.regions.filter(r=>r.colorId===color.id)){expect(activeColor(drawing,history)?.id).toBe(color.id);history=paint(drawing,history,region.id)}}
   expect(activeColor(drawing,history)).toBeUndefined();expect(history.length).toBe(drawing.regions.length)
-  expect(activeColor(drawing,history.slice(0,-1))?.id).toBe(28)
+  expect(activeColor(drawing,history.slice(0,-1))?.id).toBe(drawing.colors.length)
   expect(decodeProgress(drawing,JSON.stringify({version:1,updatedAt:new Date().toISOString(),history}))).not.toBeNull()
   expect(decodeProgress(drawing,'{bad')).toBeNull()
   expect(decodeProgress(drawing,JSON.stringify({version:1,updatedAt:new Date().toISOString(),history:[later.id]}))).toBeNull()
@@ -45,7 +45,7 @@ for(const item of officialCatalog){
   await expect(page.locator('[data-painted=true]')).toHaveCount(0)
   await tapHint(page);await expect(page.locator('[data-painted=true]')).toHaveCount(1)
   await page.getByRole('button',{name:'도안 선택',exact:true}).click()
-  await page.getByRole('button',{name:new RegExp(`${drawing.title}, 28색, 이어서`)}).click()
+  await page.getByRole('button',{name:new RegExp(`${drawing.title}, ${drawing.colors.length}색, 이어서`)}).click()
   await expect(page.locator('[data-painted=true]')).toHaveCount(1)
   await page.getByRole('button',{name:'되돌리기',exact:true}).click();await expect(page.locator('[data-painted=true]')).toHaveCount(0)
   await tapHint(page);await page.getByRole('button',{name:'처음부터',exact:true}).click()
@@ -55,11 +55,12 @@ for(const item of officialCatalog){
  test(`${item.id}: completion and exported PNG`,async({page})=>{
   const order=drawing.colors.flatMap(c=>drawing.regions.filter(r=>r.colorId===c.id)).map(r=>r.id)
   await page.addInitScript(({key,history})=>localStorage.setItem(key,JSON.stringify({version:1,updatedAt:new Date().toISOString(),history})),{key:storageKey(drawing),history:order.slice(0,-1)})
-  await gallery(page);await page.getByRole('button',{name:new RegExp(`${drawing.title}, 28색, 이어서`)}).click()
+  await gallery(page);await page.getByRole('button',{name:new RegExp(`${drawing.title}, ${drawing.colors.length}색, 이어서`)}).click()
   await tapHint(page);await expect(page.getByRole('dialog')).toBeVisible()
   const downloadEvent=page.waitForEvent('download');await page.getByRole('button',{name:'내 그림 저장하기',exact:true}).click()
   const download=await downloadEvent;const bytes=await readFile((await download.path())!)
   expect(bytes.subarray(0,8).toString('hex')).toBe('89504e470d0a1a0a');expect(bytes.readUInt32BE(16)).toBe(1200)
+  expect(bytes.readUInt32BE(20)).toBe(700)
   await download.saveAs(`docs/coloring/${item.id}-complete.png`)
   await expect(page.getByRole('progressbar')).toHaveAttribute('aria-valuenow','100')
  })
@@ -68,7 +69,7 @@ for(const [name,width,height] of [['tablet',1280,800],['tablet-16x9',1280,720],[
  test(`coloring layout ${name}`,async({page})=>{
   await page.setViewportSize({width,height});await gallery(page)
   await page.screenshot({path:`docs/coloring/gallery-${name}.png`,fullPage:true})
-  await page.getByRole('button',{name:'공룡과 알, 28색, 색칠하기',exact:true}).click()
+  await page.getByRole('button',{name:`공룡과 알, ${drawings['baby-dinosaur'].colors.length}색, 색칠하기`,exact:true}).click()
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   if(width>=1000) expect(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight+1)).toBe(true)
   const canvas=(await page.locator('.canvas-scroll').boundingBox())!,art=(await page.locator('.canvas-panel svg').boundingBox())!
@@ -82,19 +83,25 @@ for(const [name,width,height] of [['tablet',1280,800],['tablet-16x9',1280,720],[
 }
 test('offline first game open, reload persistence and isolated storage',async({page,context})=>{
  await page.goto('./');await page.evaluate(async()=>{localStorage.setItem('coloring:v1:rose:r1','legacy-keep');await navigator.serviceWorker.ready});await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller)
- await context.setOffline(true);await page.getByRole('button',{name:'순서대로 색칠놀이',exact:true}).click();await page.getByRole('button',{name:'장미꽃, 28색, 색칠하기',exact:true}).click();await tapHint(page)
- await page.reload();await page.getByRole('button',{name:'순서대로 색칠놀이',exact:true}).click();await page.getByRole('button',{name:/장미꽃, 28색, 이어서/}).click();await expect(page.locator('[data-painted=true]')).toHaveCount(1)
+ await context.setOffline(true);await page.getByRole('button',{name:'순서대로 색칠놀이',exact:true}).click();await page.getByRole('button',{name:`장미꽃, ${drawings.rose.colors.length}색, 색칠하기`,exact:true}).click();await tapHint(page)
+ await page.reload();await page.getByRole('button',{name:'순서대로 색칠놀이',exact:true}).click();await page.getByRole('button',{name:/장미꽃, .*색, 이어서/}).click();await expect(page.locator('[data-painted=true]')).toHaveCount(1)
  expect(await page.evaluate(()=>localStorage.getItem('coloring:v1:rose:r1'))).toBe('legacy-keep');await context.setOffline(false)
 })
 test('color boundary advances automatically and drawings keep separate progress',async({page})=>{
  const drawing=drawings['baby-dinosaur'];const first=drawing.regions.filter(r=>r.colorId===1).map(r=>r.id)
  await page.addInitScript(({key,history})=>localStorage.setItem(key,JSON.stringify({version:1,updatedAt:new Date().toISOString(),history})),{key:storageKey(drawing),history:first.slice(0,-1)})
- await gallery(page);await page.getByRole('button',{name:/공룡과 알, 28색, 이어서/}).click();await tapHint(page)
+ await gallery(page);await page.getByRole('button',{name:/공룡과 알, .*색, /}).click();await tapHint(page)
  await expect(page.locator('[aria-current=step]')).toHaveText('2')
- await page.getByRole('button',{name:'도안 선택',exact:true}).click();await page.getByRole('button',{name:'장미꽃, 28색, 색칠하기',exact:true}).click();await expect(page.locator('[data-painted=true]')).toHaveCount(0)
+ await page.getByRole('button',{name:'도안 선택',exact:true}).click();await page.getByRole('button',{name:`장미꽃, ${drawings.rose.colors.length}색, 색칠하기`,exact:true}).click();await expect(page.locator('[data-painted=true]')).toHaveCount(0)
 })
 test('coloring remains playable when browser storage is blocked',async({page})=>{
  await page.addInitScript(()=>{Storage.prototype.setItem=()=>{throw new Error('blocked')}})
  await open(page,'rose');await tapHint(page);await expect(page.locator('[data-painted=true]')).toHaveCount(1)
  await expect(page.locator('.storage-warning')).toBeVisible()
+})
+test('portrait revision stays intact while landscape starts separately',async({page})=>{
+ const previousKey=storageKey({...drawings.rose,revision:1})
+ await page.addInitScript(key=>localStorage.setItem(key,'previous-portrait-save'),previousKey)
+ await open(page,'rose');await expect(page.locator('[data-painted=true]')).toHaveCount(0);await tapHint(page)
+ expect(await page.evaluate(key=>localStorage.getItem(key),previousKey)).toBe('previous-portrait-save')
 })
