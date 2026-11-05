@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-05",
+  "output": "docs/coloring-v4-final/fire-city-larger.png",
+  "input": "docs/coloring-v4-preview/fire-city.png",
+  "edit": "Increase only the fire truck by approximately 10 percent; preserve the existing truck design, city/fire station background, landscape composition and illustration style. No robot; no additional police-style roof beacon.",
+  "tool": "built-in image_gen"
+}
