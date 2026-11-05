@@ -16,6 +16,8 @@ jobs:
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm build
       - run: node scripts/verify-dist.mjs
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test
       - uses: actions/upload-artifact@v4
         with:
           name: pages-preview

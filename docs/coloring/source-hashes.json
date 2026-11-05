@@ -1,0 +1,58 @@
+{
+  "source": "../app/src/data (existing kids-color-by-number local checkout)",
+  "verified": "2026-11-05",
+  "files": [
+    {
+      "path": "drawings.ts",
+      "sha256": "f6777e5a8161bb3b2a42b6701792238bf55ac880a50a9cedb90a990950e06c4c"
+    },
+    {
+      "path": "new-drawings/baby-dinosaur.json",
+      "sha256": "89e7a1f9cd7a47607883d7777c75a2300b09cb490dc2a80d2f106c1cae2f4e0c"
+    },
+    {
+      "path": "new-drawings/fire-robot.json",
+      "sha256": "8da3a11da7af99ef0c447f363da0a4025ac10f2532dba13a388b905e162132ad"
+    },
+    {
+      "path": "new-drawings/garden-butterfly.json",
+      "sha256": "cdc850041a752f5b0c6bb4b3de3926ca8385ba840d872b495ae0443ce0ccd7d2"
+    },
+    {
+      "path": "new-drawings/rose.json",
+      "sha256": "521a91834ac8d6e19fb2d98ed5fa57349a4a93da5123e4f8159e5c15540fe381"
+    },
+    {
+      "path": "police-car-robot/decorations.ts",
+      "sha256": "24ddfc6c22e111e5baff18e7d7ef414144000ee630bf025179fbb386e96d0c65"
+    },
+    {
+      "path": "police-car-robot/index.ts",
+      "sha256": "ae205f18bac9dbc90ff40c775559af7485cb2d1b237d2df8bb502906a2652968"
+    },
+    {
+      "path": "police-car-robot/manifest.json",
+      "sha256": "1c059bf07ade9b85e1c8a0695e249600c1f95a844273d398229f914039246cc3"
+    },
+    {
+      "path": "police-car-robot/outline.ts",
+      "sha256": "d81e45f82a9e3cfbabaa351eb97b53c4aeaab9e6aee1876ccd889db98402583c"
+    },
+    {
+      "path": "police-car-robot/palette.ts",
+      "sha256": "5ed68eabdfc1bffbc59a4c3e4fbb72326d3b52cf8c5a4c7aba1c1ac6248dc75d"
+    },
+    {
+      "path": "police-car-robot/regions.ts",
+      "sha256": "4091fce7db921c13f54ac52d4156c33b9a1d3b4d731ed13327b9ae7c6e2ce96b"
+    },
+    {
+      "path": "test-flower.ts",
+      "sha256": "ed7c5ad7b6ccd33b9811b6b6ebae426f1ba6be59aa9683b6933967e655085d76"
+    },
+    {
+      "path": "types.ts",
+      "sha256": "6b0d51a181d23eb4a40a1128b3dcbf1d7bfabc90d14a1381f759f67945690b79"
+    }
+  ]
+}
