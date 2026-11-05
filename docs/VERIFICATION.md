@@ -16,4 +16,4 @@
 
 확정 시안의 배치와 색상 구성을 반영했으며 그림과 글자는 SVG 및 HTML/CSS로 새로 제작했습니다. 원본 시안과 그림체·글꼴까지 동일하게 복제한 결과는 아닙니다.
 
-작업 브랜치: `feat/playground-home`. 새 원격 저장소가 아직 없어 원격 업로드·PR은 미완료입니다. 배포 작업은 실행하지 않았고 CI에는 배포 단계가 없습니다.
+작업 브랜치: `feat/playground-home`. 전용 원격 저장소는 `leedb333/kids-game-playground`입니다. 배포 작업은 실행하지 않았고 CI에는 배포 단계가 없습니다. 원격 PR과 빌드 결과는 GitHub의 Pull requests 및 Actions에서 확인할 수 있습니다.

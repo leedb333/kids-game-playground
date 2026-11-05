@@ -33,7 +33,7 @@ pnpm dev
 
 ## GitHub·배포
 
-기존 `kids-color-by-number` 저장소와는 별개입니다. 이 폴더만 새 저장소에 연결해야 합니다. 작업 브랜치는 `feat/playground-home`을 사용합니다. 자동 병합·자동 배포는 없습니다. CI는 PR 빌드 결과만 보관합니다.
+전용 저장소는 [leedb333/kids-game-playground](https://github.com/leedb333/kids-game-playground)입니다. 기존 `kids-color-by-number` 저장소와는 별개입니다. 작업 브랜치는 `feat/playground-home`을 사용합니다. 자동 병합·자동 배포는 없습니다. CI는 PR 빌드 결과만 보관합니다.
 
 GitHub Pages 준비는 [다음 단계 안내](docs/GITHUB-SETUP.md)를 참고하세요. 저장소 이름이 다르면 `BASE_PATH`를 `/<새 저장소 이름>/`으로 지정해 빌드해야 합니다.
 
