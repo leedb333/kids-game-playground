@@ -38,3 +38,7 @@ pnpm dev
 GitHub Pages 준비는 [다음 단계 안내](docs/GITHUB-SETUP.md)를 참고하세요. 저장소 이름이 다르면 `BASE_PATH`를 `/<새 저장소 이름>/`으로 지정해 빌드해야 합니다.
 
 설정 근거: [Vite GitHub Pages 안내](https://vite.dev/guide/static-deploy), [MDN 서비스 워커 안내](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers).
+
+## 수동 배포 준비
+
+홈 화면 PR #1은 병합됐습니다. 배포 준비는 `chore/pages-deployment`의 별도 PR에서 검토합니다. PR 빌드 검사와 수동 배포 작업은 분리되어 있습니다. 코드 업로드와 병합만으로는 배포되지 않습니다. 클릭 순서는 [배포 안내](docs/GITHUB-SETUP.md)를 참고하세요.
