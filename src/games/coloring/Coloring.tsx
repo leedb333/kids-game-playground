@@ -4,6 +4,15 @@ import type { Drawing } from './data/drawings'
 import { activeColor, paint, progress, readProgress, saveProgress } from './engine'
 import { exportPng } from './export'
 
+function paletteTextColor(hex: string) {
+  const rgb = hex.replace('#', '').match(/../g)!.map(part => {
+    const value = parseInt(part, 16) / 255
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+  })
+  const luminance = rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722
+  return luminance > 0.179 ? '#000000' : '#ffffff'
+}
+
 function Dialog({
   title,
   children,
@@ -55,7 +64,7 @@ export function Coloring({
   const paletteRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const hintTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  const maxZoom = drawing.maxZoom ?? 3
+  const maxZoom = 3
   const current = activeColor(drawing, history)
   const complete = !current
   const remaining = drawing.regions.filter(
@@ -109,28 +118,12 @@ export function Coloring({
     clearTimeout(hintTimer.current)
     setHintId(region.id)
     setMessage(`${current!.id}번이 반짝반짝! 이곳을 눌러 보세요.`)
-    // Small independent cells need a usable touch target; center them without painting.
+    // Every hint uses the same 300% view and centers the target.
     const stage = stageRef.current
-    const svg = svgRef.current
-    const baseHeight = svg ? svg.getBoundingClientRect().height / zoom : 0
-    const scale = baseHeight / drawing.viewBox[3]
-    const targetZoom =
-      region.touchRadius && scale > 0
-        ? Math.min(
-            maxZoom,
-            Math.max(
-              1,
-              Math.ceil((48 / (2 * region.touchRadius * scale)) * 2) / 2,
-            ),
-          )
-        : 1
+    const targetZoom = maxZoom
     setZoom(targetZoom)
     requestAnimationFrame(() => {
       if (!stage) return
-      if (targetZoom === 1) {
-        stage.scrollTo({ top: 0, left: 0 })
-        return
-      }
       const path = svgRef.current?.querySelector<SVGPathElement>(
         `[data-region="${region.id}"]`,
       )
@@ -219,7 +212,7 @@ export function Coloring({
             <span
               key={color.id}
               className={`color-chip ${color.id === current?.id ? 'selected' : ''}`}
-              style={{ backgroundColor: color.hex }}
+              style={{ backgroundColor: color.hex, color: paletteTextColor(color.hex) }}
               aria-label={`${color.id}번 ${color.name}${color.id === current?.id ? ', 현재 색상' : ''}`}
               aria-current={color.id === current?.id ? 'step' : undefined}
             >
