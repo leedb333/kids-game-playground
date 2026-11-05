@@ -15,6 +15,7 @@ jobs:
       - run: corepack enable
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm build
+      - run: node scripts/verify-dist.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: pages-preview

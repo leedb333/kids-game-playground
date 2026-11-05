@@ -17,3 +17,7 @@
 확정 시안의 배치와 색상 구성을 반영했으며 그림과 글자는 SVG 및 HTML/CSS로 새로 제작했습니다. 원본 시안과 그림체·글꼴까지 동일하게 복제한 결과는 아닙니다.
 
 작업 브랜치: `feat/playground-home`. 전용 원격 저장소는 `leedb333/kids-game-playground`입니다. 배포 작업은 실행하지 않았고 CI에는 배포 단계가 없습니다. 원격 PR과 빌드 결과는 GitHub의 Pull requests 및 Actions에서 확인할 수 있습니다.
+
+## 배포 준비 검증 (2026-11-05)
+
+TypeScript 검사, Vite 빌드, 배포 경로·정적 파일·PWA 아이콘·서비스 워커 존재 검사를 통과했습니다. 수동 배포 작업에는 workflow_dispatch만 있고 main에서만 실행됩니다. 실제 Pages 설정 변경·배포 작업 실행은 하지 않았습니다. 배포 단계의 최종 검증은 실제 배포 승인 후 진행합니다.
