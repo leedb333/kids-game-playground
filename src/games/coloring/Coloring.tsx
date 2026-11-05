@@ -229,7 +229,7 @@ export function Coloring({
                   <span className="sr-only">{color.id}번 완료</span>
                 </>
               ) : (
-                color.id
+                <span>{color.id}</span>
               )}
             </span>
           ))}
@@ -251,7 +251,7 @@ export function Coloring({
                 className="current-number"
                 style={{ backgroundColor: current.hex }}
               >
-                {current.id}
+                <span>{current.id}</span>
               </span>
               <div>
                 <strong>

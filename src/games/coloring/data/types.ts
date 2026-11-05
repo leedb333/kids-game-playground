@@ -29,6 +29,8 @@ export interface Drawing {
   outlinePath?: string
   outlineColor?: string
   paperColor?: string
+  /** Same-origin, cached approved scene; export embeds it into the PNG source SVG. */
+  backgroundImage?: string
   maxZoom?: number
   decorations?: Decoration[]
 }

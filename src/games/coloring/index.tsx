@@ -16,10 +16,11 @@ export default function ColoringGame() {
         const drawing = drawings[item.id]
         const saved = readProgress(drawing).saved
         const percent = progress(drawing, saved?.history ?? [])
-        return <button key={item.id} className={`drawing-card drawing-${item.tint}`} onClick={() => setOpened(drawing)} aria-label={`${item.title}, ${drawing.colors.length}색, ${percent ? '이어서 색칠하기' : '색칠하기'}`}>
+        const count = saved?.history.length ?? 0
+        return <button key={item.id} className={`drawing-card drawing-${item.tint}`} onClick={() => setOpened(drawing)} aria-label={`${item.title}, ${drawing.colors.length}색, ${count ? '이어서 색칠하기' : '색칠하기'}`}>
           <span className="drawing-preview"><Artwork drawing={drawing} history={[]} preview /></span>
-          <strong>{item.title}</strong><span className="drawing-meta">{drawing.colors.length}가지 색 · {percent === 100 ? '완성했어요 ★' : percent ? `${percent}% 칠했어요` : '차근차근 칠해요'}</span>
-          <span className="drawing-start">{percent === 100 ? '완성한 그림 보기' : percent ? '이어서 색칠하기' : '색칠 시작'} <span aria-hidden="true">→</span></span>
+          <strong>{item.title}</strong><span className="drawing-meta">{drawing.colors.length}가지 색 · {count === drawing.regions.length ? '완성했어요 ★' : count ? percent ? `${percent}% 칠했어요` : `${count}곳 칠했어요` : '차근차근 칠해요'}</span>
+          <span className="drawing-start">{count === drawing.regions.length ? '완성한 그림 보기' : count ? '이어서 색칠하기' : '색칠 시작'} <span aria-hidden="true">→</span></span>
         </button>
       })}</div>
       <p className="gallery-note">✦ 색은 순서대로 바뀌어요. 칠한 그림은 이 기기에 자동으로 저장돼요.</p>

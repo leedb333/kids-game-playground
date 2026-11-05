@@ -1,5 +1,23 @@
 export async function exportPng(svg: SVGSVGElement, filename: string) {
   const clone = svg.cloneNode(true) as SVGSVGElement
+  // SVG exported through a blob cannot resolve external image references.
+  // Inline the same-origin scene; offline requests are served by our PWA cache.
+  for (const node of clone.querySelectorAll('image')) {
+    const href = node.getAttribute('href')
+    if (!href || href.startsWith('data:')) continue
+    const url = new URL(href, document.baseURI)
+    if (url.origin !== location.origin) throw new Error('Unexpected background origin')
+    const response = await fetch(url)
+    if (!response.ok) throw new Error('Background unavailable')
+    const blob = await response.blob()
+    const data = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result))
+      reader.onerror = () => reject(new Error('Background conversion failed'))
+      reader.readAsDataURL(blob)
+    })
+    node.setAttribute('href', data)
+  }
   const width = 1200
   const height = Math.round(
     (width * svg.viewBox.baseVal.height) / svg.viewBox.baseVal.width,

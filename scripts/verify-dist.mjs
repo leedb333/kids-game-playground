@@ -8,7 +8,7 @@ for (const url of urls) {
   if (!url.startsWith(base)) throw new Error(`Unexpected asset path: ${url}`)
   if (!existsSync(resolve('dist', url.slice(base.length)))) throw new Error(`Missing asset: ${url}`)
 }
-for (const file of ['sw.js', 'icon-192.png', 'icon-512.png']) {
+for (const file of ['sw.js', 'icon-192.png', 'icon-512.png', ...['police','fire','dinosaur','butterfly'].map(name=>`assets/coloring-v4/${name}.png`)]) {
   if (!existsSync(resolve('dist', file))) throw new Error(`Missing offline/install file: ${file}`)
 }
 if (manifest.start_url !== './' || manifest.scope !== './') throw new Error('Manifest must stay inside repository path')

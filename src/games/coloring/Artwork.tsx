@@ -36,6 +36,7 @@ export const Artwork = forwardRef<SVGSVGElement, Props>(function Artwork(
         rx="20"
         fill={drawing.paperColor ?? '#fffdf5'}
       />
+      {drawing.backgroundImage && <image data-background="true" href={drawing.backgroundImage.startsWith('data:') ? drawing.backgroundImage : import.meta.env.BASE_URL+drawing.backgroundImage} x={drawing.viewBox[0]} y={drawing.viewBox[1]} width={drawing.viewBox[2]} height={drawing.viewBox[3]} preserveAspectRatio="xMidYMid meet" pointerEvents="none" aria-hidden="true"/>}
       {drawing.regions.map((region) => {
         const color = drawing.colors.find((item) => item.id === region.colorId)!
         const filled = preview || painted.has(region.id)
