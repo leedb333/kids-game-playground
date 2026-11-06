@@ -1,0 +1,9 @@
+import type {Recipe,CookingStep} from '../types'
+import {IngredientArt} from './IngredientArt'
+export function IngredientPanel({recipe,step,selected,count,heating,done,onSelect,onDrag,onAct,onUndo}:{recipe:Recipe;step:CookingStep;selected:string|null;count:number;heating:boolean;done:boolean;onSelect:(id:string)=>void;onDrag:(id:string)=>void;onAct:()=>void;onUndo:()=>void}){
+ const placing=step.kind==='place'
+ return <aside className="cook-panel" aria-label="재료와 도구"><h2>재료 · 도구 <span aria-hidden="true">✦</span></h2>
+  <h3>{placing?'좋아하는 재료를 골라요':'이번 단계의 도구'}</h3>
+  {placing?<><div className="cook-ingredients">{recipe.ingredients.map(ingredient=><button key={ingredient.id} className="cook-ingredient" aria-pressed={selected===ingredient.id} onClick={()=>onSelect(ingredient.id)} onPointerDown={()=>onDrag(ingredient.id)}><IngredientArt kind={ingredient.icon}/><span>{ingredient.name}</span></button>)}</div><p className="cook-panel-note" role="status">{recipe.ingredients.find(i=>i.id===selected)?.name} 선택!<br/>요리를 누르거나 끌어 놓아요.</p><button className="cook-undo" onClick={onUndo} disabled={!count}>↶ 마지막 토핑 빼기</button><p className="cook-count">{count}/90개 · 원하는 만큼 올려요</p></>:step.kind==='finish'?<div className="cook-finish-note"><span aria-hidden="true">🏅</span><strong>꼬마 요리사 최고!</strong><p>또 다른 토핑으로<br/>다시 만들어 볼까요?</p></div>:<><div className="cook-tool-list">{step.toolIds.map(id=>{const tool=recipe.tools.find(t=>t.id===id)!;return <div className="cook-tool" key={id}><span aria-hidden="true">{tool.icon}</span><strong>{tool.name}</strong></div>})}</div><button className="cook-primary cook-tool-action" onClick={onAct} disabled={heating||done}>{heating?'굽고 있어요…':done?'준비됐어요 ✓':step.actionLabel??'도구 사용하기'}</button><p className="cook-panel-note">{step.kind==='heat'?'뜨거운 도구는 게임 안에서만!':step.kind==='spread'?'주걱으로 한 번에 넓게 발라도 좋아요.':'반죽을 누르거나 위 버튼을 눌러요.'}</p></>}
+ </aside>
+}
