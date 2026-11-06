@@ -4,6 +4,7 @@ import { games, type GameDefinition } from './games/registry'
 import { read, write } from './storage'
 import { Child, GameArt } from './Art'
 import './styles.css'
+import {SoundContext} from './games/GameSettings'
 
 class GameBoundary extends Component<{children:React.ReactNode;onHome:()=>void},{failed:boolean}> {
   state={failed:false}
@@ -25,7 +26,7 @@ function App(){
     <nav className="toolbar" aria-label="공통 메뉴"><button className="home" onClick={home} aria-label="홈으로 이동"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m3 15 13-12 13 12M7 13v16h7v-9h5v9h7V13" fill="white" stroke="currentColor" strokeWidth="3" strokeLinejoin="round"/></svg><span>홈</span></button>{active&&<span className="playing-name">✦ {active.id==='coloring'?'나의 색칠 놀이터':active.title}</span>}<button className="sound" aria-pressed={sound} onClick={toggleSound}><span aria-hidden="true">{sound?'◖))':'◖×'}</span> 소리 {sound?'ON':'OFF'}</button></nav>
     {!active&&<header className="hero"><div className="child boy"><Child/></div><div className="hero-copy"><h1 tabIndex={-1}><span>어린이</span> <span>게임</span> <span>놀이터</span></h1><p className="welcome"><span aria-hidden="true">★</span> 매일 즐겁게 놀아요! <span className="stars" aria-hidden="true">★★★</span></p></div><div className="child girl"><Child girl/></div></header>}
     <main id="games" tabIndex={-1}>
-      {active&&Game?<section className="game-shell" aria-label={active.title}><GameBoundary key={active.id} onHome={home}><Suspense fallback={<p role="status">놀이를 불러오고 있어요…</p>}><Game/></Suspense></GameBoundary></section>:<><h2 className="sr-only">게임 목록</h2><div className="game-grid">
+      {active&&Game?<section className="game-shell" aria-label={active.title}><GameBoundary key={active.id} onHome={home}><Suspense fallback={<p role="status">놀이를 불러오고 있어요…</p>}><SoundContext.Provider value={sound}><Game/></SoundContext.Provider></Suspense></GameBoundary></section>:<><h2 className="sr-only">게임 목록</h2><div className="game-grid">
         {games.map((game,index)=><button key={game.id} className={`card ${game.color}`} disabled={game.status==='coming-soon'} aria-label={`${game.title}${game.status==='coming-soon'?' · 준비 중':''}`} onClick={()=>open(game)}><span className="card-number" aria-hidden="true">0{index+1}</span><GameArt id={game.id}/><span className="game-title">{game.id==='coloring'?<>순서대로<br/>색칠놀이</>:game.title}</span><span className="caption">{game.caption}</span>{game.status==='coming-soon'&&<span className="badge"><span aria-hidden="true">◷</span> 준비 중</span>}</button>)}
         <div className="future-cards"><button className="card blue mini" disabled aria-label="새 게임 · 준비 중"><GameArt id="new"/><span className="game-title">새<br/>게임</span><span className="badge">준비 중</span></button><button className="card gray mini" disabled aria-label="준비 중인 게임"><GameArt id="locked"/><span className="game-title">준비 중</span><span className="mini-dots" aria-hidden="true">● ● ●</span></button></div>
       </div><p className="preparing"><span aria-hidden="true">✦</span> 색칠놀이와 요리놀이가 열렸어요! 좋아하는 놀이를 골라요.</p></>}
