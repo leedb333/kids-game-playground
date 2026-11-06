@@ -15,13 +15,19 @@ test('pizza state validation and previous revision separation',()=>{const good=f
 test('hands-on pizza: roll, cream, toppings, oven drag and eight cuts',async({page})=>{
  await page.addInitScript(()=>{const original=AudioContext.prototype.createOscillator;AudioContext.prototype.createOscillator=function(){(window as any).__ovenTones=((window as any).__ovenTones??0)+1;return original.call(this)}})
  await page.setViewportSize({width:1280,height:800});await toppings(page,'크림소스');await expect(page.locator('.cook-ingredient')).toHaveCount(7)
+ await expect(page.locator('path[stroke="#fffdf1"],path[stroke="#ffc28a"]')).toHaveCount(0)
  for(const ingredient of pizza.ingredients){await page.getByRole('button',{name:ingredient.name,exact:true}).click();await page.getByRole('button',{name:'선택한 재료 올리기',exact:true}).press('Enter')}
  const b=await page.getByRole('button',{name:'토마토',exact:true}).boundingBox();await drag(page,{x:b!.x+b!.width/2,y:b!.y+b!.height/2},await at(page,380,250));await expect(page.locator('[data-topping]')).toHaveCount(8)
  await page.getByRole('button',{name:/마지막 토핑 빼기/}).click();await expect(page.locator('[data-topping]')).toHaveCount(7)
  await page.screenshot({path:'docs/cooking-touch/toppings-cream.png',fullPage:true})
  await page.reload();await page.getByRole('button',{name:'요리놀이',exact:true}).click();await page.getByRole('button',{name:/피자 만들기/}).click();await expect(page.locator('[data-topping]')).toHaveCount(7)
- await page.getByRole('button',{name:'다음 →',exact:true}).click();await page.getByRole('button',{name:'오븐 문 열기',exact:true}).click();await expect(page.locator('[data-oven-state=open]')).toHaveCount(1)
- await drag(page,await at(page,155,252),await at(page,450,260));await expect(page.locator('[data-oven-state=loaded]')).toHaveCount(1)
+ await page.getByRole('button',{name:'다음 →',exact:true}).click()
+ await expect.poll(async()=>{const svg=await page.locator('[data-pizza-surface]>svg').boundingBox(),food=await page.locator('.pizza-food-motion > [data-pizza-food] > ellipse').first().boundingBox();return (food!.x+food!.width/2-svg!.x)/svg!.width}).toBeLessThan(.24)
+ const svg=await page.locator('[data-pizza-surface]>svg').boundingBox(),food=await page.locator('.pizza-food-motion > [data-pizza-food] > ellipse').first().boundingBox(),oven=await page.locator('.pizza-oven').boundingBox()
+ expect(food!.width/svg!.width).toBeGreaterThan(.4);expect((food!.x+food!.width/2-svg!.x)/svg!.width).toBeLessThan(.24);expect(oven!.width/svg!.width).toBeGreaterThan(.45)
+ await page.screenshot({path:'docs/cooking-touch/oven-ready.png',fullPage:true})
+ await page.getByRole('button',{name:'오븐 문 열기',exact:true}).click();await expect(page.locator('[data-oven-state=open]')).toHaveCount(1)
+ await drag(page,await at(page,135,252),await at(page,450,260));await expect(page.locator('[data-oven-state=loaded]')).toHaveCount(1)
  await page.getByRole('button',{name:'오븐 문 닫기',exact:true}).click();await expect(page.locator('.oven-glowing')).toBeVisible();await expect(page.getByRole('button',{name:'다음 →',exact:true})).toBeDisabled();await page.screenshot({path:'docs/cooking-touch/oven-baking.png',fullPage:true})
  await expect(page.getByRole('button',{name:'피자 칼 가져오기'})).toBeVisible({timeout:6000});await expect(page.locator('.cook-completion')).toHaveCount(0)
  await expect.poll(()=>page.evaluate(()=>(window as any).__ovenTones??0)).toBe(2)
@@ -31,12 +37,14 @@ test('hands-on pizza: roll, cream, toppings, oven drag and eight cuts',async({pa
  for(let i=3;i<=8;i++){const q=await page.getByRole('button',{name:`${i}번 자르기 선`,exact:true}).boundingBox();await page.touchscreen.tap(q!.x+q!.width/2,q!.y+q!.height/2)}
  await expect(page.locator('[data-pizza-slice]')).toHaveCount(8);await expect(page.locator('.cook-completion')).toBeVisible();await page.screenshot({path:'docs/cooking-touch/complete-eight-slices.png',fullPage:true})
  await page.getByRole('button',{name:/다시 만들기/}).click();await page.getByRole('button',{name:'계속 만들기',exact:true}).click();await expect(page.locator('[data-pizza-slice]')).toHaveCount(8)
- await page.getByRole('button',{name:/다시 만들기/}).click();await page.getByRole('button',{name:'처음부터 만들기',exact:true}).click();await expect(page.locator('[data-topping]')).toHaveCount(0);await expect(page.locator('[aria-current=step]')).toContainText('반죽 준비')
+ await page.getByRole('button',{name:'요리 선택',exact:true}).click();await expect(page.locator('.recipe-pizza .cook-recipe-start')).toHaveText('만들기 시작 →');await page.screenshot({path:'docs/cooking-touch/selection-after-complete.png',fullPage:true});await page.getByRole('button',{name:/피자 만들기/}).click();await expect(page.locator('[data-topping]')).toHaveCount(0);await expect(page.locator('[aria-current=step]')).toContainText('반죽 준비')
+ await page.getByRole('button',{name:/다시 만들기/}).click();await page.getByRole('button',{name:'처음부터 만들기',exact:true}).click();await expect(page.locator('[aria-current=step]')).toContainText('반죽 준비')
 })
 test('rolling requires movement on both axes; sauce needs tool and coverage',async({page})=>{
  await page.setViewportSize({width:1280,height:800});await enter(page);await page.screenshot({path:'docs/cooking-touch/dough-start.png',fullPage:true});const board=page.getByRole('button',{name:'밀대로 반죽 밀기',exact:true});await board.click();await expect(page.getByRole('button',{name:'다음 →',exact:true})).toBeDisabled()
  await tool(page,'밀대');for(let i=0;i<7;i++)await drag(page,await at(page,270,240),await at(page,370,240));await expect(page.getByRole('button',{name:'다음 →',exact:true})).toBeDisabled();await drag(page,await at(page,300,180),await at(page,300,300));await expect(page.getByRole('button',{name:'다음 →',exact:true})).toBeEnabled()
  await page.screenshot({path:'docs/cooking-touch/dough-rolled.png',fullPage:true});await page.getByRole('button',{name:'다음 →',exact:true}).click();await expect(page.getByRole('button',{name:'숟가락 가져오기'})).toBeDisabled();await page.getByRole('button',{name:'토마토 소스',exact:true}).click();await page.getByRole('button',{name:'숟가락으로 소스 바르기',exact:true}).click();await expect(page.getByRole('button',{name:'다음 →',exact:true})).toBeDisabled();await tool(page,'숟가락');const q=await at(page,400,240);await page.touchscreen.tap(q.x,q.y);await expect(page.getByRole('button',{name:'다음 →',exact:true})).toBeDisabled();await page.screenshot({path:'docs/cooking-touch/sauce-partial.png',fullPage:true})
+ await expect(page.locator('path[stroke="#fffdf1"],path[stroke="#ffc28a"]')).toHaveCount(0)
 })
 for(const [name,width,height] of [['tablet',1280,800],['tablet-16x9',1280,720],['phone',360,800],['small-phone',320,640],['phone-landscape',800,360]] as const)test(`hands-on cooking layout ${name}`,async({page})=>{
  await page.setViewportSize({width,height});await toppings(page);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);for(const button of await page.locator('.cooking-game button:visible').all()){const b=await button.boundingBox();expect(b!.height).toBeGreaterThanOrEqual(48);expect(b!.width).toBeGreaterThanOrEqual(48)}await page.screenshot({path:`docs/cooking-touch/pizza-${name}.png`,fullPage:true});if(width===1280)expect(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight)).toBe(true)
