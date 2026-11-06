@@ -1,0 +1,2 @@
+import type {Recipe} from '../types'
+export function Completion({recipe}:{recipe:Recipe}){return <div className="cook-completion" role="status"><div className="cook-confetti" aria-hidden="true">{Array.from({length:12},(_,i)=><i key={i} style={{left:`${5+i*8}%`,animationDelay:`${i*.07}s`,background:['#ef9f92','#f5ca58','#8ac5ab'][i%3]}}/>)}</div><h2>✦ {recipe.completion.title} ✦</h2><p>{recipe.completion.message}</p></div>}

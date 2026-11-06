@@ -3,7 +3,7 @@ for(const [name,width,height] of [['tablet-16x9',1280,720],['tablet',1280,800],[
  test(name,async({page})=>{
   await page.setViewportSize({width,height});const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message))
   await page.goto('./');await expect(page.getByRole('heading',{name:'어린이 게임 놀이터'})).toBeVisible()
-  await expect(page.locator('.card:disabled')).toHaveCount(5)
+  await expect(page.locator('.card:disabled')).toHaveCount(4)
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   for(const card of await page.locator('.card').all()){const box=await card.boundingBox();expect(box!.width).toBeGreaterThan(48);expect(box!.height).toBeGreaterThan(48)}
   const sound=page.getByRole('button',{name:/소리/});await sound.click();await expect(sound).toHaveAttribute('aria-pressed','false');await page.reload();await expect(sound).toHaveAttribute('aria-pressed','false')
