@@ -42,7 +42,7 @@ test('camp skewers drag, grill, automatic finish and per-recipe save isolation',
 
 for(const [name,width,height] of [['tablet',1280,800],['tablet-16x9',1280,720],['phone',360,800],['small-phone',320,640],['phone-landscape',800,360]] as const)test(`three meal layouts ${name}`,async({page})=>{
  await page.setViewportSize({width,height});for(const recipe of [spaghetti,sandwich,skewer]){await enter(page,recipe.title);if(recipe.id!=='spaghetti'){await page.getByRole('button',{name:'3개 만들기'}).click();await page.getByRole('button',{name:recipe.ingredients[0].name,exact:true}).click();await page.locator('[data-meal-target="1"]').click()}
- expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);for(const b of await page.locator('.meal-workshop button:visible').all()){const box=await b.boundingBox();expect(box!.height).toBeGreaterThanOrEqual(48);expect(box!.width).toBeGreaterThanOrEqual(48)}if(width===1280)expect(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight)).toBe(true);await page.screenshot({path:`docs/cooking-meals/${recipe.id}-${name}.png`,fullPage:true})}
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);for(const b of await page.locator('.meal-workshop button:visible').all()){const box=await b.boundingBox();expect(box!.height).toBeGreaterThanOrEqual(48);expect(box!.width).toBeGreaterThanOrEqual(48)}if(width===1280)expect(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight),recipe.id+' tablet height').toBe(true);await page.screenshot({path:`docs/cooking-meals/${recipe.id}-${name}.png`,fullPage:true})}
 })
 
 test('keyboard spaghetti and blocked storage remain playable',async({page})=>{
