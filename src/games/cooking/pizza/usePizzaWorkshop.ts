@@ -10,8 +10,9 @@ export function validPizza(value:unknown,recipe:Recipe):value is PizzaState{
  const indices=(v:unknown,max:number):boolean=>Array.isArray(v)&&v.length<=max&&new Set(v).size===v.length&&v.every(n=>Number.isInteger(n)&&n>=0&&n<max)
  return !!p&&[null,'rolling-pin','spoon','cutter'].includes(p.tool)&&[p.horizontal,p.vertical].every(n=>Number.isInteger(n)&&n>=0&&n<=6)&&[null,'tomato','cream'].includes(p.sauce)&&indices(p.sauceCells,12)&&indices(p.cuts,8)&&['closed','open','loaded','baking','done'].includes(p.oven)&&(p.oven==='baking'?value.bakeUntil!==null:value.bakeUntil===null)
 }
+export function isPizzaComplete(value:unknown,recipe:Recipe){return validPizza(value,recipe)&&value.interaction.cuts.length===8}
 export function usePizzaWorkshop(recipe:Recipe){
- const [state,setState]=useState<PizzaState>(()=>{const s=read<unknown>(cookingKey(recipe),null);return validPizza(s,recipe)?s:freshPizza(recipe)})
+ const [state,setState]=useState<PizzaState>(()=>{const s=read<unknown>(cookingKey(recipe),null);return validPizza(s,recipe)&&!isPizzaComplete(s,recipe)?s:freshPizza(recipe)})
  const [storageOk,setStorageOk]=useState(true)
 
  const p=state.interaction,step=recipe.steps[state.step],heating=p.oven==='baking'

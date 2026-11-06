@@ -22,7 +22,7 @@ export function PizzaWorkshop({recipe,onBack}:{recipe:Recipe;onBack:()=>void}){
  useEffect(()=>{if(reset)dialog.current?.showModal()},[reset])
  function point(x:number,y:number):Point|null{const svg=surface.current?.querySelector('svg'),matrix=svg?.getScreenCTM();if(!matrix)return null;const result=new DOMPoint(x,y).matrixTransform(matrix.inverse());return {x:result.x,y:result.y}}
  const onFood=(q:Point)=>Math.hypot(q.x-300,q.y-240)<=205
- const onOven=(q:Point)=>q.x>=330&&q.x<=575&&q.y>=90&&q.y<=420
+ const onOven=(q:Point)=>q.x>=300&&q.x<=590&&q.y>=90&&q.y<=420
  function start(event:React.PointerEvent<HTMLElement>){
   if(event.button!==0||heating||complete)return
   unlock()
@@ -31,7 +31,7 @@ export function PizzaWorkshop({recipe,onBack}:{recipe:Recipe;onBack:()=>void}){
   if(!kind&&!(event.target as Element).closest('[data-pizza-surface]'))return
   if(!kind&&(event.target as Element).closest('[data-cut],.pizza-door-hit'))return
   if(!kind){
-   if(state.step===3){if(Math.hypot(q.x-155,q.y-252)>112)return;kind='pizza'}
+   if(state.step===3){if(Math.hypot(q.x-135,q.y-252)>135)return;kind='pizza'}
    else if(pending&&onFood(q)){game.equip(pending);setPending(null);return}
    else if(state.step===0&&p.tool==='rolling-pin'&&onFood(q))kind='roll'
    else if(state.step===1&&p.tool==='spoon'&&onFood(q)){kind='brush';game.brush(q.x,q.y)}
