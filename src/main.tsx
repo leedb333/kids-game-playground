@@ -29,7 +29,7 @@ function App(){
       {active&&Game?<section className="game-shell" aria-label={active.title}><GameBoundary key={active.id} onHome={home}><Suspense fallback={<p role="status">놀이를 불러오고 있어요…</p>}><SoundContext.Provider value={sound}><Game/></SoundContext.Provider></Suspense></GameBoundary></section>:<><h2 className="sr-only">게임 목록</h2><div className="game-grid">
         {games.map((game,index)=><button key={game.id} className={`card ${game.color}`} disabled={game.status==='coming-soon'} aria-label={`${game.title}${game.status==='coming-soon'?' · 준비 중':''}`} onClick={()=>open(game)}><span className="card-number" aria-hidden="true">0{index+1}</span><GameArt id={game.id}/><span className="game-title">{game.id==='coloring'?<>순서대로<br/>색칠놀이</>:game.title}</span><span className="caption">{game.caption}</span>{game.status==='coming-soon'&&<span className="badge"><span aria-hidden="true">◷</span> 준비 중</span>}</button>)}
         <div className="future-cards"><button className="card blue mini" disabled aria-label="새 게임 · 준비 중"><GameArt id="new"/><span className="game-title">새<br/>게임</span><span className="badge">준비 중</span></button><button className="card gray mini" disabled aria-label="준비 중인 게임"><GameArt id="locked"/><span className="game-title">준비 중</span><span className="mini-dots" aria-hidden="true">● ● ●</span></button></div>
-      </div><p className="preparing"><span aria-hidden="true">✦</span> 색칠놀이와 요리놀이가 열렸어요! 좋아하는 놀이를 골라요.</p></>}
+      </div><p className="preparing"><span aria-hidden="true">✦</span> 색칠놀이 · 요리놀이 · 코디놀이, 좋아하는 놀이를 골라요.</p></>}
     </main><footer>광고 없이 · 회원가입 없이 · 안심하고 놀아요</footer><span role="status" className="sr-only">{notice}</span>
   </div>
 }
