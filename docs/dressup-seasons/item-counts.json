@@ -1,0 +1,305 @@
+{
+  "uniqueItems": 89,
+  "counts": [
+    {
+      "season": "봄",
+      "characters": [
+        {
+          "character": "하루",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 5,
+              "all": 10
+            },
+            {
+              "category": "상의",
+              "recommended": 6,
+              "all": 16
+            },
+            {
+              "category": "하의",
+              "recommended": 4,
+              "all": 8
+            },
+            {
+              "category": "신발",
+              "recommended": 3,
+              "all": 9
+            }
+          ]
+        },
+        {
+          "character": "보미",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 8,
+              "all": 15
+            },
+            {
+              "category": "상의",
+              "recommended": 8,
+              "all": 21
+            },
+            {
+              "category": "하의",
+              "recommended": 5,
+              "all": 12
+            },
+            {
+              "category": "신발",
+              "recommended": 3,
+              "all": 9
+            }
+          ]
+        },
+        {
+          "character": "두부",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 4,
+              "all": 10
+            },
+            {
+              "category": "강아지 옷",
+              "recommended": 5,
+              "all": 11
+            },
+            {
+              "category": "신발",
+              "recommended": 3,
+              "all": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "season": "여름",
+      "characters": [
+        {
+          "character": "하루",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 3,
+              "all": 10
+            },
+            {
+              "category": "상의",
+              "recommended": 4,
+              "all": 16
+            },
+            {
+              "category": "하의",
+              "recommended": 2,
+              "all": 8
+            },
+            {
+              "category": "신발",
+              "recommended": 3,
+              "all": 9
+            }
+          ]
+        },
+        {
+          "character": "보미",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 4,
+              "all": 15
+            },
+            {
+              "category": "상의",
+              "recommended": 6,
+              "all": 21
+            },
+            {
+              "category": "하의",
+              "recommended": 3,
+              "all": 12
+            },
+            {
+              "category": "신발",
+              "recommended": 3,
+              "all": 9
+            }
+          ]
+        },
+        {
+          "character": "두부",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 2,
+              "all": 10
+            },
+            {
+              "category": "강아지 옷",
+              "recommended": 2,
+              "all": 11
+            },
+            {
+              "category": "신발",
+              "recommended": 2,
+              "all": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "season": "가을",
+      "characters": [
+        {
+          "character": "하루",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 2,
+              "all": 10
+            },
+            {
+              "category": "상의",
+              "recommended": 6,
+              "all": 16
+            },
+            {
+              "category": "하의",
+              "recommended": 4,
+              "all": 8
+            },
+            {
+              "category": "신발",
+              "recommended": 2,
+              "all": 9
+            }
+          ]
+        },
+        {
+          "character": "보미",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 3,
+              "all": 15
+            },
+            {
+              "category": "상의",
+              "recommended": 7,
+              "all": 21
+            },
+            {
+              "category": "하의",
+              "recommended": 4,
+              "all": 12
+            },
+            {
+              "category": "신발",
+              "recommended": 2,
+              "all": 9
+            }
+          ]
+        },
+        {
+          "character": "두부",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 2,
+              "all": 10
+            },
+            {
+              "category": "강아지 옷",
+              "recommended": 2,
+              "all": 11
+            },
+            {
+              "category": "신발",
+              "recommended": 2,
+              "all": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "season": "겨울",
+      "characters": [
+        {
+          "character": "하루",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 2,
+              "all": 10
+            },
+            {
+              "category": "상의",
+              "recommended": 4,
+              "all": 16
+            },
+            {
+              "category": "하의",
+              "recommended": 3,
+              "all": 8
+            },
+            {
+              "category": "신발",
+              "recommended": 2,
+              "all": 9
+            }
+          ]
+        },
+        {
+          "character": "보미",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 3,
+              "all": 15
+            },
+            {
+              "category": "상의",
+              "recommended": 5,
+              "all": 21
+            },
+            {
+              "category": "하의",
+              "recommended": 3,
+              "all": 12
+            },
+            {
+              "category": "신발",
+              "recommended": 2,
+              "all": 9
+            }
+          ]
+        },
+        {
+          "character": "두부",
+          "categories": [
+            {
+              "category": "모자·안경",
+              "recommended": 2,
+              "all": 10
+            },
+            {
+              "category": "강아지 옷",
+              "recommended": 2,
+              "all": 11
+            },
+            {
+              "category": "신발",
+              "recommended": 2,
+              "all": 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
