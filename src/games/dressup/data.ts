@@ -1,8 +1,8 @@
 import {fittingRigs} from './rig'
 export type CharacterId = 'boy' | 'girl' | 'dog'
 export type SeasonId = 'spring' | 'summer' | 'autumn' | 'winter'
-export type Category = 'head' | 'top' | 'bottom' | 'shoes'
-export type Slot = 'headwear' | 'eyewear' | 'top' | 'bottom' | 'onepiece' | 'dogOutfit' | 'footwear'
+export type Category = 'head' | 'top' | 'bottom' | 'shoes' | 'outfit'
+export type Slot = 'headwear' | 'eyewear' | 'top' | 'bottom' | 'onepiece' | 'footwear' | 'dogHeadwear' | 'dogEyewear' | 'dogOutfit' | 'dogFootwear'
 export type Outfit = Partial<Record<Slot,string>>
 export type Item = {
  itemId:string; name:string; season:SeasonId[]; category:Category; compatibleCharacters:CharacterId[];
@@ -19,9 +19,11 @@ export const seasons:{id:SeasonId;name:string;title:string;ready:boolean;color:s
  {id:'winter',name:'겨울',title:'포근한 눈꽃',ready:false,color:'#e2e7f2'},
 ]
 export const categories:{id:Category;name:string;short:string}[]=[{id:'head',name:'모자·안경',short:'모자·안경'},{id:'top',name:'상의·세트',short:'상의'},{id:'bottom',name:'하의',short:'하의'},{id:'shoes',name:'신발',short:'신발'}]
+export const dogCategories:typeof categories=[{id:'head',name:'모자·안경',short:'모자·안경'},{id:'outfit',name:'강아지 옷',short:'강아지 옷'},{id:'shoes',name:'신발',short:'신발'}]
+export const categoriesFor=(character:CharacterId)=>character==='dog'?dogCategories:categories
 const human:CharacterId[]=['boy','girl']
 function item(itemId:string,name:string,category:Category,equipSlot:Slot,image:string,color:string,accent:string,compatibleCharacters:CharacterId[]=human):Item{
- return {itemId,name,season:['spring'],category,compatibleCharacters,equipSlot,image,color,accent,anchorPosition:Object.fromEntries(compatibleCharacters.map(id=>[id,fittingRigs[id].anchors[equipSlot]])),scale:1,layerOrder:equipSlot==='eyewear'?80:equipSlot==='headwear'?90:equipSlot==='footwear'?60:equipSlot==='bottom'?20:30,conflictsWith:equipSlot==='onepiece'||equipSlot==='dogOutfit'?['top','bottom']:equipSlot==='top'||equipSlot==='bottom'?['onepiece','dogOutfit']:[]}
+ return {itemId,name,season:['spring'],category,compatibleCharacters,equipSlot,image,color,accent,anchorPosition:Object.fromEntries(compatibleCharacters.map(id=>[id,fittingRigs[id].anchors[equipSlot]])),scale:1,layerOrder:['eyewear','dogEyewear'].includes(equipSlot)?80:['headwear','dogHeadwear'].includes(equipSlot)?90:['footwear','dogFootwear'].includes(equipSlot)?60:equipSlot==='bottom'?20:30,conflictsWith:equipSlot==='onepiece'?['top','bottom']:equipSlot==='top'||equipSlot==='bottom'?['onepiece']:[]}
 }
 export const items:Item[]=[
  item('mint-cap','민트 야구모자','head','headwear','cap','#92beb2','#e6f0d6'),
@@ -46,20 +48,18 @@ export const items:Item[]=[
  item('cream-sneakers','크림 운동화','shoes','footwear','sneakers','#eee7d5','#89aba0'),
  item('yellow-boots','노란 장화','shoes','footwear','boots','#dec080','#f4db9d'),
  item('rose-sandals','산책 샌들','shoes','footwear','sandals','#c89088','#f1d0b4'),
- item('dog-cap','두부의 야구모자','head','headwear','cap','#a2bca1','#e9edce',['dog']),
- item('dog-beret','두부의 베레모','head','headwear','beret','#c89394','#f3c7bd',['dog']),
- item('dog-glasses','두부의 선글라스','head','eyewear','glasses','#7e91a2','#bdd8df',['dog']),
- item('dog-bow','두부의 리본','head','headwear','bow','#d3a2b0','#f7d6cc',['dog']),
- item('dog-tee','산책 티셔츠','top','top','tee','#adbfab','#f0e5cb',['dog']),
- item('dog-vest','포켓 조끼','top','top','vest','#b5a3bd','#e6c9d3',['dog']),
- item('dog-knit','꽃무늬 니트','top','top','knit','#e4b4a0','#fff0d0',['dog']),
- item('dog-harness','튼튼한 하네스','top','top','harness','#a0bac7','#ede8cd',['dog']),
- item('dog-shorts','두부 반바지','bottom','bottom','shorts','#a4b6c6','#e1e4dd',['dog']),
- item('dog-allinone','데이지 올인원','bottom','dogOutfit','allinone','#c5b4d1','#f5e7b8',['dog']),
- item('dog-waist','허리 리본 장식','bottom','bottom','waist','#c68c95','#f0c3b9',['dog']),
- item('dog-sneakers','네 발 운동화','shoes','footwear','sneakers','#e4ddc5','#a4b8a2',['dog']),
- item('dog-boots','네 발 장화','shoes','footwear','boots','#d9b576','#f4dca7',['dog']),
- item('dog-socks','네 발 양말','shoes','footwear','socks','#bcaac7','#f5e0da',['dog']),
+ item('dog-cap','두부의 야구모자','head','dogHeadwear','cap','#a2bca1','#e9edce',['dog']),
+ item('dog-beret','두부의 베레모','head','dogHeadwear','beret','#c89394','#f3c7bd',['dog']),
+ item('dog-glasses','두부의 선글라스','head','dogEyewear','glasses','#7e91a2','#bdd8df',['dog']),
+ item('dog-bow','두부의 리본','head','dogHeadwear','bow','#d3a2b0','#f7d6cc',['dog']),
+ item('dog-tee','산책 티셔츠','outfit','dogOutfit','tee','#adbfab','#f0e5cb',['dog']),
+ item('dog-vest','포켓 조끼','outfit','dogOutfit','vest','#b5a3bd','#e6c9d3',['dog']),
+ item('dog-knit','꽃무늬 니트','outfit','dogOutfit','knit','#e4b4a0','#fff0d0',['dog']),
+ item('dog-harness','튼튼한 하네스','outfit','dogOutfit','harness','#a0bac7','#ede8cd',['dog']),
+ item('dog-allinone','데이지 올인원','outfit','dogOutfit','allinone','#c5b4d1','#f5e7b8',['dog']),
+ item('dog-sneakers','네 발 운동화','shoes','dogFootwear','sneakers','#e4ddc5','#a4b8a2',['dog']),
+ item('dog-boots','네 발 장화','shoes','dogFootwear','boots','#d9b576','#f4dca7',['dog']),
+ item('dog-socks','네 발 양말','shoes','dogFootwear','socks','#bcaac7','#f5e0da',['dog']),
 ]
 export const itemById=Object.fromEntries(items.map(i=>[i.itemId,i])) as Record<string,Item>
 export const emptyOutfits=():Record<CharacterId,Outfit>=>({boy:{},girl:{},dog:{}})

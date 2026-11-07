@@ -1,4 +1,5 @@
 import {useId} from 'react'
+import {DogCharacter,DogItemLayer} from './DogArtwork'
 import {itemById,type Item,type CharacterId,type Outfit,type Slot} from './data'
 import {fittingRigs,layerPlan,type Foot} from './rig'
 
@@ -90,37 +91,6 @@ function HumanOnepiece({kind,c,a,id}:{kind:string;c:string;a:string;id:string}){
  </>}
  </g>}
 
-const dogCoat='M-63-15Q-41-25-19-12Q31-17 69 1Q91 16 82 49L76 60Q14 75-48 48L-57 69-81 61-85 30Q-83 3-63-15Z'
-function DogGarment({item,id}:{item:Item;id:string}){
- const {image:kind,color:c,accent:a,equipSlot:slot}=item,full=slot==='dogOutfit'
- const silhouette=kind==='vest'?'M-63-15Q-41-25-19-12Q31-17 69 1Q91 16 82 49L76 60Q14 75-48 48L-48 37Q-27 31-40 11L-61 4Z':dogCoat
- if(slot==='bottom')return kind==='waist'?<>
-  <path d="M-32-20Q-6-30 23-16L29-6Q0 2-29-7Z" fill={c}/><g transform="translate(4 -10) rotate(-10) scale(.46)"><Bow c={c} a={a}/></g>
- </>:<>
-  <path d="M-32-22Q1-32 28-13L29 19 14 32-3 29-12 10-23 25-39 19Z" fill={`url(#${id}fabric)`}/>
-  <path d="M-30-17Q0-25 24-10M-35 14-24 19M-1 23 12 27" fill="none" stroke={a} strokeWidth="4"/>
-  <path d="M5-10 5 9Q14 15 21 6V-8" fill="none" stroke={a} strokeWidth="1.5"/>
- </>
- if(kind==='harness')return <g data-dog-tailoring="harness">
-  <path d="M-67-12-56-17-29 51-42 55ZM31-13 45-8 44 60 29 64Z" fill={c}/>
-  <path d="M-58 8Q-10 37 40 25L40 40Q-11 49-53 25Z" fill={a}/>
-  <path d="M-57-5Q-14 18 39 5" fill="none" stroke={c} strokeWidth="11"/>
-  <rect x="-21" y="13" width="22" height="17" rx="4" fill={c}/><circle cx="-10" cy="21" r="5" fill={a}/><path d="M-8-9v-6" stroke="#9d9e90" strokeWidth="5"/>
- </g>
- return <g data-dog-tailoring={full?'all-in-one':kind}>
-  {full&&fittingRigs.dog.feet.map((foot,i)=>{const x=foot.x-190,y=foot.y-350,far=foot.depth==='far';return <path key={i} d={`M${x-10} ${far?45:46}Q${x-13} ${y-35} ${x-10} ${y-19}Q${x} ${y-12} ${x+11} ${y-19}L${x+12} ${far?47:43}Z`} fill={c}/>})}
-  <path d={silhouette} fill={`url(#${id}fabric)`}/><defs><clipPath id={id+'dogcoat'}><path d={silhouette}/></clipPath></defs>
-  <g clipPath={`url(#${id}dogcoat)`}>
-   <path d="M-69-5Q-21-3 23-3Q51-2 71 13" stroke="#fff6dd" strokeWidth="3" opacity=".45" fill="none"/>
-   {kind==='tee'&&[16,35,54].map(y=><path key={y} d={`M-91 ${y}Q-14 ${y+17} 89 ${y+4}`} fill="none" stroke={a} strokeWidth="7"/>)}
-   {kind==='knit'&&[-34,-18,-2,14,30,46,62].map(x=><path key={x} d={`M${x} 4q-6 24 1 52`} fill="none" stroke={a} strokeWidth="1.3" opacity=".7"/>)}
-   {(kind==='knit'||full)&&[[-27,17],[22,37],[53,13]].map(([x,y])=><Flower key={x} x={x} y={y} size={full?.65:.75} color={a}/>)}
-   {kind==='vest'&&<><path d="M-43-13Q-21 12-40 52" fill="none" stroke={a} strokeWidth="4"/><path d="M21 16h26v21q-13 9-26 0Z" fill={a}/><path d="M24 20h20" stroke={c}/>{[10,26,42].map(y=><circle key={y} cx="-35" cy={y} r="2.5" fill={a} stroke="none"/>)}</>}
-  </g>
-  <path d="M-63-13Q-54-1-45 4M-43 48Q17 69 77 56" fill="none" stroke={a} strokeWidth={kind==='knit'?7:4}/>
-  {kind==='vest'?<path d="M-58 6Q-33 22-46 36" fill="none" stroke={a} strokeWidth="4"/>:<><path d="M-77 56-59 63" stroke={a} strokeWidth={kind==='knit'?7:4}/><path d="M-60 17Q-69 35-66 50" fill="none" stroke="#80675d" strokeWidth="1.5" opacity=".5"/></>}
- </g>
-}
 function Shoe({foot,kind,c,a,id}:{foot:Foot;kind:string;c:string;a:string;id:string}){return <g transform={`translate(${foot.x} ${foot.y}) scale(${foot.facing*foot.width} ${foot.width})`}>
  {kind==='boots'||kind==='socks'?<>
   <path d="M-12-38Q0-34 12-38L13-8Q28-5 28 7Q26 18-17 14L-17-6Z" fill={`url(#${id}fabric)`}/><path d="M-13-37Q0-32 13-37V-29Q0-24-14-29Z" fill={a}/>
@@ -137,11 +107,11 @@ function Shoe({foot,kind,c,a,id}:{foot:Foot;kind:string;c:string;a:string;id:str
 /** A single fitted asset is shared by thumbnails, previews, the doll and PNG export. */
 export function ItemLayer({item,character,preview=false}:{item:Item;character:CharacterId;preview?:boolean}){
  const id=useId().replace(/:/g,''),anchor=item.anchorPosition[character],dog=character==='dog',c=item.color,a=item.accent
+ if(dog)return <DogItemLayer item={item} preview={preview}/>
  if(!anchor)return null
- const headFit=dog&&item.equipSlot==='headwear'?(item.image==='bow'?'scale(.84)':'scale(.86 .56)'):dog&&item.equipSlot==='eyewear'?'scale(.82)':undefined
- return <g data-equipped-item={item.itemId} data-slot={item.equipSlot} data-fit-rig={dog?'dog-side':'doll'} className={preview?undefined:'dress-fitted-item'} transform={`translate(${anchor.x} ${anchor.y}) scale(${item.scale})`} stroke="#806658" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+ return <g data-equipped-item={item.itemId} data-slot={item.equipSlot} data-fit-rig="doll" className={preview?undefined:'dress-fitted-item'} transform={`translate(${anchor.x} ${anchor.y}) scale(${item.scale})`} stroke="#806658" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
   <FabricDefs id={id} c={c} a={a}/>
-  {item.equipSlot==='headwear'?<g transform={headFit}><Headwear kind={item.image} c={c} a={a} id={id}/></g>:item.equipSlot==='eyewear'?<g transform={headFit}><Eyewear c={c} a={a}/></g>:item.equipSlot==='footwear'?<g>{fittingRigs[character].feet.map((foot,i)=><g key={i} data-shoe={i} data-foot-depth={foot.depth}><Shoe foot={{...foot,x:foot.x-anchor.x,y:foot.y-anchor.y}} kind={item.image} c={c} a={a} id={id}/></g>)}</g>:dog?<DogGarment item={item} id={id}/>:item.equipSlot==='onepiece'?<HumanOnepiece kind={item.image} c={c} a={a} id={id}/>:item.equipSlot==='bottom'?<HumanBottom kind={item.image} c={c} a={a} id={id}/>:<HumanTop kind={item.image} c={c} a={a} id={id}/>}
+  {item.equipSlot==='headwear'?<g ><Headwear kind={item.image} c={c} a={a} id={id}/></g>:item.equipSlot==='eyewear'?<g ><Eyewear c={c} a={a}/></g>:item.equipSlot==='footwear'?<g>{fittingRigs[character].feet.map((foot,i)=><g key={i} data-shoe={i} data-foot-depth={foot.depth}><Shoe foot={{...foot,x:foot.x-anchor.x,y:foot.y-anchor.y}} kind={item.image} c={c} a={a} id={id}/></g>)}</g>:item.equipSlot==='onepiece'?<HumanOnepiece kind={item.image} c={c} a={a} id={id}/>:item.equipSlot==='bottom'?<HumanBottom kind={item.image} c={c} a={a} id={id}/>:<HumanTop kind={item.image} c={c} a={a} id={id}/>}
  </g>
 }
 export function ItemPicture({item,character}:{item:Item;character:CharacterId}){return <svg viewBox={fittingRigs[character].preview[item.equipSlot]} className="dress-item-picture" aria-hidden="true"><ItemLayer item={item} character={character} preview/></svg>}
@@ -162,34 +132,15 @@ function HumanHead({girl,id,covered}:{girl:boolean;id:string;covered:boolean}){
   <path d="M160 149q-5 8 1 9" fill="none" stroke="#cd987e" strokeWidth="1.7"/><path d="M149 174Q160 183 172 174" fill="none" stroke="#a26b58" strokeWidth="2.2"/>
  </g>
 }
-function DogHead({id}:{id:string}){const fur=`url(#${id}fur)`;return <g data-body-part="head">
- <path d="M70 247Q45 239 48 278Q42 310 64 329Q80 330 85 308M149 245Q177 239 176 279Q184 310 162 330Q144 327 139 309" fill="#bc9369"/>
- <path d="M59 266Q50 303 66 315M164 264Q176 299 160 315" stroke="#d5ad7e" strokeWidth="6" fill="none"/>
- <path d="M57 285Q55 244 89 236Q107 224 124 235Q160 238 164 276Q170 311 149 331Q127 351 103 342Q68 343 60 316Q52 304 57 285Z" fill={fur}/>
- <path d="M99 237Q89 254 95 269Q107 278 116 257Q119 243 115 235" fill="#e5c396" stroke="none"/>
- <path d="M81 277q9-5 17-2M121 275q9-4 18 1" fill="none" stroke="#9e7d5c" strokeWidth="1.7"/>
- <g stroke="none"><ellipse data-eye="left" cx="91" cy="291" rx="6" ry="8" fill="#5c4a3e"/><ellipse data-eye="right" cx="129" cy="291" rx="6" ry="8" fill="#5c4a3e"/><circle cx="93" cy="288" r="2.2" fill="#fffaf0"/><circle cx="131" cy="288" r="2.2" fill="#fffaf0"/><ellipse cx="77" cy="310" rx="10" ry="6" fill="#e5ac96"/><ellipse cx="145" cy="309" rx="10" ry="6" fill="#e5ac96"/><ellipse cx="110" cy="320" rx="26" ry="19" fill="#fff1d7"/></g>
- <path d="M100 307Q110 302 120 307Q122 315 110 319Q99 315 100 307Z" fill="#77594a"/>
- <path d="M110 319v7M98 324Q103 333 110 326Q117 333 124 323" fill="none" strokeWidth="1.8"/><path d="M106 331Q111 342 116 330" fill="#d48f8f" strokeWidth="1.3"/>
- </g>}
-
 export function CharacterArt({character,outfit={}}:{character:CharacterId;outfit?:Outfit}){
  const id=useId().replace(/:/g,''),rig=fittingRigs[character],plan=layerPlan(character,outfit),girl=character==='girl',dog=character==='dog'
- const skin=`url(#${id}skin)`,hair=`url(#${id}hair)`,fur=`url(#${id}fur)`
+ if(dog)return <DogCharacter outfit={outfit}/>
+ const skin=`url(#${id}skin)`,hair=`url(#${id}hair)`
  const worn=(slots:Slot[])=>Object.values(outfit).map(key=>itemById[key!]).filter((item):item is Item=>!!item&&slots.includes(item.equipSlot)).sort((a,b)=>a.layerOrder-b.layerOrder).map(item=><ItemLayer key={item.itemId} item={item} character={character}/>)
  const covered=!!outfit.headwear&&['cap','bucket','straw','beret'].includes(itemById[outfit.headwear]?.image)
- return <g className="dress-character-art" data-body-rig={dog?'dog-side':'doll'} stroke="#795f50" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+ return <g className="dress-character-art" data-body-rig="doll" stroke="#795f50" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
  <defs><radialGradient id={id+'skin'} cx=".4" cy=".3"><stop stopColor="#ffdfbf"/><stop offset="1" stopColor="#edbc9b"/></radialGradient><linearGradient id={id+'hair'} x2=".8" y2="1"><stop stopColor={girl?'#a47558':'#96724f'}/><stop offset="1" stopColor="#654b3c"/></linearGradient><radialGradient id={id+'fur'} cx=".3" cy=".3"><stop stopColor="#fff4d7"/><stop offset="1" stopColor="#e0c08f"/></radialGradient></defs>
- {dog?<>
-  <g data-body-part="paw-shadows" stroke="none" fill="#909473" opacity=".16">{rig.feet.map((foot,i)=><ellipse key={i} cx={foot.x+3} cy={foot.y+13} rx={foot.width*21} ry={foot.width*4}/>)}</g>
-  <path data-body-part="tail" d="M267 361Q295 351 291 332Q286 317 280 328Q288 342 266 344" fill={fur}/>
-  {rig.feet.filter(f=>f.depth==='far').map((foot,i)=><g key={i} data-body-part="far-leg"><path d={`M${foot.x-9} 386Q${foot.x-11} 414 ${foot.x-9} ${foot.y-5}Q${foot.x} ${foot.y+3} ${foot.x+9} ${foot.y-5}L${foot.x+10} 385Z`} fill="#dcc094"/>{plan.baseFootwear&&<ellipse cx={foot.x} cy={foot.y} rx="12" ry="7" fill="#e4cda5"/>}</g>)}
-  <path data-body-part="torso" d="M108 362Q129 338 177 344Q230 333 268 355Q289 371 279 399Q273 420 237 422L150 418Q115 419 101 392Q92 373 108 362Z" fill={fur}/>
-  <path data-body-part="neck" d="M99 366Q91 338 103 318L139 316Q160 343 147 377" fill={fur}/>
-  {rig.feet.filter(f=>f.depth==='near').map((foot,i)=><g key={i} data-body-part="near-leg"><path d={`M${foot.x-10} ${i?400:376}Q${foot.x-17} 428 ${foot.x-12} ${foot.y-6}Q${foot.x} ${foot.y+3} ${foot.x+12} ${foot.y-6}L${foot.x+12} ${i?397:374}Z`} fill={fur}/>{plan.baseFootwear&&<path d={`M${foot.x-13} ${foot.y-8}Q${foot.x+7} ${foot.y-14} ${foot.x+15} ${foot.y-2}Q${foot.x+19} ${foot.y+12} ${foot.x-12} ${foot.y+10}Q${foot.x-19} ${foot.y+4} ${foot.x-13} ${foot.y-8}Z`} fill={fur}/>}</g>)}
-  <path d="M163 354Q211 347 249 362M149 409Q182 419 213 414" fill="none" stroke="#fff7e0" strokeWidth="3" opacity=".55"/>
-  {worn(['bottom','top','dogOutfit'])}<DogHead id={id}/>{worn(['footwear','eyewear','headwear'])}
- </>:<>
+ <>
   {girl&&<g data-body-part="back-hair"><path d="M105 108Q85 164 93 229Q104 247 119 226L201 226Q219 247 230 225Q240 170 215 108Z" fill={hair}/><path d="M102 158Q93 194 103 226M220 159Q231 194 221 225" fill="none" stroke="#b58b68" strokeWidth="4" opacity=".65"/></g>}
   <path data-body-part="neck" d="M140 193V223Q160 236 180 223V193" fill={skin}/>
   <path data-body-part="torso" d="M123 230Q160 212 197 230L198 326Q160 343 122 326Z" fill={skin}/>
@@ -206,6 +157,6 @@ export function CharacterArt({character,outfit={}}:{character:CharacterId;outfit
   <g data-body-part="hands"><path d="M97 339Q88 346 96 358Q103 365 113 358L117 343M223 339Q232 346 224 358Q217 365 207 358L203 343" fill={skin}/><path d="m100 350 0 5M220 350v5" stroke="#d7a88c" strokeWidth="1.3"/></g>
   {plan.baseFootwear&&<g data-base-footwear="street-shoes"><FabricDefs id={id+'baseshoes'} c="#e7d5b9" a="#f2e5cc"/>{rig.feet.map((foot,i)=><Shoe key={i} foot={foot} kind="sneakers" c="#e7d5b9" a="#f2e5cc" id={id+'baseshoes'}/>)}</g>}
   {worn(['footwear'])}<HumanHead girl={girl} id={id} covered={covered}/>{worn(['eyewear','headwear'])}
- </>}
+ </>
  </g>
 }
