@@ -60,3 +60,7 @@ GitHub Pages 준비는 [다음 단계 안내](docs/GITHUB-SETUP.md)를 참고하
 강아지 전용 3개 탭과 4개 슬롯, 새 자세·옷 5종·저장 변환은 [강아지 코디 개선 안내](docs/dog-refinement/README.md)를 참고하세요.
 
 4계절 배경·추천 옷장, 벌어진 팔과 전용 소매, 정장·드레스·핸드백, 흰 말티즈/겨울 회백색 적용은 [사계절 완성 범위와 검증 자료](docs/dressup-seasons/README.md)를 참고하세요.
+
+## 별빛 벽돌깨기
+
+공식 참고 이미지를 분석한 10단계 벽돌깨기입니다. 황금별 즉시 완료, 터치 드래그, 일시정지, 단계별 이어하기를 제공합니다. [단계별 캡처·시안 비교·조작과 검증 안내](docs/brick-breaker/README.md)를 참고하세요. 작업 브랜치는 `feat/brick-breaker-ten-stages`이며 자동 병합·배포는 하지 않습니다.

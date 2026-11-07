@@ -1,0 +1,72 @@
+[
+  {
+    "stage": 1,
+    "seconds": 23.9,
+    "misses": 0,
+    "remaining": 20,
+    "reason": "gold"
+  },
+  {
+    "stage": 2,
+    "seconds": 85,
+    "misses": 0,
+    "remaining": 10,
+    "reason": "gold"
+  },
+  {
+    "stage": 3,
+    "seconds": 46.7,
+    "misses": 0,
+    "remaining": 10,
+    "reason": "gold"
+  },
+  {
+    "stage": 4,
+    "seconds": 16.5,
+    "misses": 0,
+    "remaining": 23,
+    "reason": "gold"
+  },
+  {
+    "stage": 5,
+    "seconds": 17.4,
+    "misses": 0,
+    "remaining": 62,
+    "reason": "gold"
+  },
+  {
+    "stage": 6,
+    "seconds": 7.1,
+    "misses": 0,
+    "remaining": 75,
+    "reason": "gold"
+  },
+  {
+    "stage": 7,
+    "seconds": 15.9,
+    "misses": 0,
+    "remaining": 18,
+    "reason": "gold"
+  },
+  {
+    "stage": 8,
+    "seconds": 20.6,
+    "misses": 0,
+    "remaining": 31,
+    "reason": "gold"
+  },
+  {
+    "stage": 9,
+    "seconds": 16.4,
+    "misses": 0,
+    "remaining": 91,
+    "reason": "gold"
+  },
+  {
+    "stage": 10,
+    "seconds": 25.2,
+    "misses": 0,
+    "remaining": 54,
+    "reason": "gold"
+  }
+]
