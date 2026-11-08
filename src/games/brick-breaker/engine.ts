@@ -44,9 +44,11 @@ export function step(e:Engine,dt:number){
   if(!hit){ball.x+=vx*left;ball.y+=vy*left;left=0;break}
   ball.x+=vx*hit.t;ball.y+=vy*hit.t;left-=hit.t
   if(hit.kind==='brick'&&hit.brick){const brick=hit.brick;e.bricks=e.bricks.filter(b=>b.id!==brick.id);e.removed.push(brick.id);e.events.push(brick.gold?'gold':'brick');for(let i=0;i<(brick.gold?18:6);i++){const a=i*2.399963;e.particles.push({x:brick.x+brick.w/2,y:brick.y+brick.h/2,vx:Math.cos(a)*(70+i*3),vy:Math.sin(a)*80-30,life:brick.gold?.9:.45,color:brick.color})}e.particles=e.particles.slice(-100);if(brick.gold||e.bricks.length===0){e.phase='cleared';e.clearReason=brick.gold?'gold':'all';break}}
-  if(hit.kind==='paddle'){const offset=Math.max(-1,Math.min(1,(ball.x-e.paddle.x)/(e.paddle.w/2))),angle=offset*.94;ball.vx=Math.sin(angle)*e.speed;ball.vy=-Math.cos(angle)*e.speed;ball.y=e.paddle.y-r-.2;e.events.push('paddle')}
+  // The paddle is a horizontal reflector: preserve incoming speed and horizontal
+  // direction at every contact position, including its forgiving rounded ends.
+  if(hit.kind==='paddle'){ball.vy=-ball.vy;ball.y=e.paddle.y-r-.2;e.events.push('paddle')}
   else{const dot=ball.vx*hit.nx+ball.vy*hit.ny;ball.vx-=2*dot*hit.nx;ball.vy-=2*dot*hit.ny;ball.x+=hit.nx*.05;ball.y+=hit.ny*.05}
-  safeDirection(e)
+  if(hit.kind!=='paddle')safeDirection(e)
  }
  e.trail.push({x:e.ball.x,y:e.ball.y});if(e.trail.length>26)e.trail.shift()
  if(e.ball.y-e.ball.r>e.height){e.misses++;e.events.push('miss');e.phase='ready';e.ball.vx=0;e.ball.vy=0;e.trail=[];movePaddle(e,e.paddle.x)}
