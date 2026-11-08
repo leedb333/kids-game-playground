@@ -34,7 +34,7 @@ for(const [name,width,height] of [['tablet',1280,800],['tablet-16x9',1280,720],[
 test('dog garment closeups show all five fitted silhouettes plus the natural base',async({page})=>{
  await enter(page);await page.locator('[data-character-target=dog]').click();await page.getByRole('tab',{name:'강아지 옷'}).click();const frames:{name:string;svg:string}[]=[]
  for(const item of [null,...availableItems('dog','outfit')]){
-  while(await page.locator('.dress-wearing button').count())await page.locator('.dress-wearing button').first().click()
+  while(await page.locator('.dress-item[aria-pressed=true]').count())await page.locator('.dress-item[aria-pressed=true]').first().press('Enter')
   if(item)await page.getByRole('button',{name:item.name+' 입히기',exact:true}).press('Enter')
   const svg=await page.locator('.dress-canvas [data-character-art=dog]>.dress-character-art').evaluate(g=>{const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 220 320 300');svg.setAttribute('width','640');svg.setAttribute('height','600');svg.append(g.cloneNode(true));return new XMLSerializer().serializeToString(svg)})
   frames.push({name:item?.name??'두부 · 기본 자세',svg})

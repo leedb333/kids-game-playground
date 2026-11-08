@@ -30,7 +30,7 @@ test('actual drag, return, incompatibility, replacement and simultaneous head sl
  await drag(page,'peach-bucket','boy');await expect(boy.locator('[data-equipped-item=mint-cap]')).toHaveCount(0);await expect(boy.locator('[data-equipped-item=peach-bucket]')).toHaveCount(1)
  await drag(page,'round-glasses','boy');await expect(boy.locator('[data-slot=headwear]')).toHaveCount(1);await expect(boy.locator('[data-slot=eyewear]')).toHaveCount(1)
  await drag(page,'mint-cap','dog');await expect(page.locator('[data-character-art=dog]').first().locator('[data-equipped-item]')).toHaveCount(0);await expect(page.locator('.dress-game [role=status]')).toContainText('두부에게 맞는 옷');await drag(page,'berry-beret','outside');await expect(boy.locator('[data-slot=headwear]')).toHaveAttribute('data-equipped-item','peach-bucket');await expect(page.locator('.dress-drag-ghost')).toHaveCount(0)
- await page.getByRole('button',{name:'복숭아 벙거지 벗기기'}).click();await expect(boy.locator('[data-slot=headwear]')).toHaveCount(0);await expect(boy.locator('[data-slot=eyewear]')).toHaveCount(1);await page.getByRole('button',{name:'되돌리기',exact:true}).click();await expect(boy.locator('[data-slot=headwear]')).toHaveCount(1)
+ await page.getByRole('button',{name:'복숭아 벙거지 입히기',exact:true}).press('Enter');await expect(boy.locator('[data-slot=headwear]')).toHaveCount(0);await expect(boy.locator('[data-slot=eyewear]')).toHaveCount(1);await page.getByRole('button',{name:'되돌리기',exact:true}).click();await expect(boy.locator('[data-slot=headwear]')).toHaveCount(1)
 })
 
 test('dress and two-piece fitting, separate dog garments, all-in-one conflict and four shoes',async({page})=>{
@@ -79,8 +79,8 @@ test('every representative garment fits its canvas; generate fitting review shee
  const {writeFile}=await import('node:fs/promises')
  for(const character of characters){
   await page.locator(`[data-character-target=${character.id}]`).click();const frames:{name:string;svg:string}[]=[]
-  for(const category of categoriesFor(character.id)){await tab(page,category.short);for(const item of availableItems(character.id,category.id)){
-   while(await page.locator('.dress-wearing button').count())await page.locator('.dress-wearing button').first().click()
+  for(const category of categoriesFor(character.id)){await page.getByRole('button',{name:character.name+' 초기화',exact:true}).click();await page.getByRole('button',{name:'초기화하기',exact:true}).click();await tab(page,category.short);for(const item of availableItems(character.id,category.id)){
+   while(await page.locator('.dress-item[aria-pressed=true]').count())await page.locator('.dress-item[aria-pressed=true]').first().press('Enter')
    await page.getByRole('button',{name:item.name+' 입히기',exact:true}).press('Enter')
    const garment=page.locator(`.dress-canvas [data-character-art=${character.id}] [data-equipped-item="${item.itemId}"]`),anchor=item.anchorPosition[character.id]!
    await expect(garment).toHaveAttribute('transform',`translate(${anchor.x} ${anchor.y}) scale(1)`)
