@@ -1,72 +1,72 @@
 [
   {
     "stage": 1,
-    "seconds": 141,
+    "seconds": 42,
     "misses": 0,
-    "remaining": 1,
+    "remaining": 18,
     "reason": "gold"
   },
   {
     "stage": 2,
-    "seconds": 12,
+    "seconds": 45.7,
     "misses": 0,
-    "remaining": 30,
+    "remaining": 16,
     "reason": "gold"
   },
   {
     "stage": 3,
-    "seconds": 62.7,
+    "seconds": 13.9,
     "misses": 0,
-    "remaining": 25,
+    "remaining": 35,
     "reason": "gold"
   },
   {
     "stage": 4,
-    "seconds": 44.6,
-    "misses": 0,
-    "remaining": 14,
+    "seconds": 57.7,
+    "misses": 1,
+    "remaining": 6,
     "reason": "gold"
   },
   {
     "stage": 5,
-    "seconds": 129.5,
+    "seconds": 1.6,
     "misses": 0,
-    "remaining": 27,
+    "remaining": 66,
     "reason": "gold"
   },
   {
     "stage": 6,
-    "seconds": 39.8,
+    "seconds": 1.6,
     "misses": 0,
-    "remaining": 63,
+    "remaining": 76,
     "reason": "gold"
   },
   {
     "stage": 7,
-    "seconds": 55.9,
+    "seconds": 10.1,
     "misses": 0,
-    "remaining": 5,
+    "remaining": 18,
     "reason": "gold"
   },
   {
     "stage": 8,
-    "seconds": 28.5,
+    "seconds": 28.8,
     "misses": 0,
-    "remaining": 42,
+    "remaining": 34,
     "reason": "gold"
   },
   {
     "stage": 9,
-    "seconds": 177.4,
+    "seconds": 25.8,
     "misses": 0,
-    "remaining": 29,
+    "remaining": 79,
     "reason": "gold"
   },
   {
     "stage": 10,
-    "seconds": 66.2,
+    "seconds": 23.4,
     "misses": 0,
-    "remaining": 31,
+    "remaining": 51,
     "reason": "gold"
   }
 ]

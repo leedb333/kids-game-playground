@@ -27,7 +27,7 @@ export default function BrickBreaker(){
  useEffect(()=>{
   const element=host.current;if(!element)return
   const observer=new ResizeObserver(([entry])=>{const w=entry.contentRect.width,h=entry.contentRect.height;if(w<1||h<1)return;const height=1000*h/w;size.current={w,h,dpr:Math.min(window.devicePixelRatio||1,2)};const node=canvas.current;if(node){node.width=Math.round(w*size.current.dpr);node.height=Math.round(h*size.current.dpr)}
-   const old=engine.current,next=createEngine(stages[old.stage-1],height,old.removed);next.misses=old.misses;if(old.phase==='playing'||old.phase==='paused'){next.phase='paused';next.pausedFrom='ready'}else if(old.phase==='cleared'){next.phase='cleared';next.clearReason=old.clearReason}engine.current=next;setWorldHeight(next.height);publish()
+   const old=engine.current,next=createEngine(stages[old.stage-1],height,old.removed,old.playSeconds,old.balls.length);next.misses=old.misses;if(old.phase==='playing'||old.phase==='paused'){next.phase='paused';next.pausedFrom='ready'}else if(old.phase==='cleared'){next.phase='cleared';next.clearReason=old.clearReason}engine.current=next;setWorldHeight(next.height);publish()
   });observer.observe(element);return()=>observer.disconnect()
  },[])
  useEffect(()=>{
@@ -39,7 +39,7 @@ export default function BrickBreaker(){
     if(before!==e.phase)publish();accumulator-=1/120
    }
    const node=canvas.current,ctx=node?.getContext('2d');if(ctx&&now-lastRender>=15){lastRender=now;const s=size.current;render(ctx,e,s.w,s.h,s.dpr,now/1000,window.matchMedia('(prefers-reduced-motion: reduce)').matches)}
-   if(node&&now-lastData>=100){lastData=now;node.dataset.ballX=e.ball.x.toFixed(2);node.dataset.ballY=e.ball.y.toFixed(2);node.dataset.paddleX=e.paddle.x.toFixed(2);node.dataset.remaining=String(e.bricks.length);node.dataset.worldHeight=String(e.height)}
+   if(node&&now-lastData>=100){lastData=now;node.dataset.ballX=e.balls[0].x.toFixed(2);node.dataset.ballY=e.balls[0].y.toFixed(2);node.dataset.paddleX=e.paddle.x.toFixed(2);node.dataset.remaining=String(e.bricks.length);node.dataset.worldHeight=String(e.height);node.dataset.ballCount=String(e.balls.length);node.dataset.ballSpeed=e.speed.toFixed(4);node.dataset.playSeconds=e.playSeconds.toFixed(3);node.dataset.paddleWidth=e.paddle.w.toFixed(3);node.dataset.paddleHeight=e.paddle.h.toFixed(3)}
   }
   frame=requestAnimationFrame(animate)
   function stop(){keys.current.clear();if(engine.current.phase==='playing'){togglePause(engine.current);publish()}}
