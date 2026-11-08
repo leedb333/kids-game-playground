@@ -26,6 +26,23 @@ test('paddle mirrors incoming angle at every contact position without changing s
  const wall=createEngine(stages[0],620);wall.bricks=[];wall.phase='playing';wall.speed=300;wall.ball={x:985,y:200,vx:300,vy:.001,r:12};step(wall,.05);expect(wall.ball.vx).toBeLessThan(0);expect(Math.abs(wall.ball.vy)).toBeGreaterThan(100);expect(wall.ball.x).toBeLessThanOrEqual(988)
  for(const x of [-1000,2000]){movePaddle(wall,x);expect(wall.paddle.x-wall.paddle.w/2).toBeGreaterThanOrEqual(0);expect(wall.paddle.x+wall.paddle.w/2).toBeLessThanOrEqual(1000)}
 })
+test('smaller paddle and a single 1.2x boost after ten active seconds, retained across misses and resize',()=>{
+ for(const stage of stages){const e=createEngine(stage,620);expect(e.paddle.w).toBeCloseTo(stage.paddleWidth*2/3);expect(e.paddle.h).toBeCloseTo(44*2/3)}
+ const e=createEngine(stages[0],620),base=e.speed
+ step(e,30);expect(e.playSeconds).toBe(0);launch(e);togglePause(e);step(e,30);expect(e.playSeconds).toBe(0);togglePause(e)
+ // An empty playfield isolates timing from stage completion. Catch the ball normally.
+ e.bricks=[]
+ for(let tick=0;tick<1199;tick++){movePaddle(e,e.ball.x);step(e,1/120)}
+ expect(e.boosted).toBe(false);expect(e.speed).toBe(base)
+ const direction=Math.atan2(e.ball.vy,e.ball.vx);step(e,1/120)
+ expect(e.boosted).toBe(true);expect(e.speed).toBeCloseTo(base*1.2);expect(Math.hypot(e.ball.vx,e.ball.vy)).toBeCloseTo(base*1.2);expect(Math.atan2(e.ball.vy,e.ball.vx)).toBeCloseTo(direction)
+ for(let tick=0;tick<2400;tick++){movePaddle(e,e.ball.x);step(e,1/120)}
+ expect(e.speed).toBeCloseTo(base*1.2)
+ e.ball.y=e.height+20;e.ball.vy=100;step(e,1/120);expect(e.phase).toBe('ready');const elapsed=e.playSeconds;step(e,20);expect(e.playSeconds).toBe(elapsed);launch(e);expect(Math.hypot(e.ball.vx,e.ball.vy)).toBeCloseTo(base*1.2)
+ const resized=createEngine(stages[0],510,e.removed,e.playSeconds),fresh=createEngine(stages[0],510);expect(resized.boosted).toBe(true);expect(resized.speed).toBeCloseTo(fresh.speed*1.2)
+ const next=createEngine(stages[1],620);expect(next.playSeconds).toBe(0);expect(next.boosted).toBe(false)
+})
+
 test('pause is frozen, misses keep bricks, and variable frame intervals preserve physics',()=>{
  const e=createEngine(stages[0],620);launch(e);togglePause(e);const snapshot=JSON.stringify(e);step(e,1);expect(JSON.stringify(e)).toBe(snapshot);togglePause(e);expect(e.phase).toBe('playing');e.ball.y=e.height+20;e.ball.vy=100;const count=e.bricks.length;step(e,.01);expect(e.phase).toBe('ready');expect(e.misses).toBe(1);expect(e.bricks).toHaveLength(count)
  const simulate=(fps:number)=>{const e=createEngine(stages[0],620);e.bricks=[];e.phase='playing';e.ball={x:910,y:65,vx:220,vy:-180,r:12};e.speed=Math.hypot(220,180);for(let i=0;i<fps*2;i++)step(e,1/fps);return e.ball};const reference=simulate(120);for(const fps of [30,60,144]){const ball=simulate(fps);expect(ball.x).toBeCloseTo(reference.x,5);expect(ball.y).toBeCloseTo(reference.y,5)}

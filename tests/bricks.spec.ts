@@ -6,6 +6,36 @@ async function enter(page:Page){await page.goto('./');await page.getByRole('butt
 async function choose(page:Page,id:number){await page.getByRole('button',{name:'단계 선택',exact:true}).click();await page.getByRole('button',{name:new RegExp(`^${id}단계 `)}).click();await expect(page.locator('.brick-field>canvas')).toHaveAttribute('data-stage',String(id))}
 async function aimAtOnlyGold(page:Page){const canvas=page.locator('.brick-field>canvas'),height=Number(await canvas.getAttribute('data-world-height')),r=height>1000?18:12,scale=Math.min(1,Math.max(.38,(height-145)/350)),goldBottom=18+(43-40)*scale+40*scale,ballY=height-66-r-3,targetX=500-(ballY-(goldBottom+r))*.24/Math.sqrt(1-.24**2),box=(await canvas.boundingBox())!;await page.mouse.move(box.x+targetX/1000*box.width,box.y+box.height*.7);await canvas.focus();await canvas.press(' ')}
 
+test('live play gets exactly one speed boost, excludes pause and resets on a new stage',async({page})=>{
+ test.setTimeout(40000);await page.setViewportSize({width:1280,height:800});await enter(page)
+ const canvas=page.locator('.brick-field>canvas'),base=Number(await canvas.getAttribute('data-ball-speed')),box=(await canvas.boundingBox())!
+ expect(Number(await canvas.getAttribute('data-paddle-width'))).toBeCloseTo(stages[0].paddleWidth*2/3,2);expect(Number(await canvas.getAttribute('data-paddle-height'))).toBeCloseTo(44*2/3,2)
+ await page.getByRole('button',{name:'공 보내기',exact:true}).click();await page.getByRole('button',{name:'일시정지',exact:true}).click();await page.waitForTimeout(150)
+ const paused=await canvas.getAttribute('data-play-seconds');await page.waitForTimeout(500);expect(await canvas.getAttribute('data-play-seconds')).toBe(paused);expect(Number(await canvas.getAttribute('data-ball-speed'))).toBe(base)
+ await page.getByRole('button',{name:'계속하기',exact:true}).click()
+ const deadline=Date.now()+22000
+ while(Number(await canvas.getAttribute('data-play-seconds'))<10.2&&Date.now()<deadline){
+  const x=Number(await canvas.getAttribute('data-ball-x'));await page.mouse.move(box.x+x/1000*box.width,box.y+box.height*.96)
+  if(await canvas.getAttribute('data-phase')==='ready')await page.getByRole('button',{name:'공 보내기',exact:true}).click()
+  await page.waitForTimeout(40)
+ }
+ expect(Number(await canvas.getAttribute('data-play-seconds'))).toBeGreaterThanOrEqual(10)
+ expect(Number(await canvas.getAttribute('data-ball-speed'))).toBeCloseTo(base*1.2,3)
+ await page.getByRole('button',{name:'일시정지',exact:true}).click();await choose(page,2)
+ await expect.poll(()=>canvas.getAttribute('data-play-seconds')).toBe('0.000')
+})
+
+test('cached playground starts in a new offline window and opens all four games',async({page,context})=>{
+ await page.goto('./');await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller)
+ const url=page.url();await context.setOffline(true);await page.close();const offline=await context.newPage(),errors:string[]=[];offline.on('pageerror',e=>errors.push(e.message))
+ await offline.goto(url);await expect(offline.getByRole('heading',{name:'어린이 게임 놀이터',exact:true})).toBeVisible()
+ for(const name of ['순서대로 색칠놀이','요리놀이','코디놀이','벽돌깨기']){
+  await offline.getByRole('button',{name,exact:true}).click();await expect(offline.getByRole('region',{name,exact:true})).toBeVisible();await expect(offline.locator('.game-shell')).not.toBeEmpty()
+  await offline.getByRole('button',{name:'홈으로 이동',exact:true}).click()
+ }
+ expect(errors).toEqual([]);await context.setOffline(false)
+})
+
 test('all ten stages start, stage gallery matches data, and each layout is captured',async({page})=>{
  test.setTimeout(90000);await page.setViewportSize({width:1280,height:800});await enter(page);const canvas=page.locator('.brick-field>canvas');await expect(canvas).toHaveAttribute('data-stage','1')
  for(let id=1;id<=10;id++){if(id!==1)await choose(page,id);await expect.poll(()=>canvas.getAttribute('data-remaining')).toBe(String(stages[id-1].bricks.length));await page.screenshot({path:`docs/brick-breaker/stage-${String(id).padStart(2,'0')}.png`,fullPage:true})}

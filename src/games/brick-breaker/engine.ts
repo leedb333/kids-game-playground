@@ -18,11 +18,11 @@ export function sweepCircleRect(x:number,y:number,vx:number,vy:number,r:number,r
  }
  return hits.sort((a,b)=>a.t-b.t)[0]??null
 }
-export function createEngine(stage:Stage,height:number,removed:string[]=[]):Engine{
- const h=Math.max(250,height),r=height>1000?18:12,paddle={x:500,y:h-66,w:stage.paddleWidth,h:44},layout=stageBricks(stage,h)
+export function createEngine(stage:Stage,height:number,removed:string[]=[],playSeconds=0):Engine{
+ const h=Math.max(250,height),r=height>1000?18:12,paddle={x:500,y:h-66,w:stage.paddleWidth*2/3,h:44*2/3},layout=stageBricks(stage,h)
  // Preserve reaction time when a tall pattern is shown in a short landscape viewport.
  const clearance=paddle.y-Math.max(...layout.map(b=>b.y+b.h))-r,speed=Math.min(stage.speed*h/620,Math.max(90,clearance/.6))
- return {stage:stage.id,width:1000,height:h,phase:'ready',pausedFrom:'ready',paddle,ball:{x:500,y:paddle.y-r-3,vx:0,vy:0,r},bricks:layout.filter(b=>!removed.includes(b.id)),removed:[...removed],trail:[],particles:[],speed,misses:0,clearReason:null,events:[]}
+ return {stage:stage.id,width:1000,height:h,phase:'ready',pausedFrom:'ready',paddle,ball:{x:500,y:paddle.y-r-3,vx:0,vy:0,r},bricks:layout.filter(b=>!removed.includes(b.id)),removed:[...removed],trail:[],particles:[],speed:speed*(playSeconds>=10-1e-9?1.2:1),playSeconds,boosted:playSeconds>=10-1e-9,misses:0,clearReason:null,events:[]}
 }
 export function movePaddle(e:Engine,x:number){e.paddle.x=Math.max(e.paddle.w/2+4,Math.min(e.width-e.paddle.w/2-4,x));if(e.phase==='ready'){e.ball.x=e.paddle.x;e.ball.y=e.paddle.y-e.ball.r-3}}
 export function launch(e:Engine){if(e.phase!=='ready')return;e.phase='playing';e.ball.vx=e.speed*.24;e.ball.vy=-e.speed*Math.sqrt(1-.24**2);e.trail=[]}
@@ -33,13 +33,16 @@ export function step(e:Engine,dt:number){
  if(e.phase==='paused')return
  for(const p of e.particles){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=110*dt}e.particles=e.particles.filter(p=>p.life>0)
  if(e.phase!=='playing')return
+ // Count active play only. One speed increase per stage, retained after a miss.
+ e.playSeconds+=dt
+ if(!e.boosted&&e.playSeconds>=10-1e-9){e.boosted=true;e.speed*=1.2;e.ball.vx*=1.2;e.ball.vy*=1.2}
  let left=dt
  for(let bounce=0;left>1e-7&&bounce<12&&e.phase==='playing';bounce++){
   const ball=e.ball,hits:Hit[]=[],{x,y,vx,vy,r}=ball
   const wall=(t:number,nx:number,ny:number)=>{if(t>=-1e-8&&t<=left)hits.push({t:Math.max(0,t),nx,ny,kind:'wall'})}
   if(vx<0)wall((r-x)/vx,1,0);if(vx>0)wall((e.width-r-x)/vx,-1,0);if(vy<0)wall((r-y)/vy,0,1)
   for(const brick of e.bricks){const hit=sweepCircleRect(x,y,vx,vy,r,brick,left,Math.min(9,brick.h*.3));if(hit)hits.push({...hit,kind:'brick',brick})}
-  if(vy>0){const rect={x:e.paddle.x-e.paddle.w/2,y:e.paddle.y,w:e.paddle.w,h:e.paddle.h},hit=sweepCircleRect(x,y,vx,vy,r,rect,left,18);if(hit&&y+vy*hit.t<=rect.y+rect.h*.55)hits.push({...hit,kind:'paddle'})}
+  if(vy>0){const rect={x:e.paddle.x-e.paddle.w/2,y:e.paddle.y,w:e.paddle.w,h:e.paddle.h},hit=sweepCircleRect(x,y,vx,vy,r,rect,left,Math.min(18,rect.h/2));if(hit&&y+vy*hit.t<=rect.y+rect.h*.55)hits.push({...hit,kind:'paddle'})}
   const hit=hits.sort((a,b)=>a.t-b.t)[0]
   if(!hit){ball.x+=vx*left;ball.y+=vy*left;left=0;break}
   ball.x+=vx*hit.t;ball.y+=vy*hit.t;left-=hit.t
