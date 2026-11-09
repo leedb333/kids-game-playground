@@ -3,12 +3,12 @@ for(const [name,width,height] of [['tablet-16x9',1280,720],['tablet',1280,800],[
  test(name,async({page})=>{
   await page.setViewportSize({width,height});const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message))
   await page.goto('./');await expect(page.getByRole('heading',{name:'어린이 게임 놀이터'})).toBeVisible()
-  await expect(page.locator('.card:disabled')).toHaveCount(1)
+  await expect(page.locator('.card:disabled')).toHaveCount(0)
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   for(const card of await page.locator('.card').all()){const box=await card.boundingBox();expect(box!.width).toBeGreaterThan(48);expect(box!.height).toBeGreaterThan(48)}
   const sound=page.getByRole('button',{name:/소리/});await sound.click();await expect(sound).toHaveAttribute('aria-pressed','false');await page.reload();await expect(sound).toHaveAttribute('aria-pressed','false')
   await page.getByRole('button',{name:'홈으로 이동'}).click();await expect(page.getByRole('heading',{level:1})).toBeFocused()
-  await page.screenshot({path:`docs/screenshots/${name}.png`,fullPage:true});expect(errors).toEqual([])
+  await page.screenshot({path:`docs/home-carousel/${name}.png`,fullPage:true});expect(errors).toEqual([])
  })
 }
 test('offline shell and scoped settings',async({page,context})=>{
