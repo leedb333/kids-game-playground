@@ -1,0 +1,92 @@
+[
+  {
+    "stage": 1,
+    "base": 222,
+    "beforeAt511": 219.56516129032258,
+    "afterAt511": 219.56516129032258,
+    "referenceAt620": 266.4,
+    "measuredAt511": 219.56516129032258,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 2,
+    "base": 229,
+    "beforeAt511": 226,
+    "afterAt511": 226.4883870967742,
+    "referenceAt620": 274.8,
+    "measuredAt511": 226.48838709677418,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 3,
+    "base": 236,
+    "beforeAt511": 178,
+    "afterAt511": 233.41161290322577,
+    "referenceAt620": 283.2,
+    "measuredAt511": 233.41161290322574,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 4,
+    "base": 243,
+    "beforeAt511": 240.3348387096774,
+    "afterAt511": 240.3348387096774,
+    "referenceAt620": 291.59999999999997,
+    "measuredAt511": 240.33483870967737,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 5,
+    "base": 250,
+    "beforeAt511": 247.25806451612902,
+    "afterAt511": 247.25806451612902,
+    "referenceAt620": 300,
+    "measuredAt511": 247.258064516129,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 6,
+    "base": 257,
+    "beforeAt511": 254.18129032258062,
+    "afterAt511": 254.18129032258062,
+    "referenceAt620": 308.4,
+    "measuredAt511": 254.1812903225806,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 7,
+    "base": 264,
+    "beforeAt511": 261.1045161290323,
+    "afterAt511": 261.1045161290323,
+    "referenceAt620": 316.8,
+    "measuredAt511": 261.1045161290323,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 8,
+    "base": 271,
+    "beforeAt511": 138,
+    "afterAt511": 268.02774193548385,
+    "referenceAt620": 325.2,
+    "measuredAt511": 268.02774193548385,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 9,
+    "base": 278,
+    "beforeAt511": 138,
+    "afterAt511": 274.9509677419355,
+    "referenceAt620": 333.59999999999997,
+    "measuredAt511": 274.9509677419355,
+    "units": "world units/second; field width=1000"
+  },
+  {
+    "stage": 10,
+    "base": 285,
+    "beforeAt511": 176.0658537296266,
+    "afterAt511": 281.8741935483871,
+    "referenceAt620": 342,
+    "measuredAt511": 281.8741935483871,
+    "units": "world units/second; field width=1000"
+  }
+]

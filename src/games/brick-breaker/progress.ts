@@ -10,3 +10,4 @@ export function restoreProgress(value:unknown):Progress{
  return {version:1,current:s.current,completed:[...new Set(s.completed)].sort((a,b)=>a-b),boards:Object.fromEntries(Object.entries(s.boards).map(([key,ids])=>[key,[...ids]]))}
 }
 export function completeStage(s:Progress,id:number):Progress{const boards={...s.boards};delete boards[id];return {version:1,current:Math.min(stages.length,id+1),completed:[...new Set([...s.completed,id])].sort((a,b)=>a-b),boards}}
+export function restartStage(s:Progress,id:number):Progress{return {...s,current:id,completed:[...s.completed],boards:{...s.boards,[id]:[]}}}

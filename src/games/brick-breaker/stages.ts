@@ -1,4 +1,5 @@
 import type {Brick,BrickColor,Stage} from './types'
+import {stageBaseSpeed} from './speed'
 const palette:BrickColor[]=['pink','yellow','mint','purple','blue']
 type Piece=Omit<Brick,'id'>
 const block=(x:number,y:number,color:BrickColor,w=62,h=29):Piece=>({x:x-w/2,y:y-h/2,w,h,color,gold:false})
@@ -37,5 +38,5 @@ const configs:{name:string;theme:Stage['theme'];pieces:Piece[]}[]=[
  {name:'커다란 네잎클로버',theme:'clover',pieces:clover(500,224,1,true)},
  {name:'별빛 왕국의 축제',theme:'final',pieces:[...tinyHeart(180),...tinyHeart(820),...wave(4,16,(t,r)=>174+Math.cos(t*Math.PI*2+r*.15)*68+r*37)]},
 ]
-export const stages:Stage[]=configs.map((c,i)=>({id:i+1,name:c.name,theme:c.theme,difficulty:i<3?'쉬움':i<6?'보통':i<9?'조금 더 도전':'마지막 축제',speed:222+i*7,paddleWidth:278-i*5,bricks:[{id:`s${i+1}-gold`,x:452,y:43,w:96,h:40,color:'gold',gold:true},...unique(c.pieces).map((b,j)=>({...b,id:`s${i+1}-b${j}`}))]}))
+export const stages:Stage[]=configs.map((c,i)=>({id:i+1,name:c.name,theme:c.theme,difficulty:i<3?'쉬움':i<6?'보통':i<9?'조금 더 도전':'마지막 축제',speed:stageBaseSpeed(i+1),paddleWidth:278-i*5,bricks:[{id:`s${i+1}-gold`,x:452,y:43,w:96,h:40,color:'gold',gold:true},...unique(c.pieces).map((b,j)=>({...b,id:`s${i+1}-b${j}`}))]}))
 export function stageBricks(stage:Stage,height:number):Brick[]{const scale=Math.min(1,Math.max(.38,(height-145)/350));return stage.bricks.map(b=>({...b,x:500+(b.x-500)*scale,y:18+(b.y-40)*scale,w:b.w*scale,h:b.h*scale}))}

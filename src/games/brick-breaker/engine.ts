@@ -1,5 +1,6 @@
 import type {Ball,Brick,Engine,Stage} from './types'
 import {stageBricks} from './stages'
+import {targetBallSpeed} from './speed'
 type Rect={x:number;y:number;w:number;h:number}
 type Hit={t:number;nx:number;ny:number;brick?:Brick;kind:'brick'|'paddle'|'wall'}
 /** Swept circle vs rounded rectangle: flat faces plus exact circular corner arcs. */
@@ -21,14 +22,15 @@ export function sweepCircleRect(x:number,y:number,vx:number,vy:number,r:number,r
 function restingBalls(paddle:Engine['paddle'],r:number,count:number):Ball[]{return Array.from({length:count},(_,i)=>({x:paddle.x+(i-(count-1)/2)*(r*2+4),y:paddle.y-r-3,vx:0,vy:0,r,trail:[]}))}
 export function createEngine(stage:Stage,height:number,removed:string[]=[],playSeconds=0,ballCount=playSeconds>=10-1e-9?2:1):Engine{
  const h=Math.max(250,height),r=height>1000?18:12,paddle={x:500,y:h-66,w:stage.paddleWidth*2/3,h:44*2/3},layout=stageBricks(stage,h)
- // Keep responsive reaction-time limits, then apply the new 1.2x starting speed.
- const clearance=paddle.y-Math.max(...layout.map(b=>b.y+b.h))-r,speed=Math.min(stage.speed*h/620,Math.max(90,clearance/.6))*1.2
+ // One shared rule for launch, miss recovery, resize and saved-board restoration.
+ const speed=targetBallSpeed(stage.speed,h)
  return {stage:stage.id,width:1000,height:h,phase:'ready',pausedFrom:'ready',paddle,balls:restingBalls(paddle,r,ballCount),bricks:layout.filter(b=>!removed.includes(b.id)),removed:[...removed],particles:[],speed,playSeconds,split:playSeconds>=10-1e-9,misses:0,clearReason:null,events:[]}
 }
 export function movePaddle(e:Engine,x:number){e.paddle.x=Math.max(e.paddle.w/2+4,Math.min(e.width-e.paddle.w/2-4,x));if(e.phase==='ready'){const positions=restingBalls(e.paddle,e.balls[0].r,e.balls.length);e.balls.forEach((ball,i)=>{ball.x=positions[i].x;ball.y=positions[i].y})}}
 export function launch(e:Engine){if(e.phase!=='ready')return;e.phase='playing';e.balls.forEach((ball,i)=>{const horizontal=e.balls.length===1?.24:i===0?.34:-.42;ball.vx=e.speed*horizontal;ball.vy=-e.speed*Math.sqrt(1-horizontal**2);ball.trail=[]})}
 export function togglePause(e:Engine){if(e.phase==='cleared')return;if(e.phase==='paused')e.phase=e.pausedFrom;else{e.pausedFrom=e.phase;e.phase='paused'}}
-function safeDirection(e:Engine,ball:Ball){let {vx,vy}=ball;const signX=Math.sign(vx)||1,signY=Math.sign(vy)||-1;if(Math.abs(vy)<e.speed*.43){vy=signY*e.speed*.43;vx=signX*Math.sqrt(e.speed**2-vy**2)}if(Math.abs(vx)<e.speed*.12){vx=signX*e.speed*.12;vy=signY*Math.sqrt(e.speed**2-vx**2)}const length=Math.hypot(vx,vy);ball.vx=vx/length*e.speed;ball.vy=vy/length*e.speed}
+function normalizeSpeed(e:Engine,ball:Ball){const length=Math.hypot(ball.vx,ball.vy);if(length>0){ball.vx=ball.vx/length*e.speed;ball.vy=ball.vy/length*e.speed}}
+function safeDirection(e:Engine,ball:Ball){let {vx,vy}=ball;const signX=Math.sign(vx)||1,signY=Math.sign(vy)||-1;if(Math.abs(vy)<e.speed*.43){vy=signY*e.speed*.43;vx=signX*Math.sqrt(e.speed**2-vy**2)}if(Math.abs(vx)<e.speed*.12){vx=signX*e.speed*.12;vy=signY*Math.sqrt(e.speed**2-vx**2)}ball.vx=vx;ball.vy=vy;normalizeSpeed(e,ball)}
 function nextHit(e:Engine,ball:Ball,dt:number):Hit|undefined{
   const hits:Hit[]=[],{x,y,vx,vy,r}=ball
   const wall=(t:number,nx:number,ny:number)=>{if(t>=-1e-8&&t<=dt)hits.push({t:Math.max(0,t),nx,ny,kind:'wall'})}
@@ -48,7 +50,7 @@ function advanceBalls(e:Engine,dt:number){
   if(hit.kind==='brick'&&hit.brick){const brick=hit.brick;e.bricks=e.bricks.filter(b=>b.id!==brick.id);e.removed.push(brick.id);e.events.push(brick.gold?'gold':'brick');for(let i=0;i<(brick.gold?18:6);i++){const a=i*2.399963;e.particles.push({x:brick.x+brick.w/2,y:brick.y+brick.h/2,vx:Math.cos(a)*(70+i*3),vy:Math.sin(a)*80-30,life:brick.gold?.9:.45,color:brick.color})}e.particles=e.particles.slice(-100);if(brick.gold||e.bricks.length===0){e.phase='cleared';e.clearReason=brick.gold?'gold':'all';break}}
   // The paddle is a horizontal reflector: preserve incoming speed and horizontal
   // direction at every contact position, including its forgiving rounded ends.
-  if(hit.kind==='paddle'){ball.vy=-ball.vy;ball.y=e.paddle.y-r-.2;e.events.push('paddle')}
+  if(hit.kind==='paddle'){ball.vy=-ball.vy;normalizeSpeed(e,ball);ball.y=e.paddle.y-r-.2;e.events.push('paddle')}
   else{const dot=ball.vx*hit.nx+ball.vy*hit.ny;ball.vx-=2*dot*hit.nx;ball.vy-=2*dot*hit.ny;ball.x+=hit.nx*.05;ball.y+=hit.ny*.05}
   if(hit.kind!=='paddle')safeDirection(e,ball)
  }

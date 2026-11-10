@@ -8,7 +8,7 @@ test('ten distinct stage patterns, exactly three hearts/three clovers and one no
  expect(stages).toHaveLength(10);expect(stages.filter(s=>s.theme==='heart')).toHaveLength(3);expect(stages.filter(s=>s.theme==='clover')).toHaveLength(3);expect(new Set(stages.map(s=>JSON.stringify(s.bricks.map(b=>[b.x,b.y,b.color])))).size).toBe(10)
  const problems:string[]=[]
  for(const s of stages){if(s.bricks.filter(b=>b.gold).length!==1||s.bricks.length<21||new Set(s.bricks.map(b=>b.id)).size!==s.bricks.length)problems.push('metadata '+s.id);for(let i=0;i<s.bricks.length;i++){const a=s.bricks[i];if(a.x<=0||a.x+a.w>=1000)problems.push('bounds '+a.id);for(const b of s.bricks.slice(i+1))if(!(a.x>=b.x+b.w||b.x>=a.x+a.w||a.y>=b.y+b.h||b.y>=a.y+a.h))problems.push('overlap '+a.id+' / '+b.id)}for(const height of [350,560,620,2000])for(const b of stageBricks(s,height))if(b.y+b.h>=height-85)problems.push('paddle gap '+s.id+' at '+height)}
- expect(problems).toEqual([]);expect(createEngine(stages[8],511).speed).toBeLessThan(stages[8].speed*511/620)
+ expect(problems).toEqual([]);expect(createEngine(stages[8],511).speed).toBeCloseTo(stages[8].speed*511/620*1.2)
 })
 test('swept rounded collision handles all faces, corner arcs, misses and high-speed tunneling',()=>{
  const rect={x:100,y:100,w:80,h:30};expect(sweepCircleRect(50,115,500,0,10,rect,.2)).toMatchObject({t:.08,nx:-1,ny:0});expect(sweepCircleRect(140,50,0,500,10,rect,.2)).toMatchObject({t:.08,nx:0,ny:-1});expect(sweepCircleRect(140,180,0,-500,10,rect,.2)).toMatchObject({t:.08,nx:0,ny:1});expect(sweepCircleRect(230,115,-500,0,10,rect,.2)).toMatchObject({t:.08,nx:1,ny:0});expect(sweepCircleRect(30,30,-100,-100,10,rect,.2)).toBeNull()
@@ -27,7 +27,7 @@ test('paddle mirrors incoming angle at every contact position without changing s
  for(const x of [-1000,2000]){movePaddle(wall,x);expect(wall.paddle.x-wall.paddle.w/2).toBeGreaterThanOrEqual(0);expect(wall.paddle.x+wall.paddle.w/2).toBeLessThanOrEqual(1000)}
 })
 test('1.2x base speed, two balls after ten active seconds, and no timed acceleration',()=>{
- for(const stage of stages){const e=createEngine(stage,620),layout=stageBricks(stage,620),old=Math.min(stage.speed,Math.max(90,(e.paddle.y-Math.max(...layout.map(b=>b.y+b.h))-12)/.6));expect(e.speed).toBeCloseTo(old*1.2);expect(e.paddle.w).toBeCloseTo(stage.paddleWidth*2/3);expect(e.paddle.h).toBeCloseTo(44*2/3)}
+ for(const stage of stages){const e=createEngine(stage,620);expect(e.speed).toBeCloseTo(stage.speed*1.2);expect(e.paddle.w).toBeCloseTo(stage.paddleWidth*2/3);expect(e.paddle.h).toBeCloseTo(44*2/3)}
  const e=createEngine(stages[0],620),base=e.speed;step(e,30);expect(e.playSeconds).toBe(0);launch(e);togglePause(e);step(e,30);expect(e.playSeconds).toBe(0);togglePause(e);e.bricks=[]
  for(let tick=0;tick<1199;tick++){movePaddle(e,e.balls[0].x);step(e,1/120)}
  expect(e.split).toBe(false);expect(e.balls).toHaveLength(1);step(e,1/120);expect(e.split).toBe(true);expect(e.balls).toHaveLength(2);expect(e.speed).toBe(base)
