@@ -1,0 +1,82 @@
+[
+  {
+    "stage": 1,
+    "worldHeight": 511.21794871794873,
+    "target": 219.6588,
+    "actual": 219.6588,
+    "cssPixelsPerSecond": 274.1341824,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 2,
+    "worldHeight": 511.21794871794873,
+    "target": 226.585,
+    "actual": 226.585,
+    "cssPixelsPerSecond": 282.77808,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 3,
+    "worldHeight": 511.21794871794873,
+    "target": 233.5112,
+    "actual": 233.5112,
+    "cssPixelsPerSecond": 291.4219776,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 4,
+    "worldHeight": 511.21794871794873,
+    "target": 240.4373,
+    "actual": 240.4373,
+    "cssPixelsPerSecond": 300.0657504,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 5,
+    "worldHeight": 511.21794871794873,
+    "target": 247.3635,
+    "actual": 247.3635,
+    "cssPixelsPerSecond": 308.70964799999996,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 6,
+    "worldHeight": 511.21794871794873,
+    "target": 254.2897,
+    "actual": 254.2897,
+    "cssPixelsPerSecond": 317.3535456,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 7,
+    "worldHeight": 511.21794871794873,
+    "target": 261.2159,
+    "actual": 261.2159,
+    "cssPixelsPerSecond": 325.99744319999996,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 8,
+    "worldHeight": 511.21794871794873,
+    "target": 268.1421,
+    "actual": 268.1421,
+    "cssPixelsPerSecond": 334.6413408,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 9,
+    "worldHeight": 511.21794871794873,
+    "target": 275.0682,
+    "actual": 275.0682,
+    "cssPixelsPerSecond": 343.2851136,
+    "viewport": "1280x720"
+  },
+  {
+    "stage": 10,
+    "worldHeight": 511.21794871794873,
+    "target": 281.9944,
+    "actual": 281.9944,
+    "cssPixelsPerSecond": 351.9290112,
+    "viewport": "1280x720"
+  }
+]
