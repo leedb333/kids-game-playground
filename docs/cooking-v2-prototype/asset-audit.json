@@ -1,0 +1,753 @@
+{
+  "originals": {
+    "pizza-cheese-raw.png": {
+      "width": 1254,
+      "height": 1254,
+      "channels": 4,
+      "sha256": "b88a5aecef9866460978a6ba71aeb7099fe5df84d35b5a65b292d363f6e3aa03",
+      "left": 105,
+      "top": 90,
+      "right": 1141,
+      "bottom": 1121,
+      "transparent": 761990,
+      "partial": 810113
+    },
+    "pizza-cutting-board.png": {
+      "width": 1254,
+      "height": 1254,
+      "channels": 4,
+      "sha256": "bff2875fd52e10a01ea01f9ac5e9473d07be1fda9bd320493a840c0fa28b1d9b",
+      "left": 77,
+      "top": 247,
+      "right": 1174,
+      "bottom": 1041,
+      "transparent": 650412,
+      "partial": 921565
+    },
+    "pizza-dough-flat.png": {
+      "width": 1254,
+      "height": 1254,
+      "channels": 4,
+      "sha256": "8b301fc3eae6d35a7a3c6f008fa05159f3f7d805923cf5cb88772a51c11fb48a",
+      "left": 45,
+      "top": 66,
+      "right": 1188,
+      "bottom": 1171,
+      "transparent": 514673,
+      "partial": 1057229
+    },
+    "pizza-prep-bg.png": {
+      "width": 1672,
+      "height": 941,
+      "channels": 3,
+      "sha256": "479dba0755106a20d8ade5e2866a5df8c5516aefe778891db7b6c047fb74f9e7",
+      "left": 0,
+      "top": 0,
+      "right": 1671,
+      "bottom": 940,
+      "transparent": 0,
+      "partial": 0
+    },
+    "pizza-sauce-tomato.png": {
+      "width": 1254,
+      "height": 1254,
+      "channels": 4,
+      "sha256": "b57100059e5bc5872d34ee3e1e6e5b94acb2e7b4e1770bbcac93ebe62454e1fb",
+      "left": 91,
+      "top": 88,
+      "right": 1147,
+      "bottom": 1147,
+      "transparent": 692501,
+      "partial": 879600
+    },
+    "tool-spoon.png": {
+      "width": 1254,
+      "height": 1254,
+      "channels": 4,
+      "sha256": "8e3286b7c2eb131fce3be23a0a9131aa13cd492bf51d5996314a8970cd735df2",
+      "left": 116,
+      "top": 318,
+      "right": 1148,
+      "bottom": 959,
+      "transparent": 1280446,
+      "partial": 291495
+    },
+    "topping-mushroom.png": {
+      "width": 1254,
+      "height": 1254,
+      "channels": 4,
+      "sha256": "5f0f0783536c71b9723d59cdb84aa2e7f8feb80491388afa4868a9e8fedd481e",
+      "left": 160,
+      "top": 305,
+      "right": 1068,
+      "bottom": 939,
+      "transparent": 1191793,
+      "partial": 380345
+    },
+    "topping-pepperoni.png": {
+      "width": 1254,
+      "height": 1254,
+      "channels": 4,
+      "sha256": "eb4446d7a6cd03667dfaeb5172431befd518a338fac67d1f9fe2661c34c6f353",
+      "left": 176,
+      "top": 343,
+      "right": 1071,
+      "bottom": 919,
+      "transparent": 1156805,
+      "partial": 415430
+    }
+  },
+  "processing": "Originals unchanged. Alpha speckles removed, near-opaque pixels normalized, conservative masks/crops; food RGB preserved.",
+  "processed": [
+    {
+      "name": "room",
+      "from": "pizza-prep-bg.png",
+      "box": [
+        0,
+        0,
+        1672,
+        395
+      ],
+      "shape": null,
+      "width": 1672,
+      "height": 395,
+      "left": 0,
+      "top": 0,
+      "right": 1671,
+      "bottom": 394,
+      "transparent": 0,
+      "partial": 0
+    },
+    {
+      "name": "counter",
+      "from": "pizza-prep-bg.png",
+      "box": [
+        0,
+        395,
+        1672,
+        546
+      ],
+      "shape": null,
+      "width": 1672,
+      "height": 546,
+      "left": 0,
+      "top": 0,
+      "right": 1671,
+      "bottom": 545,
+      "transparent": 0,
+      "partial": 0
+    },
+    {
+      "name": "dough",
+      "from": "pizza-dough-flat.png",
+      "box": [
+        40,
+        60,
+        1156,
+        1116
+      ],
+      "shape": {
+        "ellipse": [
+          618,
+          618,
+          574,
+          553
+        ]
+      },
+      "width": 1156,
+      "height": 1116,
+      "left": 5,
+      "top": 7,
+      "right": 1147,
+      "bottom": 1110,
+      "transparent": 312858,
+      "partial": 5856
+    },
+    {
+      "name": "sauce",
+      "from": "pizza-sauce-tomato.png",
+      "box": [
+        200,
+        200,
+        840,
+        840
+      ],
+      "shape": null,
+      "width": 840,
+      "height": 840,
+      "left": 0,
+      "top": 0,
+      "right": 839,
+      "bottom": 839,
+      "transparent": 26075,
+      "partial": 1230
+    },
+    {
+      "name": "board",
+      "from": "pizza-cutting-board.png",
+      "box": [
+        72,
+        240,
+        1110,
+        810
+      ],
+      "shape": null,
+      "width": 1110,
+      "height": 810,
+      "left": 5,
+      "top": 9,
+      "right": 1102,
+      "bottom": 800,
+      "transparent": 65361,
+      "partial": 6557
+    },
+    {
+      "name": "spoon",
+      "from": "tool-spoon.png",
+      "box": [
+        110,
+        310,
+        1045,
+        660
+      ],
+      "shape": null,
+      "width": 1045,
+      "height": 660,
+      "left": 8,
+      "top": 8,
+      "right": 1038,
+      "bottom": 649,
+      "transparent": 431726,
+      "partial": 4711
+    },
+    {
+      "name": "cheese-pile",
+      "from": "pizza-cheese-raw.png",
+      "box": [
+        100,
+        85,
+        1050,
+        1040
+      ],
+      "shape": null,
+      "width": 1050,
+      "height": 1040,
+      "left": 6,
+      "top": 5,
+      "right": 1041,
+      "bottom": 1036,
+      "transparent": 305189,
+      "partial": 9699
+    },
+    {
+      "name": "pepperoni",
+      "from": "topping-pepperoni.png",
+      "box": [
+        398,
+        342,
+        450,
+        395
+      ],
+      "shape": {
+        "ellipse": [
+          623,
+          539,
+          223,
+          195
+        ]
+      },
+      "width": 450,
+      "height": 395,
+      "left": 2,
+      "top": 2,
+      "right": 447,
+      "bottom": 391,
+      "transparent": 41115,
+      "partial": 1645
+    },
+    {
+      "name": "mushroom",
+      "from": "topping-mushroom.png",
+      "box": [
+        300,
+        570,
+        530,
+        375
+      ],
+      "shape": {
+        "polygon": [
+          [
+            551,
+            578
+          ],
+          [
+            610,
+            581
+          ],
+          [
+            670,
+            598
+          ],
+          [
+            724,
+            623
+          ],
+          [
+            765,
+            654
+          ],
+          [
+            793,
+            691
+          ],
+          [
+            806,
+            729
+          ],
+          [
+            803,
+            762
+          ],
+          [
+            786,
+            796
+          ],
+          [
+            759,
+            817
+          ],
+          [
+            714,
+            826
+          ],
+          [
+            694,
+            866
+          ],
+          [
+            673,
+            906
+          ],
+          [
+            648,
+            928
+          ],
+          [
+            598,
+            929
+          ],
+          [
+            545,
+            922
+          ],
+          [
+            496,
+            911
+          ],
+          [
+            465,
+            893
+          ],
+          [
+            453,
+            878
+          ],
+          [
+            459,
+            853
+          ],
+          [
+            478,
+            819
+          ],
+          [
+            434,
+            830
+          ],
+          [
+            393,
+            825
+          ],
+          [
+            359,
+            809
+          ],
+          [
+            338,
+            785
+          ],
+          [
+            328,
+            755
+          ],
+          [
+            333,
+            724
+          ],
+          [
+            350,
+            691
+          ],
+          [
+            378,
+            660
+          ],
+          [
+            413,
+            633
+          ],
+          [
+            455,
+            610
+          ],
+          [
+            502,
+            591
+          ]
+        ]
+      },
+      "width": 530,
+      "height": 375,
+      "left": 37,
+      "top": 8,
+      "right": 505,
+      "bottom": 358,
+      "transparent": 86384,
+      "partial": 1549
+    },
+    {
+      "name": "cheese-a",
+      "from": "pizza-cheese-raw.png",
+      "box": [
+        397,
+        90,
+        245,
+        140
+      ],
+      "shape": {
+        "polygon": [
+          [
+            405,
+            175
+          ],
+          [
+            417,
+            161
+          ],
+          [
+            431,
+            161
+          ],
+          [
+            446,
+            173
+          ],
+          [
+            464,
+            177
+          ],
+          [
+            488,
+            169
+          ],
+          [
+            520,
+            150
+          ],
+          [
+            555,
+            126
+          ],
+          [
+            591,
+            104
+          ],
+          [
+            617,
+            93
+          ],
+          [
+            630,
+            94
+          ],
+          [
+            639,
+            104
+          ],
+          [
+            636,
+            118
+          ],
+          [
+            620,
+            133
+          ],
+          [
+            597,
+            150
+          ],
+          [
+            565,
+            171
+          ],
+          [
+            532,
+            191
+          ],
+          [
+            499,
+            210
+          ],
+          [
+            471,
+            224
+          ],
+          [
+            446,
+            227
+          ],
+          [
+            423,
+            218
+          ],
+          [
+            406,
+            203
+          ],
+          [
+            399,
+            190
+          ]
+        ]
+      },
+      "width": 245,
+      "height": 140,
+      "left": 2,
+      "top": 3,
+      "right": 239,
+      "bottom": 136,
+      "transparent": 23140,
+      "partial": 607
+    },
+    {
+      "name": "cheese-b",
+      "from": "pizza-cheese-raw.png",
+      "box": [
+        581,
+        189,
+        200,
+        215
+      ],
+      "shape": {
+        "polygon": [
+          [
+            596,
+            192
+          ],
+          [
+            609,
+            190
+          ],
+          [
+            626,
+            203
+          ],
+          [
+            650,
+            229
+          ],
+          [
+            675,
+            254
+          ],
+          [
+            704,
+            281
+          ],
+          [
+            731,
+            309
+          ],
+          [
+            753,
+            340
+          ],
+          [
+            773,
+            374
+          ],
+          [
+            778,
+            390
+          ],
+          [
+            773,
+            400
+          ],
+          [
+            763,
+            400
+          ],
+          [
+            751,
+            390
+          ],
+          [
+            732,
+            371
+          ],
+          [
+            713,
+            351
+          ],
+          [
+            691,
+            331
+          ],
+          [
+            668,
+            312
+          ],
+          [
+            645,
+            292
+          ],
+          [
+            625,
+            268
+          ],
+          [
+            609,
+            246
+          ],
+          [
+            597,
+            222
+          ],
+          [
+            584,
+            205
+          ]
+        ]
+      },
+      "width": 200,
+      "height": 215,
+      "left": 3,
+      "top": 1,
+      "right": 196,
+      "bottom": 210,
+      "transparent": 32421,
+      "partial": 559
+    },
+    {
+      "name": "cheese-c",
+      "from": "pizza-cheese-raw.png",
+      "box": [
+        333,
+        305,
+        245,
+        160
+      ],
+      "shape": {
+        "polygon": [
+          [
+            341,
+            307
+          ],
+          [
+            355,
+            307
+          ],
+          [
+            373,
+            317
+          ],
+          [
+            397,
+            337
+          ],
+          [
+            423,
+            360
+          ],
+          [
+            451,
+            380
+          ],
+          [
+            478,
+            398
+          ],
+          [
+            506,
+            414
+          ],
+          [
+            535,
+            432
+          ],
+          [
+            565,
+            445
+          ],
+          [
+            576,
+            454
+          ],
+          [
+            573,
+            463
+          ],
+          [
+            562,
+            463
+          ],
+          [
+            542,
+            454
+          ],
+          [
+            517,
+            445
+          ],
+          [
+            490,
+            434
+          ],
+          [
+            459,
+            421
+          ],
+          [
+            427,
+            403
+          ],
+          [
+            398,
+            385
+          ],
+          [
+            374,
+            365
+          ],
+          [
+            352,
+            344
+          ],
+          [
+            338,
+            324
+          ]
+        ]
+      },
+      "width": 245,
+      "height": 160,
+      "left": 5,
+      "top": 2,
+      "right": 242,
+      "bottom": 157,
+      "transparent": 31494,
+      "partial": 581
+    }
+  ]
+}
