@@ -1,3 +1,10 @@
+import onion from './assets/onion.png'
+import paprika from './assets/paprika.png'
+import olive from './assets/olive.png'
+import doughBall from './assets/dough-ball.png'
+import doughMid from './assets/dough-mid.png'
+import doughBaked from './assets/dough-baked.png'
+import cheeseMelt from './assets/cheese-melt.png'
 import room from './assets/room.png'
 import counter from './assets/counter.png'
 import dough from './assets/dough.png'
@@ -10,6 +17,6 @@ import cheeseB from './assets/cheese-b.png'
 import cheeseC from './assets/cheese-c.png'
 import pepperoni from './assets/pepperoni.png'
 import mushroom from './assets/mushroom.png'
-export const urls={room,counter,dough,sauce,board,spoon,cheesePile,cheeseA,cheeseB,cheeseC,pepperoni,mushroom}
+export const urls={onion,paprika,olive,doughBall,doughMid,doughBaked,cheeseMelt,room,counter,dough,sauce,board,spoon,cheesePile,cheeseA,cheeseB,cheeseC,pepperoni,mushroom}
 export type Images=Record<keyof typeof urls,HTMLImageElement>
 export async function loadImages():Promise<Images>{const result=await Promise.all(Object.entries(urls).map(async([key,url])=>{const image=new Image();image.src=url;await image.decode();return [key,image] as const}));return Object.fromEntries(result) as Images}

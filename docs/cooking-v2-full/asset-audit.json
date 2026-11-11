@@ -1,0 +1,184 @@
+[
+  {
+    "name": "onion",
+    "original": {
+      "width": 1312,
+      "height": 1199,
+      "sha256": "88a6170e384f901d56558975026303bee3b22e078301f1b321d78ca74f2d294c"
+    },
+    "crop": {
+      "left": 96,
+      "top": 106,
+      "right": 1203,
+      "bottom": 1108,
+      "transparent": 973248,
+      "partial": 3387
+    },
+    "processed": {
+      "width": 512,
+      "height": 463,
+      "left": 0,
+      "top": 0,
+      "right": 511,
+      "bottom": 462,
+      "transparent": 108460,
+      "partial": 2125
+    }
+  },
+  {
+    "name": "paprika",
+    "original": {
+      "width": 1536,
+      "height": 1024,
+      "sha256": "d22a2249159eca4ae9380814b73363356e9f2dfc60c656c5a2cd60dba9a7dedf"
+    },
+    "crop": {
+      "left": 392,
+      "top": 147,
+      "right": 1112,
+      "bottom": 857,
+      "transparent": 1338981,
+      "partial": 1573
+    },
+    "processed": {
+      "width": 512,
+      "height": 505,
+      "left": 0,
+      "top": 0,
+      "right": 511,
+      "bottom": 504,
+      "transparent": 139777,
+      "partial": 2428
+    }
+  },
+  {
+    "name": "olive",
+    "original": {
+      "width": 1536,
+      "height": 1024,
+      "sha256": "f5d9b021abbc0cd641da6232b179777d6de88286bbaa7a1eeafe7db998b85cb0"
+    },
+    "crop": {
+      "left": 322,
+      "top": 93,
+      "right": 1203,
+      "bottom": 927,
+      "transparent": 1117519,
+      "partial": 2481
+    },
+    "processed": {
+      "width": 512,
+      "height": 485,
+      "left": 0,
+      "top": 0,
+      "right": 511,
+      "bottom": 484,
+      "transparent": 93974,
+      "partial": 2454
+    }
+  },
+  {
+    "name": "dough-ball",
+    "original": {
+      "width": 1277,
+      "height": 1232,
+      "sha256": "3cedcf4ec497952bfc2a32ac285890a3780dcfad1d911f0fc35e3fde11bf7725"
+    },
+    "crop": {
+      "left": 68,
+      "top": 85,
+      "right": 1197,
+      "bottom": 1154,
+      "transparent": 635868,
+      "partial": 2272
+    },
+    "processed": {
+      "width": 1024,
+      "height": 970,
+      "left": 0,
+      "top": 0,
+      "right": 1023,
+      "bottom": 969,
+      "transparent": 221419,
+      "partial": 5532
+    }
+  },
+  {
+    "name": "dough-mid",
+    "original": {
+      "width": 1277,
+      "height": 1232,
+      "sha256": "8b20ab1b6fb94787b2fd351feb50ac94fe829c2d9ebe902de1c7a81a92a41743"
+    },
+    "crop": {
+      "left": 43,
+      "top": 34,
+      "right": 1232,
+      "bottom": 1195,
+      "transparent": 534153,
+      "partial": 2084
+    },
+    "processed": {
+      "width": 1024,
+      "height": 1000,
+      "left": 0,
+      "top": 0,
+      "right": 1023,
+      "bottom": 999,
+      "transparent": 252829,
+      "partial": 5072
+    }
+  },
+  {
+    "name": "dough-baked",
+    "original": {
+      "width": 1277,
+      "height": 1232,
+      "sha256": "e4561c569c6cc745ce8bd0e9200944bee9e3a3e87c2a4d517a3366f07b4211b3"
+    },
+    "crop": {
+      "left": 10,
+      "top": 6,
+      "right": 1250,
+      "bottom": 1220,
+      "transparent": 402544,
+      "partial": 2329
+    },
+    "processed": {
+      "width": 1024,
+      "height": 1003,
+      "left": 0,
+      "top": 0,
+      "right": 1023,
+      "bottom": 1002,
+      "transparent": 227967,
+      "partial": 4971
+    }
+  },
+  {
+    "name": "cheese-melt",
+    "original": {
+      "width": 2172,
+      "height": 724,
+      "sha256": "6f6aca88f66a0f2e1ea33e9ec761b7d79a935f605ca7e704d0e03e80ec88b9d4"
+    },
+    "crop": {
+      "left": 220,
+      "top": 159,
+      "right": 1895,
+      "bottom": 559,
+      "transparent": 1234266,
+      "partial": 2152
+    },
+    "processed": {
+      "width": 384,
+      "height": 92,
+      "left": 0,
+      "top": 0,
+      "right": 383,
+      "bottom": 91,
+      "transparent": 17420,
+      "partial": 361
+    }
+  }
+]
