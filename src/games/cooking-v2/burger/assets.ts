@@ -1,3 +1,6 @@
+import ketchupDrizzle from './assets/sauce-ketchup-drizzle.png'
+import mayonnaiseDrizzle from './assets/sauce-mayonnaise-drizzle.png'
+import mustardDrizzle from './assets/sauce-mustard-drizzle.png'
 import a0 from './assets/bacon.png'
 import a1 from './assets/bun-bottom.png'
 import a2 from './assets/bun-top.png'
@@ -22,6 +25,6 @@ import a20 from './assets/sauce-mustard-bowl.png'
 import a21 from './assets/spatula.png'
 import a22 from './assets/tomato-stack.png'
 import a23 from './assets/tomato.png'
-export const urls:Record<string,string>={"bacon":a0,"bun-bottom":a1,"bun-top":a2,"cheese-stack":a3,"cheese":a4,"egg":a5,"frying-pan":a6,"lettuce-stack":a7,"lettuce":a8,"mushroom-group":a9,"onion-group":a10,"patty-cooked":a11,"patty-raw":a12,"pickle-group":a13,"plate":a14,"sauce-ketchup-bottle":a15,"sauce-ketchup-bowl":a16,"sauce-mayonnaise-bottle":a17,"sauce-mayonnaise-bowl":a18,"sauce-mustard-bottle":a19,"sauce-mustard-bowl":a20,"spatula":a21,"tomato-stack":a22,"tomato":a23}
+export const urls:Record<string,string>={'sauce-ketchup-drizzle':ketchupDrizzle,'sauce-mayonnaise-drizzle':mayonnaiseDrizzle,'sauce-mustard-drizzle':mustardDrizzle,"bacon":a0,"bun-bottom":a1,"bun-top":a2,"cheese-stack":a3,"cheese":a4,"egg":a5,"frying-pan":a6,"lettuce-stack":a7,"lettuce":a8,"mushroom-group":a9,"onion-group":a10,"patty-cooked":a11,"patty-raw":a12,"pickle-group":a13,"plate":a14,"sauce-ketchup-bottle":a15,"sauce-ketchup-bowl":a16,"sauce-mayonnaise-bottle":a17,"sauce-mayonnaise-bowl":a18,"sauce-mustard-bottle":a19,"sauce-mustard-bowl":a20,"spatula":a21,"tomato-stack":a22,"tomato":a23}
 export type Images=Record<string,HTMLImageElement>
 export async function loadImages():Promise<Images>{return Object.fromEntries(await Promise.all(Object.entries(urls).map(async([k,url])=>{const i=new Image();i.src=url;await i.decode();return [k,i]})))}

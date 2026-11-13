@@ -1,7 +1,7 @@
 import {chromium} from '@playwright/test'
 import {readFileSync,readdirSync,writeFileSync,mkdirSync} from 'node:fs'
 import {createHash} from 'node:crypto'
-const dir='public/assets/cooking-v2/burger/',names=readdirSync(dir).filter(n=>n.endsWith('.png')).sort()
+const dir='public/assets/cooking-v2/burger/',names=readdirSync(dir).filter(n=>n.endsWith('.png')&&!n.endsWith('-drizzle.png')).sort()
 const browser=await chromium.launch({executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH||(process.platform==='win32'?'C:/Program Files/Google/Chrome/Application/chrome.exe':undefined)}),page=await browser.newPage({viewport:{width:1440,height:1700}})
 await page.setContent('<style>body{margin:0;background:#f9eddb;font:17px sans-serif}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px}.item{background:#fff8;border-radius:15px;text-align:center;height:270px}img{display:block;width:100%;height:237px;object-fit:contain}</style><div class="grid">'+names.map(n=>`<div class="item"><img alt="${n}" src="data:image/png;base64,${readFileSync(dir+n).toString('base64')}">${n}</div>`).join('')+'</div>')
 await page.evaluate(()=>Promise.all([...document.images].map(i=>i.decode())))
