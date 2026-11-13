@@ -46,16 +46,24 @@ export function heat(s:Session,delta:number):Session{const g=s.grill;if(s.stage!
 export function cooked(g:Grill){return g.phase==='ready'?0:g.phase==='first'?.5*g.elapsed/SIDE_MS:g.phase==='awaitFlip'||g.phase==='flipping'?.5:g.phase==='second'?.5+.5*g.elapsed/SIDE_MS:1}
 export function undo(s:Session):Session{if(s.stage==='grill'){if(!s.grillHistory.length)return s;return {...s,grill:s.grillHistory.at(-1)!,grillHistory:s.grillHistory.slice(0,-1)}}if(!s.history.length)return s;return {...s,design:s.history.at(-1)!,history:s.history.slice(0,-1)}}
 export type Sprite={key:string;asset:string;x:number;y:number;width:number;height:number;layerId?:number;sauceId?:number;rotation?:number}
+// Visible top-surface centers within each existing food sprite; food geometry stays unchanged.
+const sauceSurface:Record<Kind|'bun',number>={bun:.32,patty:.38,cheese:.32,lettuce:.40,tomato:.38,onion:.40,pickle:.40,bacon:.42,egg:.40,mushroom:.43}
 export function layout(layers:Layer[],complete:boolean,applications:Application[]=[]){
  let surface=740
  const food:Sprite[]=[{key:'bottom',asset:'bun-bottom',x:175,y:520,width:650,height:310}]
  // Insert each sauce immediately after its supporting ingredient, before any later food.
- function drizzle(base:Sprite,id:number){for(const a of applications.filter(a=>a.after===id)){
-  const width=base.width*(a.scale??.84),height=width*.20
-  food.push({key:`sauce-${a.id}`,asset:`sauce-${a.sauce}-drizzle`,x:base.x+base.width/2-width/2+(a.offsetX??0)*base.width,y:base.y+base.height*(.78+(a.offsetY??0))-height/2,width,height,sauceId:a.id,rotation:a.rotation??0})
+ function drizzle(base:Sprite,id:number,kind:Kind|'bun'='bun'){for(const a of applications.filter(a=>a.after===id)){
+  // Interpret old stored sizes through the new rendering profile; never rewrite saved recipes.
+  const width=base.width*Math.max(.4,Math.min(.65,(a.scale??.84)*.65)),height=width*.10
+  // An ID-based low-discrepancy sequence spreads repeated pours without moving their neighbors
+  // when a sauce is removed. Both screen and PNG use these same deterministic positions.
+  const fraction=(n:number)=>n-Math.floor(n)
+  const dx=(fraction(a.id*.61803398875)-.5)*.26+(a.offsetX??0)*.5
+  const dy=(fraction(a.id*.41421356237)-.5)*.12+(a.offsetY??0)*.25
+  food.push({key:`sauce-${a.id}`,asset:`sauce-${a.sauce}-drizzle`,x:base.x+base.width/2-width/2+dx*base.width,y:base.y+base.height*(sauceSurface[kind]+dy)-height/2,width,height,sauceId:a.id,rotation:(a.rotation??0)*.35})
  }}
  drizzle(food[0],0)
- for(const l of layers){const i=ingredients.find(i=>i.id===l.kind)!,sprite={key:String(l.id),asset:i.asset,x:500-i.width/2,y:surface+i.overhang-i.height,width:i.width,height:i.height,layerId:l.id};food.push(sprite);drizzle(sprite,l.id);surface-=i.thickness}
+ for(const l of layers){const i=ingredients.find(i=>i.id===l.kind)!,sprite={key:String(l.id),asset:i.asset,x:500-i.width/2,y:surface+i.overhang-i.height,width:i.width,height:i.height,layerId:l.id};food.push(sprite);drizzle(sprite,l.id,l.kind);surface-=i.thickness}
  const capTop=surface+26-345,scale=Math.min(1,700/(830-capTop))
  if(complete)food.push({key:'top',asset:'bun-top',x:170,y:capTop,width:660,height:345})
  const sprites=food.map(i=>({...i,x:500+(i.x-500)*scale,y:830+(i.y-830)*scale,width:i.width*scale,height:i.height*scale}))
