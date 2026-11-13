@@ -1,0 +1,191 @@
+[
+  {
+    "name": "cupcake-baked-base.png",
+    "sha256": "ce83f6bae052c64a130ddb4b92bcc917eda15e90117a9adfb072bf8ba79c5c1f",
+    "format": "PNG",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 905155,
+    "partial": 667120,
+    "removed": 10439,
+    "bounds": {
+      "left": 138,
+      "top": 171,
+      "right": 1108,
+      "bottom": 1082
+    },
+    "cropped": {
+      "width": 971,
+      "height": 912
+    }
+  },
+  {
+    "name": "cupcake-kitchen-bg.png",
+    "sha256": "50a68e37c835a34592e80022a06149c1e6c8522fd34aa221b32fc3e87b8cec61",
+    "format": "PNG",
+    "colorType": 2,
+    "width": 1672,
+    "height": 941,
+    "transparent": 0,
+    "partial": 0,
+    "removed": 0,
+    "bounds": {
+      "left": 0,
+      "top": 0,
+      "right": 1671,
+      "bottom": 940
+    },
+    "cropped": {
+      "width": 1672,
+      "height": 941
+    }
+  },
+  {
+    "name": "cupcake-tray.png",
+    "sha256": "5195f1cba192ee671ae9edb44108d6ad663eac63268fa0b7d56d202e2fbd672e",
+    "format": "PNG",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 742827,
+    "partial": 828638,
+    "removed": 54130,
+    "bounds": {
+      "left": 10,
+      "top": 319,
+      "right": 1231,
+      "bottom": 1022
+    },
+    "cropped": {
+      "width": 1222,
+      "height": 704
+    }
+  },
+  {
+    "name": "frosting-strawberry.png",
+    "sha256": "2b0c210ae042cacf8d3affe9b611e6b5da441f4897e28e774e5445728f18e96e",
+    "format": "PNG",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 951938,
+    "partial": 620423,
+    "removed": 30800,
+    "bounds": {
+      "left": 130,
+      "top": 135,
+      "right": 1113,
+      "bottom": 1076
+    },
+    "cropped": {
+      "width": 984,
+      "height": 942
+    }
+  },
+  {
+    "name": "frosting-vanilla.png",
+    "sha256": "f8bc99b174b89dc57e5afc267e85be516e8d9bdd393d2cff1f99fb2ddb1654ec",
+    "format": "PNG",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 803862,
+    "partial": 768278,
+    "removed": 80592,
+    "bounds": {
+      "left": 95,
+      "top": 122,
+      "right": 1158,
+      "bottom": 1110
+    },
+    "cropped": {
+      "width": 1064,
+      "height": 989
+    }
+  },
+  {
+    "name": "mixing-bowl-batter.png",
+    "sha256": "5e087d5420125de0a6a0be5a6da4fcbaa75d1a4ae10862241d7bed836a8cf7e1",
+    "format": "PNG",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 670577,
+    "partial": 901326,
+    "removed": 39219,
+    "bounds": {
+      "left": 27,
+      "top": 168,
+      "right": 1209,
+      "bottom": 1136
+    },
+    "cropped": {
+      "width": 1183,
+      "height": 969
+    }
+  },
+  {
+    "name": "piping-bag-vanilla.png",
+    "sha256": "d888f3a759d16d040d82993c66d98865d18f4a43778454d7fa12e20648612fe6",
+    "format": "PNG",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1085487,
+    "partial": 486627,
+    "removed": 10555,
+    "bounds": {
+      "left": 222,
+      "top": 13,
+      "right": 1151,
+      "bottom": 1194
+    },
+    "cropped": {
+      "width": 930,
+      "height": 1182
+    }
+  },
+  {
+    "name": "tool-whisk.png",
+    "sha256": "f091e040bd104fd7b08ad26fe57812ab65ac571b166cba06f12f61ee8079b613",
+    "format": "PNG",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1303974,
+    "partial": 266885,
+    "removed": 39779,
+    "bounds": {
+      "left": 404,
+      "top": 25,
+      "right": 847,
+      "bottom": 1214
+    },
+    "cropped": {
+      "width": 444,
+      "height": 1190
+    }
+  },
+  {
+    "name": "topping-sprinkles.png",
+    "sha256": "088747c70591ca938266dd41a0f51573bfacdd225ec6901e941010e79f1163f6",
+    "format": "PNG",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 996372,
+    "partial": 575913,
+    "removed": 59167,
+    "bounds": {
+      "left": 119,
+      "top": 269,
+      "right": 1135,
+      "bottom": 978
+    },
+    "cropped": {
+      "width": 1017,
+      "height": 710
+    }
+  }
+]
