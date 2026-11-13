@@ -1,0 +1,68 @@
+[
+  {
+    "name": "sauce-ketchup-drizzle.png",
+    "format": "PNG",
+    "colorType": 6,
+    "sha256": "fee9555c15ad6ea9a623637a23063fa7b4446afd2e8b258a2e0c611ea6aeaa94",
+    "width": 1448,
+    "height": 1086,
+    "transparent": 1308835,
+    "partial": 263204,
+    "components": 1,
+    "removed": 11324,
+    "cropped": {
+      "width": 1286,
+      "height": 388
+    },
+    "bounds": {
+      "left": 83,
+      "top": 364,
+      "right": 1368,
+      "bottom": 751
+    }
+  },
+  {
+    "name": "sauce-mayonnaise-drizzle.png",
+    "format": "PNG",
+    "colorType": 6,
+    "sha256": "5646b84720bff9289b089f8bc772be2c37bfe40b28f18a671e2267d801a7c925",
+    "width": 1448,
+    "height": 1086,
+    "transparent": 1278721,
+    "partial": 293418,
+    "components": 1,
+    "removed": 19774,
+    "cropped": {
+      "width": 1303,
+      "height": 397
+    },
+    "bounds": {
+      "left": 80,
+      "top": 363,
+      "right": 1382,
+      "bottom": 759
+    }
+  },
+  {
+    "name": "sauce-mustard-drizzle.png",
+    "format": "PNG",
+    "colorType": 6,
+    "sha256": "3af2c5300779354295c4021df5f63d2eca62d683c0189862e05bbb7e08a9dfed",
+    "width": 1448,
+    "height": 1086,
+    "transparent": 1291694,
+    "partial": 280220,
+    "components": 1,
+    "removed": 10040,
+    "cropped": {
+      "width": 1291,
+      "height": 400
+    },
+    "bounds": {
+      "left": 79,
+      "top": 361,
+      "right": 1369,
+      "bottom": 760
+    }
+  }
+]

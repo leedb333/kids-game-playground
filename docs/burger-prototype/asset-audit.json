@@ -1,0 +1,458 @@
+[
+  {
+    "name": "bacon.png",
+    "sha256": "6bbf63e44ed884f9fdfd224aa7cf8066a0396c5ae3dfa1ac7fe2a6ba00cfb333",
+    "width": 564,
+    "height": 286,
+    "transparent": 78914,
+    "partial": 82390,
+    "speckles": 230,
+    "bounds": {
+      "left": 17,
+      "top": 16,
+      "right": 546,
+      "bottom": 268
+    },
+    "cropped": {
+      "width": 530,
+      "height": 253
+    }
+  },
+  {
+    "name": "bun-bottom.png",
+    "sha256": "03cb205ea0a7e70d12e9d6701cb47a20c95320f96fc11ff3553076fca4599099",
+    "width": 543,
+    "height": 375,
+    "transparent": 62571,
+    "partial": 140991,
+    "speckles": 239,
+    "bounds": {
+      "left": 16,
+      "top": 16,
+      "right": 525,
+      "bottom": 357
+    },
+    "cropped": {
+      "width": 510,
+      "height": 342
+    }
+  },
+  {
+    "name": "bun-top.png",
+    "sha256": "c2068f6d83de55c67e8561d9614a78b9c8789bcae653ba86201f36b1f88a1db9",
+    "width": 1265,
+    "height": 769,
+    "transparent": 247889,
+    "partial": 724502,
+    "speckles": 547,
+    "bounds": {
+      "left": 17,
+      "top": 17,
+      "right": 1248,
+      "bottom": 751
+    },
+    "cropped": {
+      "width": 1232,
+      "height": 735
+    }
+  },
+  {
+    "name": "cheese-stack.png",
+    "sha256": "b76ef9c7922fba6c464e4675542bb8b02d3c4314042d4f4446e751c0eaded007",
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1217913,
+    "partial": 354225,
+    "speckles": 13510,
+    "bounds": {
+      "left": 54,
+      "top": 364,
+      "right": 1198,
+      "bottom": 898
+    },
+    "cropped": {
+      "width": 1145,
+      "height": 535
+    }
+  },
+  {
+    "name": "cheese.png",
+    "sha256": "1815596a708300aed4360ccb376b10d2da2abb81192e443981a2443a9925bbb1",
+    "width": 512,
+    "height": 316,
+    "transparent": 85655,
+    "partial": 76137,
+    "speckles": 265,
+    "bounds": {
+      "left": 17,
+      "top": 17,
+      "right": 494,
+      "bottom": 298
+    },
+    "cropped": {
+      "width": 478,
+      "height": 282
+    }
+  },
+  {
+    "name": "egg.png",
+    "sha256": "30cd2edfac394d7db75e8fe621c5217c127a320469d720ae7ae65c3708cce230",
+    "width": 477,
+    "height": 309,
+    "transparent": 56841,
+    "partial": 90552,
+    "speckles": 268,
+    "bounds": {
+      "left": 16,
+      "top": 17,
+      "right": 460,
+      "bottom": 291
+    },
+    "cropped": {
+      "width": 445,
+      "height": 275
+    }
+  },
+  {
+    "name": "frying-pan.png",
+    "sha256": "5b53280ca510793d47d12f40d2bfa5edc3b2d74aa4e8427d4583696a01e421a4",
+    "width": 903,
+    "height": 532,
+    "transparent": 233621,
+    "partial": 246735,
+    "speckles": 451,
+    "bounds": {
+      "left": 16,
+      "top": 16,
+      "right": 886,
+      "bottom": 514
+    },
+    "cropped": {
+      "width": 871,
+      "height": 499
+    }
+  },
+  {
+    "name": "lettuce-stack.png",
+    "sha256": "13e66e8a2ecc8c43132d09f7dfb921d76556bb42033d2fbd5d8b090e06033696",
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1201390,
+    "partial": 370783,
+    "speckles": 27239,
+    "bounds": {
+      "left": 43,
+      "top": 417,
+      "right": 1210,
+      "bottom": 820
+    },
+    "cropped": {
+      "width": 1168,
+      "height": 404
+    }
+  },
+  {
+    "name": "lettuce.png",
+    "sha256": "d3c6500639692c63e8022da2762c27bbbeb1ca68f19f7d2eb7ab0e2d24d2d930",
+    "width": 539,
+    "height": 372,
+    "transparent": 77210,
+    "partial": 123298,
+    "speckles": 309,
+    "bounds": {
+      "left": 16,
+      "top": 17,
+      "right": 521,
+      "bottom": 355
+    },
+    "cropped": {
+      "width": 506,
+      "height": 339
+    }
+  },
+  {
+    "name": "mushroom-group.png",
+    "sha256": "1d803793ebd940ed870c0d21953052266bef18a68c0ee9b7d84355e99ca095d0",
+    "width": 485,
+    "height": 300,
+    "transparent": 60386,
+    "partial": 85114,
+    "speckles": 296,
+    "bounds": {
+      "left": 17,
+      "top": 17,
+      "right": 468,
+      "bottom": 282
+    },
+    "cropped": {
+      "width": 452,
+      "height": 266
+    }
+  },
+  {
+    "name": "onion-group.png",
+    "sha256": "199144b751818b00b56a8aedfecdf52550b67089d44b8dc2d59914ee9d759631",
+    "width": 542,
+    "height": 307,
+    "transparent": 80313,
+    "partial": 86081,
+    "speckles": 600,
+    "bounds": {
+      "left": 16,
+      "top": 17,
+      "right": 524,
+      "bottom": 290
+    },
+    "cropped": {
+      "width": 509,
+      "height": 274
+    }
+  },
+  {
+    "name": "patty-cooked.png",
+    "sha256": "f723c96d05570646b40b0332b9d79990b1a992038fd313384a32a5e50136d4aa",
+    "width": 509,
+    "height": 352,
+    "transparent": 59662,
+    "partial": 119506,
+    "speckles": 276,
+    "bounds": {
+      "left": 17,
+      "top": 18,
+      "right": 492,
+      "bottom": 334
+    },
+    "cropped": {
+      "width": 476,
+      "height": 317
+    }
+  },
+  {
+    "name": "patty-raw.png",
+    "sha256": "5a4051b8939d57c160eb34a9219e1fe4ec7dd06a46be34243b8154a7ebcb9012",
+    "width": 1254,
+    "height": 1254,
+    "transparent": 860701,
+    "partial": 711381,
+    "speckles": 14223,
+    "bounds": {
+      "left": 68,
+      "top": 224,
+      "right": 1186,
+      "bottom": 1015
+    },
+    "cropped": {
+      "width": 1119,
+      "height": 792
+    }
+  },
+  {
+    "name": "pickle-group.png",
+    "sha256": "d228cdd565726090fcec45365d25e4ca746015be93c32396dff5d8397435fec9",
+    "width": 456,
+    "height": 309,
+    "transparent": 54051,
+    "partial": 86853,
+    "speckles": 264,
+    "bounds": {
+      "left": 16,
+      "top": 17,
+      "right": 438,
+      "bottom": 291
+    },
+    "cropped": {
+      "width": 423,
+      "height": 275
+    }
+  },
+  {
+    "name": "plate.png",
+    "sha256": "577a428d03707c596ee20110970297146971244724501b5ae746c03bbd5df0f7",
+    "width": 644,
+    "height": 403,
+    "transparent": 81214,
+    "partial": 178290,
+    "speckles": 326,
+    "bounds": {
+      "left": 17,
+      "top": 17,
+      "right": 626,
+      "bottom": 385
+    },
+    "cropped": {
+      "width": 610,
+      "height": 369
+    }
+  },
+  {
+    "name": "sauce-ketchup-bottle.png",
+    "sha256": "318407206ddcd3b8a6d0f74c274412c91322d4e6934b8ea1486e42d73477b692",
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1055276,
+    "partial": 516571,
+    "speckles": 24579,
+    "bounds": {
+      "left": 314,
+      "top": 40,
+      "right": 923,
+      "bottom": 1211
+    },
+    "cropped": {
+      "width": 610,
+      "height": 1172
+    }
+  },
+  {
+    "name": "sauce-ketchup-bowl.png",
+    "sha256": "8c6451700a8971683d3acecda2116b98272065f959120fa2421c854cabe9f5d0",
+    "width": 389,
+    "height": 309,
+    "transparent": 43224,
+    "partial": 76941,
+    "speckles": 210,
+    "bounds": {
+      "left": 17,
+      "top": 17,
+      "right": 370,
+      "bottom": 291
+    },
+    "cropped": {
+      "width": 354,
+      "height": 275
+    }
+  },
+  {
+    "name": "sauce-mayonnaise-bottle.png",
+    "sha256": "685fa3a9cd322539de4c5bba6762248249b82133607e0bd3b901e953663a5914",
+    "width": 1254,
+    "height": 1254,
+    "transparent": 327421,
+    "partial": 1244456,
+    "speckles": 493554,
+    "bounds": {
+      "left": 274,
+      "top": 0,
+      "right": 953,
+      "bottom": 1205
+    },
+    "cropped": {
+      "width": 680,
+      "height": 1206
+    }
+  },
+  {
+    "name": "sauce-mayonnaise-bowl.png",
+    "sha256": "ed5f3ab2c1866a9dd29b48b749cd369c7b79ae21fdad3c96be64bd9e50144d03",
+    "width": 387,
+    "height": 308,
+    "transparent": 42627,
+    "partial": 76533,
+    "speckles": 171,
+    "bounds": {
+      "left": 17,
+      "top": 16,
+      "right": 369,
+      "bottom": 291
+    },
+    "cropped": {
+      "width": 353,
+      "height": 276
+    }
+  },
+  {
+    "name": "sauce-mustard-bottle.png",
+    "sha256": "7ef90c466409d10ff9d65d5e7b2013131ad8a222c3819e092c850d3edda6f522",
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1019927,
+    "partial": 551832,
+    "speckles": 14632,
+    "bounds": {
+      "left": 308,
+      "top": 31,
+      "right": 934,
+      "bottom": 1223
+    },
+    "cropped": {
+      "width": 627,
+      "height": 1193
+    }
+  },
+  {
+    "name": "sauce-mustard-bowl.png",
+    "sha256": "1778c39ffcf2f6e4bf7b5803407e0c3d6aa71dbfa6f7819a8e2979eeb6e4945f",
+    "width": 389,
+    "height": 309,
+    "transparent": 43054,
+    "partial": 77112,
+    "speckles": 221,
+    "bounds": {
+      "left": 17,
+      "top": 16,
+      "right": 370,
+      "bottom": 291
+    },
+    "cropped": {
+      "width": 354,
+      "height": 276
+    }
+  },
+  {
+    "name": "spatula.png",
+    "sha256": "fb2d95dd28b307a6a4638a41a3837fecd59d4fb50456cecc0b219d6d1d48578d",
+    "width": 457,
+    "height": 500,
+    "transparent": 154764,
+    "partial": 73684,
+    "speckles": 444,
+    "bounds": {
+      "left": 16,
+      "top": 17,
+      "right": 440,
+      "bottom": 482
+    },
+    "cropped": {
+      "width": 425,
+      "height": 466
+    }
+  },
+  {
+    "name": "tomato-stack.png",
+    "sha256": "f251e70238cb8abe248aa7b7936346e43b3d4e3ca609b7e1c471aa591dd9460a",
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1141875,
+    "partial": 430172,
+    "speckles": 13258,
+    "bounds": {
+      "left": 98,
+      "top": 433,
+      "right": 1149,
+      "bottom": 917
+    },
+    "cropped": {
+      "width": 1052,
+      "height": 485
+    }
+  },
+  {
+    "name": "tomato.png",
+    "sha256": "357cc7ba72feecb2ceca36ab2bfbc462fa3c26b4e5ce559350ab0d23887ce0eb",
+    "width": 468,
+    "height": 339,
+    "transparent": 51191,
+    "partial": 107461,
+    "speckles": 231,
+    "bounds": {
+      "left": 17,
+      "top": 17,
+      "right": 450,
+      "bottom": 322
+    },
+    "cropped": {
+      "width": 434,
+      "height": 306
+    }
+  }
+]
