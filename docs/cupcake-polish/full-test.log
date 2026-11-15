@@ -1,0 +1,336 @@
+
+[WebServer] (node:16544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 276 tests using 2 workers
+
+(node:4756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:5156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/276] tests\bricks-speed-restart.spec.ts:9:1 › audit all ten stages at compact/reference/portrait sizes; no pattern-dependent cap
+[2/276] tests\bricks-engine.spec.ts:7:1 › ten distinct stage patterns, exactly three hearts/three clovers and one nonoverlapping gold each
+[3/276] tests\bricks-engine.spec.ts:13:1 › swept rounded collision handles all faces, corner arcs, misses and high-speed tunneling
+[4/276] tests\bricks-engine.spec.ts:18:1 › gold immediately clears while normal bricks remain; normals alone never bypass a remaining gold
+[5/276] tests\bricks-speed-restart.spec.ts:21:1 › 30/60/90/120/144Hz and jitter move all stages by elapsed seconds, not by frame count
+[6/276] tests\bricks-engine.spec.ts:23:1 › paddle mirrors incoming angle at every contact position without changing speed or horizontal direction
+[7/276] tests\bricks-engine.spec.ts:29:1 › 1.2x base speed, two balls after ten active seconds, and no timed acceleration
+[8/276] tests\bricks-speed-restart.spec.ts:31:1 › every stage preserves target magnitude through paddle, brick, wall, pause, miss and two-ball launches
+[9/276] tests\bricks-speed-restart.spec.ts:42:1 › old saves cannot restore a stale speed; current-stage reset preserves all other boards/completions
+[10/276] tests\bricks-speed-restart.spec.ts:53:25 › stage 1: cancel a moving game, confirm reset, persist and resume with full gold/normal bricks
+[11/276] tests\bricks-engine.spec.ts:41:1 › two independent balls share bricks, either ball clears gold, and only losing both restarts
+[12/276] tests\bricks-engine.spec.ts:49:1 › pause is frozen, misses keep bricks, and variable frame intervals preserve physics
+[13/276] tests\bricks-engine.spec.ts:53:1 › progress validates each board and preserves other unfinished stages and completion records
+[14/276] tests\bricks-engine.spec.ts:56:1 › all ten real layouts can clear through simulated paddle control without editing bricks or the ball
+[15/276] tests\bricks-speed-restart.spec.ts:53:25 › stage 8: cancel a moving game, confirm reset, persist and resume with full gold/normal bricks
+[16/276] tests\bricks.spec.ts:9:1 › live play adds a second ball after ten seconds without acceleration and resets on a new stage
+[17/276] tests\bricks-speed-restart.spec.ts:53:25 › stage 9: cancel a moving game, confirm reset, persist and resume with full gold/normal bricks
+[18/276] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: tablet
+[19/276] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: tablet-16x9
+[20/276] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: phone
+[21/276] tests\bricks.spec.ts:30:1 › cached playground starts in a new offline window and opens all four games
+[22/276] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: small-phone
+[23/276] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: phone-landscape
+[24/276] tests\bricks-speed-restart.spec.ts:65:1 › real browser audits target/actual launch speed and paused/resumed velocity in all ten stages
+[25/276] tests\bricks.spec.ts:41:1 › all ten stages start, stage gallery matches data, and each layout is captured
+[26/276] tests\burger-sauce-fit.spec.ts:24:29 › comparison ketchup-once
+[27/276] tests\bricks.spec.ts:46:160 › live breakout layout tablet
+[28/276] tests\bricks.spec.ts:46:160 › live breakout layout tablet-16x9
+[29/276] tests\bricks.spec.ts:46:160 › live breakout layout phone
+[30/276] tests\bricks.spec.ts:46:160 › live breakout layout small-phone
+[31/276] tests\bricks.spec.ts:46:160 › live breakout layout phone-landscape
+[32/276] tests\bricks.spec.ts:50:1 › native phone touch moves the paddle only horizontally, captures a grab offset and blocks scroll
+[33/276] tests\bricks.spec.ts:55:1 › pause freezes the ball, resumes without a time jump and backgrounding pauses automatically
+[34/276] tests\bricks.spec.ts:59:1 › remaining gold is playable, naturally clears with other bricks absent, saves next stage and resumes
+[35/276] tests\bricks.spec.ts:62:1 › stage ten naturally clears to a special celebration and can restart stage one
+[36/276] tests\bricks.spec.ts:65:1 › offline first open, isolated progress and muted/blocked storage remain playable
+  1) tests\burger-sauce-fit.spec.ts:24:29 › comparison ketchup-once ────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.bg-burger')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('.bg-burger') with timeout 5000ms
+      - waiting for locator('.bg-burger')
+
+
+       8 | function recipe(names:Kind[]){let s=ready();for(const name of names)s=add(s,name);return s}
+       9 | function drizzle(s:Session,names:Sauce[]){for(const name of names)s=applySauce(s,name,{x:500,y:550});return s}
+    > 10 | async function open(page:Page,s:Session){await page.addInitScript(({s,k})=>{if(!sessionStorage.getItem('fit-fixture')){localStorage.setItem(k,JSON.stringify(s));sessionStorage.setItem('fit-fixture','yes')}},{s,k:storageKey});await page.goto('prototypes/cooking-v2/burger/#play');await expect(page.locator('.bg-burger')).toBeVisible()}
+         |                                                                                                                                                                                                                                                                                                                                 ^
+      11 | const scenarios=['ketchup-once','mustard-once','mustard-three','mixed','under-cheese','under-stack','complete','cheese-diagnostic'] as const
+      12 | function scenario(name:typeof scenarios[number]){
+      13 |  let s=recipe(['patty','cheese','lettuce'])
+        at open (C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\burger-sauce-fit.spec.ts:10:321)
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\burger-sauce-fit.spec.ts:25:77
+
+    Error Context: test-results\burger-sauce-fit-comparison-ketchup-once\error-context.md
+
+
+[37/276] tests\bricks.spec.ts:68:1 › muted brick hits make no audio and blocked storage does not stop play
+(node:19748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[38/276] tests\burger-sauce-fit.spec.ts:24:29 › comparison mustard-once
+[39/276] tests\bricks.spec.ts:72:1 › real destroyed bricks persist independently when leaving home and returning
+[40/276] tests\burger-sauce-fit.spec.ts:24:29 › comparison mustard-three
+[41/276] tests\burger-sauces.spec.ts:13:1 › legacy v1 saves/history keep food and sauces; removed supporting layers reanchor; undo restores exact placement
+[42/276] tests\burger-sauces.spec.ts:26:1 › unlimited sauce repeats do not consume any of the sixteen ingredient layers or change food scale
+[43/276] tests\burger-sauces.spec.ts:34:1 › all three originals preserve hashes and RGBA; processed transparent edges contain no detached speckles
+[44/276] tests\burger-sauce-fit.spec.ts:24:29 › comparison mixed
+[45/276] tests\burger-sauce-fit.spec.ts:24:29 › comparison under-cheese
+[46/276] tests\burger-sauce-fit.spec.ts:24:29 › comparison under-stack
+[47/276] tests\burger-sauces.spec.ts:47:93 › ketchup alone renders only its own sauce and persists exact coordinates
+[48/276] tests\burger-sauce-fit.spec.ts:24:29 › comparison complete
+[49/276] tests\burger-sauces.spec.ts:47:93 › mayonnaise alone renders only its own sauce and persists exact coordinates
+[50/276] tests\burger-sauce-fit.spec.ts:24:29 › comparison cheese-diagnostic
+[51/276] tests\burger-sauces.spec.ts:47:93 › mustard alone renders only its own sauce and persists exact coordinates
+[52/276] tests\burger-sauce-fit.spec.ts:36:1 › surface geometry: all ingredients, bottom bun, old saves and many repeats remain small, thin and stable
+[53/276] tests\burger-sauces.spec.ts:52:1 › touch and drag: repeated sauces, covering food, removal, undo, completion and PNG keep painter order
+[54/276] tests\burger-sauce-fit.spec.ts:52:1 › ingredient removal/reanchor and undo preserve exact sauce placement without changing food layout
+[55/276] tests\burger.spec.ts:12:1 › arbitrary/repeated order, remove/undo, selected inventory and stable fitting through sixteen layers
+[56/276] tests\burger.spec.ts:16:1 › both sides require a flip, never burn, pause and undo keep cooking state consistent
+[57/276] tests\burger.spec.ts:19:1 › all 24 original images decode with real alpha; hashes and processed assets are preserved
+[58/276] tests\burger.spec.ts:22:1 › real touch grill and flip, choose, free stack, remove/undo, completion and PNG keep exact layers
+[59/276] tests\burger-sauces.spec.ts:76:111 › three sauces fit touch viewport and PNG controls: tablet
+[60/276] tests\burger-sauces.spec.ts:76:111 › three sauces fit touch viewport and PNG controls: phone
+[61/276] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: tablet
+[62/276] tests\burger-sauces.spec.ts:76:111 › three sauces fit touch viewport and PNG controls: phone-landscape
+[63/276] tests\burger-sauces.spec.ts:80:1 › offline reload preserves sauces and other game saves; no sauce remains none
+[64/276] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: tablet-16x9
+[65/276] tests\coloring.spec.ts:30:2 › police-car-robot: all ordered colors, undo boundary, corrupt save
+[66/276] tests\coloring.spec.ts:41:2 › police-car-robot: actual touch, wrong color, resume, undo, reset
+[67/276] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: phone
+[68/276] tests\coloring.spec.ts:55:2 › police-car-robot: completion and exported PNG
+[69/276] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: small-phone
+[70/276] tests\coloring.spec.ts:30:2 › fire-robot: all ordered colors, undo boundary, corrupt save
+[71/276] tests\coloring.spec.ts:41:2 › fire-robot: actual touch, wrong color, resume, undo, reset
+[72/276] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: phone-landscape
+[73/276] tests\coloring.spec.ts:55:2 › fire-robot: completion and exported PNG
+[74/276] tests\burger.spec.ts:29:1 › horizontal touch scroll never places food; vertical touch drop, cancellation and repeat preserve order
+[75/276] tests\coloring.spec.ts:30:2 › baby-dinosaur: all ordered colors, undo boundary, corrupt save
+[76/276] tests\coloring.spec.ts:41:2 › baby-dinosaur: actual touch, wrong color, resume, undo, reset
+[77/276] tests\burger.spec.ts:32:1 › three sauces select and apply without fake drizzle; resume/reset keep pizza and other keys intact
+[78/276] tests\coloring.spec.ts:55:2 › baby-dinosaur: completion and exported PNG
+[79/276] tests\burger.spec.ts:35:1 › offline fresh burger entry, saved cooking, keyboard and blocked storage stay playable
+[80/276] tests\coloring.spec.ts:30:2 › garden-butterfly: all ordered colors, undo boundary, corrupt save
+[81/276] tests\coloring.spec.ts:41:2 › garden-butterfly: actual touch, wrong color, resume, undo, reset
+[82/276] tests\coloring.spec.ts:55:2 › garden-butterfly: completion and exported PNG
+[83/276] tests\cooking-v2-full.spec.ts:11:1 › session validation, active-time baking, ingredient and exact position preservation
+[84/276] tests\coloring.spec.ts:69:2 › coloring layout tablet
+[85/276] tests\cooking-v2-full.spec.ts:14:1 › real four-step touch/drag flow, six ingredients, identical baked toppings and actual PNG export
+[86/276] tests\coloring.spec.ts:69:2 › coloring layout tablet-16x9
+[87/276] tests\coloring.spec.ts:69:2 › coloring layout phone
+[88/276] tests\coloring.spec.ts:69:2 › coloring layout phone-landscape
+[89/276] tests\coloring.spec.ts:69:2 › coloring layout small-phone
+[90/276] tests\coloring.spec.ts:84:1 › offline first game open, reload persistence and isolated storage
+[91/276] tests\coloring.spec.ts:90:1 › color boundary advances automatically and drawings keep separate progress
+[92/276] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: tablet
+[93/276] tests\coloring.spec.ts:97:1 › coloring remains playable when browser storage is blocked
+[94/276] tests\coloring.spec.ts:102:1 › portrait revision stays intact while landscape starts separately
+[95/276] tests\coloring.spec.ts:108:1 › four revised themes, 25-color vehicles, no rose and previous saves preserved
+[96/276] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: tablet-16x9
+[97/276] tests\cooking-v2.spec.ts:12:1 › model: repeated placement, per-item state, collision rejection, move/remove and gesture undo
+[98/276] tests\cooking-v2.spec.ts:18:1 › all eight original assets preserved and browser-decodable, all derivatives load
+[99/276] tests\cooking-v2.spec.ts:24:1 › real texture paint clips at inner crust, coverage gate, preserved sauce, tablet screenshots
+[100/276] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: phone
+[101/276] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: small-phone
+[102/276] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: phone-landscape
+[103/276] tests\cooking-v2-full.spec.ts:28:1 › resume, reset confirmation, undo, native touch tray and separate old prototype data
+[104/276] tests\cooking-v2-full.spec.ts:31:1 › reload resumes a baking pizza with identical placement; offline entry preserves all graphics
+[105/276] tests\cooking-v2.spec.ts:37:1 › panel drag, tap, move, remove, undo, reload and unrelated storage preservation
+[106/276] tests\cooking-v2-full.spec.ts:34:1 › native rolling-pin touch on both axes, cancel, undo and saved dough progress
+[107/276] tests\cooking-v2-full.spec.ts:38:1 › leaving a baking screen pauses elapsed time and returning resumes the same pizza
+[108/276] tests\cooking-v2.spec.ts:43:1 › cheese swiping undoes as one gesture and invalid placement does not commit
+[109/276] tests\cooking.spec.ts:12:1 › short tablet keeps dough and sauce tools inside the screen
+[110/276] tests\cooking.spec.ts:14:1 › pizza state validation and previous revision separation
+[111/276] tests\cooking.spec.ts:15:1 › hands-on pizza: roll, cream, toppings, oven drag and eight cuts
+[112/276] tests\cooking-v2.spec.ts:46:140 › responsive touch: tablet-16x9
+[113/276] tests\cooking-v2.spec.ts:46:140 › responsive touch: phone
+[114/276] tests\cooking-v2.spec.ts:46:140 › responsive touch: phone-landscape
+[115/276] tests\cooking.spec.ts:43:1 › rolling requires movement on both axes; sauce needs tool and coverage
+[116/276] tests\cooking-v2.spec.ts:46:140 › responsive touch: small-phone
+[117/276] tests\cooking.spec.ts:49:160 › hands-on cooking layout tablet
+[118/276] tests\cooking-v2.spec.ts:51:1 › offline prototype works after cache install without affecting main entry
+[119/276] tests\cooking.spec.ts:49:160 › hands-on cooking layout tablet-16x9
+[120/276] tests\cooking-v2.spec.ts:54:1 › touch pointer dragging paints and places; pointer cancellation discards unfinished work
+[121/276] tests\cooking.spec.ts:49:160 › hands-on cooking layout phone
+[122/276] tests\cooking-v2.spec.ts:60:1 › reset asks first, cancellation preserves work and approval only clears prototype; storage blocked is explicit
+[123/276] tests\cooking-v2.spec.ts:65:1 › a failed food asset reports a loading problem instead of substituting drawn food
+[124/276] tests\cooking.spec.ts:49:160 › hands-on cooking layout small-phone
+[125/276] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet
+[126/276] tests\cooking.spec.ts:49:160 › hands-on cooking layout phone-landscape
+[127/276] tests\cooking.spec.ts:52:1 › offline oven restoration and coloring/old cooking saves stay intact
+[128/276] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet-wide
+[129/276] tests\cooking.spec.ts:57:1 › keyboard tools, blocked storage and common sound toggle
+[130/276] tests\cooking.spec.ts:60:1 › muted oven completion stays silent
+[131/276] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone
+[132/276] tests\cupcake.spec.ts:8:1 › PNG alpha, cream and decoration composition matches the actual SVG
+[133/276] tests\cupcake.spec.ts:11:1 › baking pauses on selection/reset dialog and resumes from saved elapsed time
+[134/276] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: small-phone
+[135/276] tests\cupcake.spec.ts:12:1 › touch closing after a tray drag starts baking
+[136/276] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone-landscape
+[137/276] tests\cupcake.spec.ts:19:1 › ingredients, circular stirring, oven timing and undo are independent and bounded
+[138/276] tests\cupcake.spec.ts:20:1 › cream growth keeps its natural aspect, flavour preserves toppings and removal/undo preserves IDs
+[139/276] tests\cupcake.spec.ts:21:1 › all nine original PNGs decode; originals match SHA-256 and all food has alpha
+[140/276] tests\cupcake.spec.ts:22:1 › real touch mixing, fill, drag tray, bake, pipe, sprinkle, undo and PNG end-to-end
+[141/276] tests\dog-wardrobe.spec.ts:10:1 › version 2 migration keeps human looks and history, collapsing dog clothes with explicit priority
+[142/276] tests\dog-wardrobe.spec.ts:19:1 › dog wardrobe has three tabs and switching from human bottoms safely opens dog clothes
+[143/276] tests\dog-wardrobe.spec.ts:23:1 › dog live drag fits before release, replaces outfits and rejects a human target
+[144/276] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot tablet
+[145/276] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot tablet-16x9
+[146/276] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot phone
+[147/276] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot small-phone
+[148/276] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot phone-landscape
+[149/276] tests\dog-wardrobe.spec.ts:34:1 › dog garment closeups show all five fitted silhouettes plus the natural base
+[150/276] tests\dog-wardrobe.spec.ts:46:1 › native phone touch drag dresses the dog while the clothes list remains in place
+[151/276] tests\dressup-fitting.spec.ts:8:1 › legacy outfits, dog all-in-one and undo snapshots migrate without erasing IDs
+[152/276] tests\dressup-fitting.spec.ts:16:132 › fitted eyes, four paws and mixed outfits tablet
+[153/276] tests\dressup-fitting.spec.ts:16:132 › fitted eyes, four paws and mixed outfits tablet-16x9
+[154/276] tests\dressup-fitting.spec.ts:16:132 › fitted eyes, four paws and mixed outfits phone
+[155/276] tests\dressup-fitting.spec.ts:16:132 › fitted eyes, four paws and mixed outfits small-phone
+[156/276] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: tablet
+[157/276] tests\dressup-fitting.spec.ts:30:1 › bottoms do not expose a vest or base shorts; dress masks the whole base outfit
+[158/276] tests\dressup-fitting.spec.ts:36:1 › sideways dog has separate fore/hind and near/far legs with a wrapping coat
+[159/276] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: tablet-wide
+[160/276] tests\dressup-fitting.spec.ts:41:1 › live fitting preview is not saved until release and settles without an alignment jump
+[161/276] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: phone
+[162/276] tests\dressup-fitting.spec.ts:47:1 › old saved looks resume in the fitted renderer and preserve the other games
+[163/276] tests\dressup-fitting.spec.ts:51:1 › boy and girl crowns sit below the head top but above the eyes
+[164/276] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: small-phone
+[165/276] tests\dressup-seasons.spec.ts:13:1 › four-season metadata, real recommendation counts and old looks migrate safely
+[166/276] tests\dressup-seasons.spec.ts:20:113 › spring studio tablet
+[167/276] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: phone-landscape
+[168/276] tests\dressup-seasons.spec.ts:20:113 › spring studio phone
+[169/276] tests\dressup-seasons.spec.ts:20:113 › summer studio tablet
+[170/276] tests\cupcake.spec.ts:26:1 › flavour change, remove/undo and saved resume keep exact decoration positions
+[171/276] tests\dressup-seasons.spec.ts:20:113 › summer studio phone
+[172/276] tests\dressup-seasons.spec.ts:20:113 › autumn studio tablet
+[173/276] tests\cupcake.spec.ts:27:1 › reset cancel/confirm, saved stages and foreign save isolation
+[174/276] tests\dressup-seasons.spec.ts:20:113 › autumn studio phone
+[175/276] tests\cupcake.spec.ts:28:1 › touch drag, horizontal scroll and cancellation do not accidentally decorate
+[176/276] tests\dressup-seasons.spec.ts:20:113 › winter studio tablet
+[177/276] tests\dressup-seasons.spec.ts:20:113 › winter studio phone
+[178/276] tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
+[179/276] tests\dressup-seasons.spec.ts:25:1 › season change keeps clothes, selection, undo, resume and the actual photo background
+[180/276] tests\dressup-seasons.spec.ts:30:1 › suit, dress, handbag and hoodie share the open arm rig and compatible slots
+[181/276] tests\cupcake.spec.ts:34:1 › keyboard ingredient after cancelled drag and 48px shelf controls
+[182/276] tests\dressup.spec.ts:11:1 › representative wardrobe metadata, conflicts and independent history
+[183/276] tests\dressup-seasons.spec.ts:36:157 › season studio edge short-tablet
+[184/276] tests\dressup.spec.ts:21:160 › spring fitting layout tablet
+[185/276] tests\dressup-seasons.spec.ts:36:157 › season studio edge small-phone
+[186/276] tests\dressup-seasons.spec.ts:36:157 › season studio edge landscape-phone
+[187/276] tests\dressup.spec.ts:21:160 › spring fitting layout tablet-16x9
+[188/276] tests\dressup-seasons.spec.ts:39:1 › winter stays playable offline and each season random outfit uses compatible recommended items
+[189/276] tests\dressup.spec.ts:21:160 › spring fitting layout phone
+[190/276] tests\dressup-seasons.spec.ts:43:1 › handbag native touch drag aligns to the hand on a phone
+[191/276] tests\dressup.spec.ts:21:160 › spring fitting layout small-phone
+[192/276] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: tablet
+[193/276] tests\dressup.spec.ts:21:160 › spring fitting layout phone-landscape
+[194/276] tests\dressup.spec.ts:28:1 › actual drag, return, incompatibility, replacement and simultaneous head slots
+[195/276] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: tablet-16x9
+[196/276] tests\dressup.spec.ts:36:1 › dress and two-piece fitting, separate dog garments, all-in-one conflict and four shoes
+[197/276] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: small-tablet
+[198/276] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: phone
+[199/276] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: small-phone
+[200/276] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: phone-landscape
+[201/276] tests\home-carousel.spec.ts:37:1 › all five real games launch and return home
+[202/276] tests\home-carousel.spec.ts:42:1 › 12 registered entries keep five-card sizing; a 13th appears without editing the component
+[203/276] tests\dressup.spec.ts:43:1 › undo, per-character reset, all reset confirmation, random and real resume
+[204/276] tests\home-carousel.spec.ts:52:1 › native phone swipe scrolls without launch; a subsequent tap still launches
+[205/276] tests\home-carousel.spec.ts:58:1 › mouse drag blocks click, stops when released, and keyboard scrolling reaches the last game
+[206/276] tests\home-carousel.spec.ts:66:1 › cancelled scroll rejects a trailing click while a fresh tap works
+[207/276] tests\home-carousel.spec.ts:74:1 › home scrolling, resizing and arrows preserve existing saved values
+[208/276] tests\dressup.spec.ts:50:1 › one dressed friend can finish, portrait PNG matches the scene and has no UI
+[209/276] tests\home.spec.ts:3:2 › tablet-16x9
+[210/276] tests\home.spec.ts:3:2 › tablet
+[211/276] tests\dressup.spec.ts:59:1 › finished representative portrait preserves all fitting layers
+[212/276] tests\home.spec.ts:3:2 › phone
+[213/276] tests\home.spec.ts:3:2 › phone-landscape
+[214/276] tests\dressup.spec.ts:64:1 › native phone touch drag and separate wardrobe scroll surface
+[215/276] tests\home.spec.ts:3:2 › small-phone
+[216/276] tests\home.spec.ts:14:1 › offline shell and scoped settings
+[217/276] tests\dressup.spec.ts:69:1 › keyboard tabs, blocked storage and muted fitting
+[218/276] tests\dressup.spec.ts:73:1 › first offline game open and isolated saves including corrupt data recovery
+[219/276] tests\home.spec.ts:21:1 › keyboard and blocked storage
+[220/276] tests\landscape-art.spec.ts:3:46 › police-car-robot: wide drawing label hit targets
+tests\landscape-art.spec.ts:3:46 › police-car-robot: wide drawing label hit targets
+police-car-robot 25 186 []
+
+[221/276] tests\dressup.spec.ts:77:1 › every representative garment fits its canvas; generate fitting review sheets
+[222/276] tests\landscape-art.spec.ts:3:46 › fire-robot: wide drawing label hit targets
+tests\landscape-art.spec.ts:3:46 › fire-robot: wide drawing label hit targets
+fire-robot 25 223 []
+
+[223/276] tests\landscape-art.spec.ts:3:46 › baby-dinosaur: wide drawing label hit targets
+tests\landscape-art.spec.ts:3:46 › baby-dinosaur: wide drawing label hit targets
+baby-dinosaur 28 130 []
+
+[224/276] tests\landscape-art.spec.ts:3:46 › garden-butterfly: wide drawing label hit targets
+tests\landscape-art.spec.ts:3:46 › garden-butterfly: wide drawing label hit targets
+garden-butterfly 28 180 []
+
+[225/276] tests\meals.spec.ts:16:1 › meal storage validation, per-unit caps and independent recipes
+[226/276] tests\meals.spec.ts:22:1 › spaghetti touch and drag from pot to cream sauce and finished garnish
+[227/276] tests\meals.spec.ts:30:1 › three sandwiches: independent layers, cap, undo, toast lid and fresh start
+[228/276] tests\meals.spec.ts:37:1 › camp skewers drag, grill, automatic finish and per-recipe save isolation
+[229/276] tests\memory-model.spec.ts:5:1 › 15 stages, exact layouts and forty distinct themed pictures
+[230/276] tests\memory-model.spec.ts:10:1 › every stage has exactly a 3 second locked preview
+[231/276] tests\memory-model.spec.ts:13:1 › same physical card cannot match itself, comparing locks input and correct pairs remain
+[232/276] tests\memory-model.spec.ts:17:1 › mismatched pair stays for one second and then closes
+[233/276] tests\memory-model.spec.ts:21:1 › hint replaces a single flip with one unmatched pair for 2 seconds; pause freezes all timers
+[234/276] tests\memory-model.spec.ts:27:1 › all 15 stages complete and completion records remain unique
+[235/276] tests\memory-model.spec.ts:32:1 › replay always changes picture positions, even with deterministic random input
+[236/276] tests\memory-model.spec.ts:35:1 › saved board and completed stages validate independently of transient flips
+[237/276] tests\memory-visual.spec.ts:3:1 › real-clock previews and touch-play captures show front/back/matched cards together
+[238/276] tests\meals.spec.ts:43:160 › three meal layouts tablet
+[239/276] tests\meals.spec.ts:43:160 › three meal layouts tablet-16x9
+[240/276] tests\memory.spec.ts:10:1 › all 15 stage counts and three-second preview, with requested reference captures
+[241/276] tests\meals.spec.ts:43:160 › three meal layouts phone
+[242/276] tests\meals.spec.ts:43:160 › three meal layouts small-phone
+[243/276] tests\meals.spec.ts:43:160 › three meal layouts phone-landscape
+[244/276] tests\memory.spec.ts:16:1 › real touch turns pairs, prevents duplicate/third selection and shows mismatch for one second
+[245/276] tests\memory.spec.ts:20:1 › hint closes a single selection, excludes matches and survives pause without racing
+[246/276] tests\memory.spec.ts:23:1 › restart reshuffles, saves a matched board, resumes with preview, and final stage celebrates
+[247/276] tests\meals.spec.ts:48:1 › keyboard spaghetti and blocked storage remain playable
+[248/276] tests\meals.spec.ts:52:1 › phone touch selection works across separate panels and the cooking surface
+[249/276] tests\meals.spec.ts:56:1 › short tablet sauce panel stays inside the screen
+[250/276] tests\memory.spec.ts:27:1 › stage complete, next stage, keyboard selection and replayed completion
+[251/276] tests\meals.spec.ts:60:1 › offline saved grill resumes; old pizza and coloring data are untouched
+[252/276] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: tablet
+[253/276] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: tablet-16x9
+[254/276] tests\palette-zoom.spec.ts:4:48 › police-car-robot: visible palette and fixed 300 percent hint
+[255/276] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: phone
+[256/276] tests\palette-zoom.spec.ts:4:48 › fire-robot: visible palette and fixed 300 percent hint
+[257/276] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: small-phone
+[258/276] tests\palette-zoom.spec.ts:4:48 › baby-dinosaur: visible palette and fixed 300 percent hint
+[259/276] tests\palette-zoom.spec.ts:4:48 › garden-butterfly: visible palette and fixed 300 percent hint
+[260/276] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: phone-landscape
+[261/276] tests\scene-background.spec.ts:6:46 › police-car-robot: fixed background never paints
+[262/276] tests\memory.spec.ts:35:1 › forty original SVG pictures can be reviewed as four contact sheets
+[263/276] tests\scene-background.spec.ts:6:46 › fire-robot: fixed background never paints
+[264/276] tests\scene-background.spec.ts:6:46 › baby-dinosaur: fixed background never paints
+[265/276] tests\memory.spec.ts:42:1 › offline fresh entry, independent saves, and blocked storage remain playable
+[266/276] tests\scene-background.spec.ts:6:46 › garden-butterfly: fixed background never paints
+[267/276] tests\scene-background.spec.ts:17:1 › offline PNG includes the approved background with its original colors
+[268/276] tests\wardrobe-navigation.spec.ts:5:29 › hidden scrollbar: touch controls reach every spring item for every character/category
+[269/276] tests\memory.spec.ts:45:1 › blocked storage and reduced motion do not prevent completion; backgrounding pauses preview
+[270/276] tests\wardrobe-navigation.spec.ts:5:29 › hidden scrollbar: touch controls reach every summer item for every character/category
+[271/276] tests\wardrobe-navigation.spec.ts:5:29 › hidden scrollbar: touch controls reach every autumn item for every character/category
+[272/276] tests\wardrobe-navigation.spec.ts:5:29 › hidden scrollbar: touch controls reach every winter item for every character/category
+[273/276] tests\wardrobe-navigation.spec.ts:39:141 › wardrobe controls fit and reach the last item: short-tablet
+[274/276] tests\wardrobe-navigation.spec.ts:39:141 › wardrobe controls fit and reach the last item: phone
+[275/276] tests\wardrobe-navigation.spec.ts:39:141 › wardrobe controls fit and reach the last item: small-phone
+[276/276] tests\wardrobe-navigation.spec.ts:39:141 › wardrobe controls fit and reach the last item: phone-landscape
+  1 failed
+    tests\burger-sauce-fit.spec.ts:24:29 › comparison ketchup-once ─────────────────────────────────
+  275 passed (11.5m)
