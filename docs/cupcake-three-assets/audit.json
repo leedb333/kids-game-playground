@@ -1,0 +1,420 @@
+[
+  {
+    "name": "ingredient-egg",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1024,
+      1024
+    ],
+    "colorType": 6,
+    "sha256": "0326ec2ad5c91d2eee3800ca39e04fc4b76167a8ada969ab456faae2265e6bda",
+    "transparent": 535443,
+    "partial": 1035547,
+    "bounds": [
+      99,
+      127,
+      1133,
+      1172
+    ],
+    "removedSmallComponentPixels": 13,
+    "final": {
+      "transparent": 362540,
+      "partial": 686023,
+      "edgePixels": 0
+    },
+    "status": "approved-card",
+    "outputSha256": "ebc9af731c0f758a0193aa1eded2d6aa4b18239d9b21e9e5cf351d40fa6be355"
+  },
+  {
+    "name": "ingredient-milk",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1024,
+      1024
+    ],
+    "colorType": 6,
+    "sha256": "488a490d466194e74cedfe950656e2a75e1a20c138ccc39a2dd4e57fa0ab24ca",
+    "transparent": 354093,
+    "partial": 1215528,
+    "bounds": [
+      67,
+      68,
+      1174,
+      1213
+    ],
+    "removedSmallComponentPixels": 193,
+    "final": {
+      "transparent": 242517,
+      "partial": 806047,
+      "edgePixels": 0
+    },
+    "status": "approved-card",
+    "outputSha256": "788a2458c36a509da30198f8322027fcc0881d3dd440b0e6c37acf7682393515"
+  },
+  {
+    "name": "ingredient-flour",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1024,
+      1024
+    ],
+    "colorType": 6,
+    "sha256": "b6f7b54ed15aaf199dc36a2d94f7db162ffb0a10245e29e62c1a6528d33d55ff",
+    "transparent": 526533,
+    "partial": 1044358,
+    "bounds": [
+      95,
+      123,
+      1135,
+      1173
+    ],
+    "removedSmallComponentPixels": 22,
+    "final": {
+      "transparent": 355880,
+      "partial": 692603,
+      "edgePixels": 0
+    },
+    "status": "approved-card",
+    "outputSha256": "86df4246d213a9e6fb7611d768346ab50776e3a0ff0ec966ebe75f320caec2a3"
+  },
+  {
+    "name": "ingredient-sugar",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1024,
+      1024
+    ],
+    "colorType": 6,
+    "sha256": "4189b2e064bfe6c032e538ebda6ecab5967eed8a0964e99ed231f8d8052e8dd6",
+    "transparent": 379518,
+    "partial": 1191152,
+    "bounds": [
+      78,
+      69,
+      1157,
+      1212
+    ],
+    "removedSmallComponentPixels": 95,
+    "final": {
+      "transparent": 265659,
+      "partial": 782764,
+      "edgePixels": 0
+    },
+    "status": "approved-card",
+    "outputSha256": "ba3abef7b02906bd3b19937fc11535a223ad4b350b003165138b7f42979e71c0"
+  },
+  {
+    "name": "mixing-bowl-empty",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "colorType": 6,
+    "sha256": "3963aed8c4df5b337f29ba499981d3e98cc3b5ab0dd5b23822f810cfc3ebfa29",
+    "transparent": 769842,
+    "partial": 802225,
+    "bounds": [
+      59,
+      211,
+      1176,
+      1111
+    ],
+    "removedSmallComponentPixels": 55,
+    "final": {
+      "transparent": 804628,
+      "partial": 767439,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "mix-egg-layer",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "colorType": 6,
+    "sha256": "4de7a8bdb7c8e81fead81a9facbd3cd62aa4201a2312c65b2de80d39678083dc",
+    "transparent": 1169664,
+    "partial": 402448,
+    "bounds": [
+      100,
+      451,
+      1156,
+      991
+    ],
+    "removedSmallComponentPixels": 186,
+    "final": {
+      "transparent": 1191462,
+      "partial": 380650,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "mix-milk-layer",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "colorType": 6,
+    "sha256": "d027a34a7608b543d5f6434b3f3d6c6f3c21a656249f094706b5379c387da702",
+    "transparent": 1130059,
+    "partial": 441850,
+    "bounds": [
+      91,
+      388,
+      1160,
+      928
+    ],
+    "removedSmallComponentPixels": 172,
+    "final": {
+      "transparent": 1198103,
+      "partial": 373806,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "mix-flour-layer",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "colorType": 6,
+    "sha256": "d3299a678327c1bb23fe1f3fe3e119cc0f22d7103d9b17079cec7c7090200974",
+    "transparent": 1182066,
+    "partial": 390446,
+    "bounds": [
+      114,
+      378,
+      1129,
+      915
+    ],
+    "removedSmallComponentPixels": 79,
+    "final": {
+      "transparent": 1215083,
+      "partial": 357429,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "mix-sugar-layer",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "colorType": 6,
+    "sha256": "04d8dba2fc0951bf9173ec7c115ea67c111b1aba5e9e0e828d5df7961f81fbfa",
+    "transparent": 1110425,
+    "partial": 462081,
+    "bounds": [
+      90,
+      402,
+      1164,
+      980
+    ],
+    "removedSmallComponentPixels": 1,
+    "final": {
+      "transparent": 1135794,
+      "partial": 436712,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "cupcake-cup-empty",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "colorType": 6,
+    "sha256": "cb2ceb35c0091c8cec908ac1f9f803400538072eb00ede5864eb41bddf739e73",
+    "transparent": 800993,
+    "partial": 771036,
+    "bounds": [
+      67,
+      196,
+      1174,
+      1075
+    ],
+    "removedSmallComponentPixels": 39,
+    "final": {
+      "transparent": 840054,
+      "partial": 731975,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "cupcake-cup-filled",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "colorType": 6,
+    "sha256": "b0c5a6107ce1295bd2e9e1e9d11ae281ed9acca7ed4a45f0811893768bfc4594",
+    "transparent": 802936,
+    "partial": 769054,
+    "bounds": [
+      107,
+      113,
+      1145,
+      1106
+    ],
+    "removedSmallComponentPixels": 17,
+    "final": {
+      "transparent": 816082,
+      "partial": 755908,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "cupcake-cup-half-baked",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "colorType": 6,
+    "sha256": "772ed97c72e8de590cea71683059ca2f9221c37206896ee39c97754a216cbc43",
+    "transparent": 765258,
+    "partial": 806788,
+    "bounds": [
+      69,
+      163,
+      1167,
+      1078
+    ],
+    "removedSmallComponentPixels": 39,
+    "final": {
+      "transparent": 804968,
+      "partial": 767078,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "cupcake-tray-3-base",
+    "input": [
+      1683,
+      935
+    ],
+    "output": [
+      1800,
+      1000
+    ],
+    "colorType": 6,
+    "sha256": "51217b9743fecc16d7aaea5ec810111e4c0f72c6f02e4c22265a28b4cf528ca1",
+    "transparent": 583835,
+    "partial": 989265,
+    "bounds": [
+      20,
+      178,
+      1662,
+      818
+    ],
+    "removedSmallComponentPixels": 9,
+    "final": {
+      "transparent": 679815,
+      "partial": 1120181,
+      "edgePixels": 0
+    },
+    "status": "rejected-composition"
+  },
+  {
+    "name": "existing-baked",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "transparent": 905155,
+    "partial": 667120,
+    "bounds": [
+      140,
+      173,
+      1106,
+      1080
+    ],
+    "removedSmallComponentPixels": 0,
+    "final": {
+      "transparent": 905155,
+      "partial": 667120,
+      "edgePixels": 0
+    }
+  },
+  {
+    "name": "existing-bowl",
+    "input": [
+      1254,
+      1254
+    ],
+    "output": [
+      1254,
+      1254
+    ],
+    "transparent": 670577,
+    "partial": 901326,
+    "bounds": [
+      29,
+      170,
+      1208,
+      1134
+    ],
+    "removedSmallComponentPixels": 0,
+    "final": {
+      "transparent": 670577,
+      "partial": 901326,
+      "edgePixels": 0
+    }
+  }
+]
