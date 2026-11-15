@@ -1,0 +1,206 @@
+{
+  "status": "proposal-only",
+  "version": 2,
+  "selectedCupId": "cup-1",
+  "mix": {
+    "ingredients": [
+      "egg",
+      "milk",
+      "flour",
+      "sugar"
+    ],
+    "progress": 1
+  },
+  "oven": {
+    "phase": "done",
+    "elapsedMs": 3000
+  },
+  "cups": [
+    {
+      "id": "cup-1",
+      "traySlot": 0,
+      "fillProgress": 1,
+      "bakeProgress": 1,
+      "design": {
+        "cream": "strawberry",
+        "piping": 1,
+        "sprinkles": [
+          {
+            "id": 1,
+            "kind": "blue",
+            "u": 0.3,
+            "v": 0.6,
+            "rotation": 137.5,
+            "size": 0.055
+          },
+          {
+            "id": 2,
+            "kind": "purple",
+            "u": 0.38,
+            "v": 0.6,
+            "rotation": 275,
+            "size": 0.037
+          },
+          {
+            "id": 3,
+            "kind": "yellow",
+            "u": 0.45999999999999996,
+            "v": 0.6,
+            "rotation": 52.5,
+            "size": 0.048
+          }
+        ],
+        "nextId": 4,
+        "done": true
+      }
+    },
+    {
+      "id": "cup-2",
+      "traySlot": 1,
+      "fillProgress": 1,
+      "bakeProgress": 1,
+      "design": {
+        "cream": "vanilla",
+        "piping": 1,
+        "sprinkles": [
+          {
+            "id": 1,
+            "kind": "blue",
+            "u": 0.3,
+            "v": 0.6,
+            "rotation": 137.5,
+            "size": 0.055
+          },
+          {
+            "id": 2,
+            "kind": "purple",
+            "u": 0.38,
+            "v": 0.6,
+            "rotation": 275,
+            "size": 0.037
+          },
+          {
+            "id": 3,
+            "kind": "yellow",
+            "u": 0.45999999999999996,
+            "v": 0.6,
+            "rotation": 52.5,
+            "size": 0.048
+          },
+          {
+            "id": 4,
+            "kind": "blue",
+            "u": 0.54,
+            "v": 0.6,
+            "rotation": 190,
+            "size": 0.055
+          },
+          {
+            "id": 5,
+            "kind": "purple",
+            "u": 0.62,
+            "v": 0.6,
+            "rotation": 327.5,
+            "size": 0.037
+          },
+          {
+            "id": 6,
+            "kind": "yellow",
+            "u": 0.3,
+            "v": 0.7,
+            "rotation": 105,
+            "size": 0.048
+          }
+        ],
+        "nextId": 7,
+        "done": true
+      }
+    },
+    {
+      "id": "cup-3",
+      "traySlot": 2,
+      "fillProgress": 1,
+      "bakeProgress": 1,
+      "design": {
+        "cream": "strawberry",
+        "piping": 1,
+        "sprinkles": [
+          {
+            "id": 1,
+            "kind": "blue",
+            "u": 0.3,
+            "v": 0.6,
+            "rotation": 137.5,
+            "size": 0.055
+          },
+          {
+            "id": 2,
+            "kind": "purple",
+            "u": 0.38,
+            "v": 0.6,
+            "rotation": 275,
+            "size": 0.037
+          },
+          {
+            "id": 3,
+            "kind": "yellow",
+            "u": 0.45999999999999996,
+            "v": 0.6,
+            "rotation": 52.5,
+            "size": 0.048
+          },
+          {
+            "id": 4,
+            "kind": "blue",
+            "u": 0.54,
+            "v": 0.6,
+            "rotation": 190,
+            "size": 0.055
+          },
+          {
+            "id": 5,
+            "kind": "purple",
+            "u": 0.62,
+            "v": 0.6,
+            "rotation": 327.5,
+            "size": 0.037
+          },
+          {
+            "id": 6,
+            "kind": "yellow",
+            "u": 0.3,
+            "v": 0.7,
+            "rotation": 105,
+            "size": 0.048
+          },
+          {
+            "id": 7,
+            "kind": "blue",
+            "u": 0.38,
+            "v": 0.7,
+            "rotation": 242.5,
+            "size": 0.055
+          },
+          {
+            "id": 8,
+            "kind": "purple",
+            "u": 0.45999999999999996,
+            "v": 0.7,
+            "rotation": 20,
+            "size": 0.037
+          },
+          {
+            "id": 9,
+            "kind": "yellow",
+            "u": 0.54,
+            "v": 0.7,
+            "rotation": 157.5,
+            "size": 0.048
+          }
+        ],
+        "nextId": 10,
+        "done": true
+      }
+    }
+  ]
+}

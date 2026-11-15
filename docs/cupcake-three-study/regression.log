@@ -1,0 +1,36 @@
+
+[WebServer] (node:22628) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 25 tests using 1 worker
+
+
+(node:8552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/25] tests\burger.spec.ts:22:1 › real touch grill and flip, choose, free stack, remove/undo, completion and PNG keep exact layers
+[2/25] tests\cooking-v2-full.spec.ts:14:1 › real four-step touch/drag flow, six ingredients, identical baked toppings and actual PNG export
+[3/25] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet
+[4/25] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet-wide
+[5/25] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone
+[6/25] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: small-phone
+[7/25] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone-landscape
+[8/25] tests\cupcake.spec.ts:8:1 › PNG alpha, cream and decoration composition matches the actual SVG
+[9/25] tests\cupcake.spec.ts:11:1 › baking pauses on selection/reset dialog and resumes from saved elapsed time
+[10/25] tests\cupcake.spec.ts:12:1 › touch closing after a tray drag starts baking
+[11/25] tests\cupcake.spec.ts:19:1 › ingredients, circular stirring, oven timing and undo are independent and bounded
+[12/25] tests\cupcake.spec.ts:20:1 › cream growth keeps its natural aspect, flavour preserves toppings and removal/undo preserves IDs
+[13/25] tests\cupcake.spec.ts:21:1 › all nine original PNGs decode; originals match SHA-256 and all food has alpha
+[14/25] tests\cupcake.spec.ts:22:1 › real touch mixing, fill, drag tray, bake, pipe, sprinkle, undo and PNG end-to-end
+[15/25] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: tablet
+[16/25] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: tablet-wide
+[17/25] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: phone
+[18/25] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: small-phone
+[19/25] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: phone-landscape
+[20/25] tests\cupcake.spec.ts:26:1 › flavour change, remove/undo and saved resume keep exact decoration positions
+[21/25] tests\cupcake.spec.ts:27:1 › reset cancel/confirm, saved stages and foreign save isolation
+[22/25] tests\cupcake.spec.ts:28:1 › touch drag, horizontal scroll and cancellation do not accidentally decorate
+[23/25] tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
+[24/25] tests\cupcake.spec.ts:34:1 › keyboard ingredient after cancelled drag and 48px shelf controls
+[25/25] tests\home-carousel.spec.ts:37:1 › all five real games launch and return home
+  25 passed (2.2m)

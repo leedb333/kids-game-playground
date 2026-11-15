@@ -1,0 +1,21 @@
+{
+  "phase": 1,
+  "productionGameChanged": false,
+  "newFoodAssetsCreated": false,
+  "actualGameSavingImplemented": false,
+  "checks": [
+    "원본 9종 PNG 형식·크기·알파·해시 검사",
+    "서로 다른 크림·장식 개수 3/6/9 독립 유지",
+    "3번→1번 전환 시 전체 디자인 유지",
+    "선택한 컵의 장식 추가·되돌리기와 나머지 2개 불변",
+    "개별 장식 제거 및 복구, 다른 컵 불변",
+    "1400×1400 투명 합성 PNG와 검증 화면 픽셀 일치",
+    "제안 데이터 JSON 직렬화 왕복 — 실제 저장·이전 아님",
+    "구성 검증 화면: 태블릿·스마트폰 폭 넘침 없음 (정식 게임 검증 아님)"
+  ],
+  "exported": {
+    "corner": 0,
+    "difference": 0
+  },
+  "assetCount": 9
+}

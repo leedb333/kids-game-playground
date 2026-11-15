@@ -1,0 +1,83 @@
+[
+  {
+    "name": "cupcake-baked-base.png",
+    "sha256": "ce83f6bae052c64a130ddb4b92bcc917eda15e90117a9adfb072bf8ba79c5c1f",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 905155,
+    "partial": 667120
+  },
+  {
+    "name": "cupcake-kitchen-bg.png",
+    "sha256": "50a68e37c835a34592e80022a06149c1e6c8522fd34aa221b32fc3e87b8cec61",
+    "colorType": 2,
+    "width": 1672,
+    "height": 941,
+    "transparent": 0,
+    "partial": 0
+  },
+  {
+    "name": "cupcake-tray.png",
+    "sha256": "5195f1cba192ee671ae9edb44108d6ad663eac63268fa0b7d56d202e2fbd672e",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 742827,
+    "partial": 828638
+  },
+  {
+    "name": "frosting-strawberry.png",
+    "sha256": "2b0c210ae042cacf8d3affe9b611e6b5da441f4897e28e774e5445728f18e96e",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 951938,
+    "partial": 620423
+  },
+  {
+    "name": "frosting-vanilla.png",
+    "sha256": "f8bc99b174b89dc57e5afc267e85be516e8d9bdd393d2cff1f99fb2ddb1654ec",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 803862,
+    "partial": 768278
+  },
+  {
+    "name": "mixing-bowl-batter.png",
+    "sha256": "5e087d5420125de0a6a0be5a6da4fcbaa75d1a4ae10862241d7bed836a8cf7e1",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 670577,
+    "partial": 901326
+  },
+  {
+    "name": "piping-bag-vanilla.png",
+    "sha256": "d888f3a759d16d040d82993c66d98865d18f4a43778454d7fa12e20648612fe6",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1085487,
+    "partial": 486627
+  },
+  {
+    "name": "tool-whisk.png",
+    "sha256": "f091e040bd104fd7b08ad26fe57812ab65ac571b166cba06f12f61ee8079b613",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 1303974,
+    "partial": 266885
+  },
+  {
+    "name": "topping-sprinkles.png",
+    "sha256": "088747c70591ca938266dd41a0f51573bfacdd225ec6901e941010e79f1163f6",
+    "colorType": 6,
+    "width": 1254,
+    "height": 1254,
+    "transparent": 996372,
+    "partial": 575913
+  }
+]
