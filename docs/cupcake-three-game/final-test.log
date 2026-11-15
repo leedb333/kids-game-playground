@@ -1,0 +1,83 @@
+[WebServer] (node:18168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 37 tests using 1 worker
+
+(node:15640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/37] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet
+[2/37] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet-wide
+[3/37] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone
+[4/37] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: small-phone
+[5/37] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone-landscape
+[6/37] tests\cupcake-three.spec.ts:15:1 › stage gates, independent fill, per-cup undo, flavour and decoration isolation
+[7/37] tests\cupcake-three.spec.ts:16:1 › touch ingredients, circular whisk, independent fill, drag oven, three decorations and actual PNG
+[8/37] tests\cupcake-three.spec.ts:24:1 › migration requires explicit consent, retains old bytes and imports only compatible decoration
+[9/37] tests\cupcake-three.spec.ts:25:1 › baking pauses during reset and selection, resumes saved time without moving slots
+[10/37] tests\cupcake-three.spec.ts:26:143 › tablet: fill, oven, decoration and completion fit and touch targets remain accessible
+[11/37] tests\cupcake-three.spec.ts:26:143 › phone-landscape: fill, oven, decoration and completion fit and touch targets remain accessible
+[12/37] tests\cupcake-three.spec.ts:26:143 › phone-portrait: fill, oven, decoration and completion fit and touch targets remain accessible
+[13/37] tests\cupcake-three.spec.ts:26:143 › small-phone: fill, oven, decoration and completion fit and touch targets remain accessible
+[14/37] tests\cupcake-three.spec.ts:27:1 › all originals and approved source PNGs remain byte-identical to parent audits
+[15/37] tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
+  1) tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        0,
+    -   0,
+    -   0,
+    -   0,
+    +   7320,
+    +   7935,
+    +   8237,
+      ]
+
+      33 |  const imageImports=[...rawSource.matchAll(/^import (\w+) from '([^']+\.png)'/gm)].map(([,name,path])=>`const ${name}=${JSON.stringify('data:image/png;base64,'+readFileSync(resolve('src/games/cooking-v2/cupcake/three',path)).toString('base64'))};`).join('\n');
+      34 |  const script=imageImports+`\nconst metadata=${JSON.stringify(metadata)};async function loadImages(){const im=new Image();im.src=${JSON.stringify(surface)};await im.decode();return {surface:im};}\n`+ts.transpile(source,{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None})+';window.threePixel={load,renderCup,renderBowl,renderTray,geometry};';const scriptErrors:string[]=[];page.on('pageerror',e=>scriptErrors.push(e.message));await page.addScriptTag({content:'(()=>{'+script+'})();'});expect(scriptErrors).toEqual([]);
+    > 35 |  const result=await page.evaluate(async()=>{const api=(window as unknown as {threePixel:any}).threePixel,g=await api.load(),changes:number[]=[],frames:number[]=[];let foreground=0;for(const bake of [0,.05,.15,.33,.5,.66,.85,.99,1]){const c=api.renderCup(g,1,bake),p=c.getContext('2d').getImageData(0,0,1254,1254).data;let diff=0,visible=0;for(const i of g.frontIndices){if(g.front.data[i+3]>250){foreground++;if([0,1,2,3].some(j=>p[i+j]!==g.front.data[i+j]))diff++}}for(let y=170;y<500;y++)for(let x=250;x<1000;x++)if(p[(y*1254+x)*4+3]>200)visible++;changes.push(diff);frames.push(visible)}const f=document.createElement('canvas');f.width=f.height=1254;const x=f.getContext('2d',{willReadFrequently:true})!;x.drawImage(g.extra.empty,0,0);const before=x.getImageData(0,0,1254,1254).data;const w={step:'mix',mix:0,ingredients:['egg','milk','flour','sugar']};const bowl=api.renderBowl(g,w,{id:'egg',progress:.6}),after=bowl.getContext('2d').getImageData(0,0,1254,1254).data;let bowlFrontChanges=0;for(let k=650*1254*4;k<before.length;k++)if(before[k]!==after[k])bowlFrontChanges++;const bowlTransitions:number[]=[];for(const mix of [0,.25,.5,1]){const bc=api.renderBowl(g,{...w,mix}),bp=bc.getContext('2d').getImageData(0,0,1254,1254).data;let diff=0;for(let k=650*1254*4;k<before.length;k++)if(before[k]!==bp[k])diff++;bowlTransitions.push(diff)}return{bowlTransitions,foregroundSamples:foreground,changes,frames,bowlFrontChanges,anchors:api.geometry.tray.anchors}});writeFileSync(folder+'/pixel-proof.json',JSON.stringify(result,null,2));expect(result.changes).toEqual(Array(9).fill(0));expect(result.foregroundSamples).toBeGreaterThan(2700000);expect(result.bowlFrontChanges).toBe(0);expect(result.bowlTransitions).toEqual([0,0,0,0]);expect(result.anchors).toEqual([[393,680],[902,680],[1404,680]]);expect(result.frames[8]).toBeGreaterThan(result.frames[0])
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ^
+      36 | })
+      37 | test('new game reloads offline with approved graphics and never writes unrelated save keys',async({page,context})=>{await page.addInitScript(()=>localStorage.setItem('foreign-cupcake-test','keep-me'));await open(page,ready());await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);await expect(page.locator('.cc-work')).toBeVisible();await context.setOffline(true);await page.reload();await expect(page.getByText('요리 그림을 준비하고 있어요…')).toHaveCount(0);await expect(page.getByRole('button',{name:'1번 컵 선택'})).toBeVisible();expect(await page.evaluate(()=>localStorage.getItem('foreign-cupcake-test'))).toBe('keep-me');await context.setOffline(false)})
+      38 | test('archiving an unfinished legacy recipe preserves bytes, does not invent an import and survives reset',async({page})=>{const raw=JSON.stringify(old.fresh());await page.addInitScript(({key,raw})=>localStorage.setItem(key,raw),{key:old.storageKey,raw});await page.goto(route);await expect(page.getByRole('dialog')).toBeVisible();await expect(page.getByRole('button',{name:'1번 컵 꾸미기 가져오기'})).toHaveCount(0);await page.getByRole('button',{name:'기록 보관 후 새로 만들기'}).click();expect(await page.evaluate(k=>localStorage.getItem(k),m.storageKey+':legacy-archive')).toBe(raw);expect(await page.evaluate(k=>localStorage.getItem(k),old.storageKey)).toBe(raw);expect((await state(page)).work.step).toBe('mix')})
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\cupcake-three.spec.ts:35:1716
+
+    Error Context: test-results\cupcake-three-actual-rende-4b00e-ing-and-protects-bowl-front\error-context.md
+
+
+(node:12340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[16/37] tests\cupcake-three.spec.ts:37:1 › new game reloads offline with approved graphics and never writes unrelated save keys
+[17/37] tests\cupcake-three.spec.ts:38:1 › archiving an unfinished legacy recipe preserves bytes, does not invent an import and survives reset
+[18/37] tests\cupcake-three.spec.ts:39:1 › phone shelf scrolling and cancelled drags never change any cup decoration
+[19/37] tests\cupcake-three.spec.ts:40:1 › blocked browser storage still permits ingredients and gives visible feedback
+[20/37] tests\cupcake-three.spec.ts:41:1 › offline cache manifest contains only files actually emitted by the production build
+[21/37] tests\cupcake.spec.ts:8:1 › PNG alpha, cream and decoration composition matches the actual SVG
+[22/37] tests\cupcake.spec.ts:11:1 › baking pauses on selection/reset dialog and resumes from saved elapsed time
+[23/37] tests\cupcake.spec.ts:12:1 › touch closing after a tray drag starts baking
+[24/37] tests\cupcake.spec.ts:19:1 › ingredients, circular stirring, oven timing and undo are independent and bounded
+[25/37] tests\cupcake.spec.ts:20:1 › cream growth keeps its natural aspect, flavour preserves toppings and removal/undo preserves IDs
+[26/37] tests\cupcake.spec.ts:21:1 › all nine original PNGs decode; originals match SHA-256 and all food has alpha
+[27/37] tests\cupcake.spec.ts:22:1 › real touch mixing, fill, drag tray, bake, pipe, sprinkle, undo and PNG end-to-end
+[28/37] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: tablet
+[29/37] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: tablet-wide
+[30/37] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: phone
+[31/37] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: small-phone
+[32/37] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: phone-landscape
+[33/37] tests\cupcake.spec.ts:26:1 › flavour change, remove/undo and saved resume keep exact decoration positions
+[34/37] tests\cupcake.spec.ts:27:1 › reset cancel/confirm, saved stages and foreign save isolation
+[35/37] tests\cupcake.spec.ts:28:1 › touch drag, horizontal scroll and cancellation do not accidentally decorate
+[36/37] tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
+[37/37] tests\cupcake.spec.ts:34:1 › keyboard ingredient after cancelled drag and 48px shelf controls
+  1 failed
+    tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front 
+  36 passed (3.5m)

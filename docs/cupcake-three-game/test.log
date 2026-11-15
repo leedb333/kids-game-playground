@@ -1,0 +1,481 @@
+
+[WebServer] (node:9996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 285 tests using 1 worker
+
+
+
+(node:7496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/285] tests\bricks-engine.spec.ts:7:1 › ten distinct stage patterns, exactly three hearts/three clovers and one nonoverlapping gold each
+[2/285] tests\bricks-engine.spec.ts:13:1 › swept rounded collision handles all faces, corner arcs, misses and high-speed tunneling
+[3/285] tests\bricks-engine.spec.ts:18:1 › gold immediately clears while normal bricks remain; normals alone never bypass a remaining gold
+[4/285] tests\bricks-engine.spec.ts:23:1 › paddle mirrors incoming angle at every contact position without changing speed or horizontal direction
+[5/285] tests\bricks-engine.spec.ts:29:1 › 1.2x base speed, two balls after ten active seconds, and no timed acceleration
+[6/285] tests\bricks-engine.spec.ts:41:1 › two independent balls share bricks, either ball clears gold, and only losing both restarts
+[7/285] tests\bricks-engine.spec.ts:49:1 › pause is frozen, misses keep bricks, and variable frame intervals preserve physics
+[8/285] tests\bricks-engine.spec.ts:53:1 › progress validates each board and preserves other unfinished stages and completion records
+[9/285] tests\bricks-engine.spec.ts:56:1 › all ten real layouts can clear through simulated paddle control without editing bricks or the ball
+[10/285] tests\bricks-speed-restart.spec.ts:9:1 › audit all ten stages at compact/reference/portrait sizes; no pattern-dependent cap
+[11/285] tests\bricks-speed-restart.spec.ts:21:1 › 30/60/90/120/144Hz and jitter move all stages by elapsed seconds, not by frame count
+[12/285] tests\bricks-speed-restart.spec.ts:31:1 › every stage preserves target magnitude through paddle, brick, wall, pause, miss and two-ball launches
+[13/285] tests\bricks-speed-restart.spec.ts:42:1 › old saves cannot restore a stale speed; current-stage reset preserves all other boards/completions
+[14/285] tests\bricks-speed-restart.spec.ts:53:25 › stage 1: cancel a moving game, confirm reset, persist and resume with full gold/normal bricks
+[15/285] tests\bricks-speed-restart.spec.ts:53:25 › stage 8: cancel a moving game, confirm reset, persist and resume with full gold/normal bricks
+[16/285] tests\bricks-speed-restart.spec.ts:53:25 › stage 9: cancel a moving game, confirm reset, persist and resume with full gold/normal bricks
+[17/285] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: tablet
+[18/285] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: tablet-16x9
+[19/285] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: phone
+[20/285] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: small-phone
+[21/285] tests\bricks-speed-restart.spec.ts:60:160 › paused cancel and restart controls fit without shrinking the field: phone-landscape
+[22/285] tests\bricks-speed-restart.spec.ts:65:1 › real browser audits target/actual launch speed and paused/resumed velocity in all ten stages
+[23/285] tests\bricks.spec.ts:9:1 › live play adds a second ball after ten seconds without acceleration and resets on a new stage
+[24/285] tests\bricks.spec.ts:30:1 › cached playground starts in a new offline window and opens all four games
+[25/285] tests\bricks.spec.ts:41:1 › all ten stages start, stage gallery matches data, and each layout is captured
+[26/285] tests\bricks.spec.ts:46:160 › live breakout layout tablet
+[27/285] tests\bricks.spec.ts:46:160 › live breakout layout tablet-16x9
+[28/285] tests\bricks.spec.ts:46:160 › live breakout layout phone
+[29/285] tests\bricks.spec.ts:46:160 › live breakout layout small-phone
+[30/285] tests\bricks.spec.ts:46:160 › live breakout layout phone-landscape
+[31/285] tests\bricks.spec.ts:50:1 › native phone touch moves the paddle only horizontally, captures a grab offset and blocks scroll
+[32/285] tests\bricks.spec.ts:55:1 › pause freezes the ball, resumes without a time jump and backgrounding pauses automatically
+[33/285] tests\bricks.spec.ts:59:1 › remaining gold is playable, naturally clears with other bricks absent, saves next stage and resumes
+[34/285] tests\bricks.spec.ts:62:1 › stage ten naturally clears to a special celebration and can restart stage one
+[35/285] tests\bricks.spec.ts:65:1 › offline first open, isolated progress and muted/blocked storage remain playable
+[36/285] tests\bricks.spec.ts:68:1 › muted brick hits make no audio and blocked storage does not stop play
+[37/285] tests\bricks.spec.ts:72:1 › real destroyed bricks persist independently when leaving home and returning
+[38/285] tests\burger-sauce-fit.spec.ts:24:29 › comparison ketchup-once
+[39/285] tests\burger-sauce-fit.spec.ts:24:29 › comparison mustard-once
+[40/285] tests\burger-sauce-fit.spec.ts:24:29 › comparison mustard-three
+[41/285] tests\burger-sauce-fit.spec.ts:24:29 › comparison mixed
+[42/285] tests\burger-sauce-fit.spec.ts:24:29 › comparison under-cheese
+[43/285] tests\burger-sauce-fit.spec.ts:24:29 › comparison under-stack
+[44/285] tests\burger-sauce-fit.spec.ts:24:29 › comparison complete
+[45/285] tests\burger-sauce-fit.spec.ts:24:29 › comparison cheese-diagnostic
+[46/285] tests\burger-sauce-fit.spec.ts:36:1 › surface geometry: all ingredients, bottom bun, old saves and many repeats remain small, thin and stable
+[47/285] tests\burger-sauce-fit.spec.ts:52:1 › ingredient removal/reanchor and undo preserve exact sauce placement without changing food layout
+[48/285] tests\burger-sauces.spec.ts:13:1 › legacy v1 saves/history keep food and sauces; removed supporting layers reanchor; undo restores exact placement
+[49/285] tests\burger-sauces.spec.ts:26:1 › unlimited sauce repeats do not consume any of the sixteen ingredient layers or change food scale
+[50/285] tests\burger-sauces.spec.ts:34:1 › all three originals preserve hashes and RGBA; processed transparent edges contain no detached speckles
+[51/285] tests\burger-sauces.spec.ts:47:93 › ketchup alone renders only its own sauce and persists exact coordinates
+[52/285] tests\burger-sauces.spec.ts:47:93 › mayonnaise alone renders only its own sauce and persists exact coordinates
+[53/285] tests\burger-sauces.spec.ts:47:93 › mustard alone renders only its own sauce and persists exact coordinates
+[54/285] tests\burger-sauces.spec.ts:52:1 › touch and drag: repeated sauces, covering food, removal, undo, completion and PNG keep painter order
+[55/285] tests\burger-sauces.spec.ts:76:111 › three sauces fit touch viewport and PNG controls: tablet
+[56/285] tests\burger-sauces.spec.ts:76:111 › three sauces fit touch viewport and PNG controls: phone
+[57/285] tests\burger-sauces.spec.ts:76:111 › three sauces fit touch viewport and PNG controls: phone-landscape
+[58/285] tests\burger-sauces.spec.ts:80:1 › offline reload preserves sauces and other game saves; no sauce remains none
+[59/285] tests\burger.spec.ts:12:1 › arbitrary/repeated order, remove/undo, selected inventory and stable fitting through sixteen layers
+[60/285] tests\burger.spec.ts:16:1 › both sides require a flip, never burn, pause and undo keep cooking state consistent
+[61/285] tests\burger.spec.ts:19:1 › all 24 original images decode with real alpha; hashes and processed assets are preserved
+[62/285] tests\burger.spec.ts:22:1 › real touch grill and flip, choose, free stack, remove/undo, completion and PNG keep exact layers
+[63/285] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: tablet
+[64/285] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: tablet-16x9
+[65/285] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: phone
+[66/285] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: small-phone
+[67/285] tests\burger.spec.ts:26:160 › all scenes fit and reach every ingredient: phone-landscape
+[68/285] tests\burger.spec.ts:29:1 › horizontal touch scroll never places food; vertical touch drop, cancellation and repeat preserve order
+[69/285] tests\burger.spec.ts:32:1 › three sauces select and apply without fake drizzle; resume/reset keep pizza and other keys intact
+[70/285] tests\burger.spec.ts:35:1 › offline fresh burger entry, saved cooking, keyboard and blocked storage stay playable
+[71/285] tests\coloring.spec.ts:30:2 › police-car-robot: all ordered colors, undo boundary, corrupt save
+[72/285] tests\coloring.spec.ts:41:2 › police-car-robot: actual touch, wrong color, resume, undo, reset
+[73/285] tests\coloring.spec.ts:55:2 › police-car-robot: completion and exported PNG
+[74/285] tests\coloring.spec.ts:30:2 › fire-robot: all ordered colors, undo boundary, corrupt save
+[75/285] tests\coloring.spec.ts:41:2 › fire-robot: actual touch, wrong color, resume, undo, reset
+[76/285] tests\coloring.spec.ts:55:2 › fire-robot: completion and exported PNG
+[77/285] tests\coloring.spec.ts:30:2 › baby-dinosaur: all ordered colors, undo boundary, corrupt save
+[78/285] tests\coloring.spec.ts:41:2 › baby-dinosaur: actual touch, wrong color, resume, undo, reset
+[79/285] tests\coloring.spec.ts:55:2 › baby-dinosaur: completion and exported PNG
+[80/285] tests\coloring.spec.ts:30:2 › garden-butterfly: all ordered colors, undo boundary, corrupt save
+[81/285] tests\coloring.spec.ts:41:2 › garden-butterfly: actual touch, wrong color, resume, undo, reset
+[82/285] tests\coloring.spec.ts:55:2 › garden-butterfly: completion and exported PNG
+[83/285] tests\coloring.spec.ts:69:2 › coloring layout tablet
+[84/285] tests\coloring.spec.ts:69:2 › coloring layout tablet-16x9
+[85/285] tests\coloring.spec.ts:69:2 › coloring layout phone
+[86/285] tests\coloring.spec.ts:69:2 › coloring layout phone-landscape
+[87/285] tests\coloring.spec.ts:69:2 › coloring layout small-phone
+[88/285] tests\coloring.spec.ts:84:1 › offline first game open, reload persistence and isolated storage
+[89/285] tests\coloring.spec.ts:90:1 › color boundary advances automatically and drawings keep separate progress
+[90/285] tests\coloring.spec.ts:97:1 › coloring remains playable when browser storage is blocked
+[91/285] tests\coloring.spec.ts:102:1 › portrait revision stays intact while landscape starts separately
+[92/285] tests\coloring.spec.ts:108:1 › four revised themes, 25-color vehicles, no rose and previous saves preserved
+[93/285] tests\cooking-v2-full.spec.ts:11:1 › session validation, active-time baking, ingredient and exact position preservation
+[94/285] tests\cooking-v2-full.spec.ts:14:1 › real four-step touch/drag flow, six ingredients, identical baked toppings and actual PNG export
+[95/285] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: tablet
+[96/285] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: tablet-16x9
+[97/285] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: phone
+[98/285] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: small-phone
+[99/285] tests\cooking-v2-full.spec.ts:23:160 › all stages fit touch viewport: phone-landscape
+[100/285] tests\cooking-v2-full.spec.ts:28:1 › resume, reset confirmation, undo, native touch tray and separate old prototype data
+[101/285] tests\cooking-v2-full.spec.ts:31:1 › reload resumes a baking pizza with identical placement; offline entry preserves all graphics
+[102/285] tests\cooking-v2-full.spec.ts:34:1 › native rolling-pin touch on both axes, cancel, undo and saved dough progress
+[103/285] tests\cooking-v2-full.spec.ts:38:1 › leaving a baking screen pauses elapsed time and returning resumes the same pizza
+[104/285] tests\cooking-v2.spec.ts:12:1 › model: repeated placement, per-item state, collision rejection, move/remove and gesture undo
+[105/285] tests\cooking-v2.spec.ts:18:1 › all eight original assets preserved and browser-decodable, all derivatives load
+[106/285] tests\cooking-v2.spec.ts:24:1 › real texture paint clips at inner crust, coverage gate, preserved sauce, tablet screenshots
+[107/285] tests\cooking-v2.spec.ts:37:1 › panel drag, tap, move, remove, undo, reload and unrelated storage preservation
+[108/285] tests\cooking-v2.spec.ts:43:1 › cheese swiping undoes as one gesture and invalid placement does not commit
+[109/285] tests\cooking-v2.spec.ts:46:140 › responsive touch: tablet-16x9
+[110/285] tests\cooking-v2.spec.ts:46:140 › responsive touch: phone
+[111/285] tests\cooking-v2.spec.ts:46:140 › responsive touch: phone-landscape
+[112/285] tests\cooking-v2.spec.ts:46:140 › responsive touch: small-phone
+[113/285] tests\cooking-v2.spec.ts:51:1 › offline prototype works after cache install without affecting main entry
+[114/285] tests\cooking-v2.spec.ts:54:1 › touch pointer dragging paints and places; pointer cancellation discards unfinished work
+[115/285] tests\cooking-v2.spec.ts:60:1 › reset asks first, cancellation preserves work and approval only clears prototype; storage blocked is explicit
+[116/285] tests\cooking-v2.spec.ts:65:1 › a failed food asset reports a loading problem instead of substituting drawn food
+[117/285] tests\cooking.spec.ts:12:1 › short tablet keeps dough and sauce tools inside the screen
+[118/285] tests\cooking.spec.ts:14:1 › pizza state validation and previous revision separation
+[119/285] tests\cooking.spec.ts:15:1 › hands-on pizza: roll, cream, toppings, oven drag and eight cuts
+[120/285] tests\cooking.spec.ts:43:1 › rolling requires movement on both axes; sauce needs tool and coverage
+[121/285] tests\cooking.spec.ts:49:160 › hands-on cooking layout tablet
+[122/285] tests\cooking.spec.ts:49:160 › hands-on cooking layout tablet-16x9
+[123/285] tests\cooking.spec.ts:49:160 › hands-on cooking layout phone
+[124/285] tests\cooking.spec.ts:49:160 › hands-on cooking layout small-phone
+[125/285] tests\cooking.spec.ts:49:160 › hands-on cooking layout phone-landscape
+[126/285] tests\cooking.spec.ts:52:1 › offline oven restoration and coloring/old cooking saves stay intact
+[127/285] tests\cooking.spec.ts:57:1 › keyboard tools, blocked storage and common sound toggle
+[128/285] tests\cooking.spec.ts:60:1 › muted oven completion stays silent
+[129/285] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet
+  1) tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet ─────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.tap: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '문 열기', exact: true })
+
+
+      23 |  await page.setViewportSize({width,height});await page.goto('prototypes/cooking-v2/cupcake/?legacy=1');await fixture(page,{oven:'ready'});await page.screenshot({path:`${folder}/${name}-oven.png`})
+      24 |  const stage=await page.locator('.cc-scene').boundingBox(),work=await page.locator('.cc-work').boundingBox();const metrics:any={stage,work};if(phase==='after')metrics.baselineWork=await baselineBounds(page,'bake')
+    > 25 |  await page.getByRole('button',{name:'문 열기',exact:true}).tap();await page.screenshot({path:`${folder}/${name}-open.png`});const cdp=await context.newCDPSession(page)
+         |                                                          ^
+      26 |  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...await at(page,350,510),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{...await at(page,1030,440),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await expect(page.locator('main')).toHaveAttribute('data-phase','inside');await page.screenshot({path:`${folder}/${name}-inside.png`})
+      27 |  const close=page.getByRole('button',{name:'문 닫고 굽기',exact:true}),button=(await close.boundingBox())!;expect(button.width).toBeGreaterThanOrEqual(48);expect(button.height).toBeGreaterThanOrEqual(48);expect(button.y+button.height).toBeLessThanOrEqual((await page.locator('.cc-dock').boundingBox())!.y+1)
+      28 |  await close.tap();await expect(page.locator('main')).toHaveAttribute('data-phase','done',{timeout:6000});await page.screenshot({path:`${folder}/${name}-baked.png`})
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\cupcake-polish.spec.ts:25:58
+
+    Error Context: test-results\cupcake-polish-cupcake-oven-and-celebration-review-tablet\error-context.md
+
+
+
+
+(node:17692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[130/285] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet-wide
+  2) tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet-wide ────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.tap: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '문 열기', exact: true })
+
+
+      23 |  await page.setViewportSize({width,height});await page.goto('prototypes/cooking-v2/cupcake/?legacy=1');await fixture(page,{oven:'ready'});await page.screenshot({path:`${folder}/${name}-oven.png`})
+      24 |  const stage=await page.locator('.cc-scene').boundingBox(),work=await page.locator('.cc-work').boundingBox();const metrics:any={stage,work};if(phase==='after')metrics.baselineWork=await baselineBounds(page,'bake')
+    > 25 |  await page.getByRole('button',{name:'문 열기',exact:true}).tap();await page.screenshot({path:`${folder}/${name}-open.png`});const cdp=await context.newCDPSession(page)
+         |                                                          ^
+      26 |  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...await at(page,350,510),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{...await at(page,1030,440),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await expect(page.locator('main')).toHaveAttribute('data-phase','inside');await page.screenshot({path:`${folder}/${name}-inside.png`})
+      27 |  const close=page.getByRole('button',{name:'문 닫고 굽기',exact:true}),button=(await close.boundingBox())!;expect(button.width).toBeGreaterThanOrEqual(48);expect(button.height).toBeGreaterThanOrEqual(48);expect(button.y+button.height).toBeLessThanOrEqual((await page.locator('.cc-dock').boundingBox())!.y+1)
+      28 |  await close.tap();await expect(page.locator('main')).toHaveAttribute('data-phase','done',{timeout:6000});await page.screenshot({path:`${folder}/${name}-baked.png`})
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\cupcake-polish.spec.ts:25:58
+
+    Error Context: test-results\cupcake-polish-cupcake-ove-60f95-ebration-review-tablet-wide\error-context.md
+
+
+
+(node:25184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[131/285] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone
+  3) tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone ──────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.tap: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '문 열기', exact: true })
+
+
+      23 |  await page.setViewportSize({width,height});await page.goto('prototypes/cooking-v2/cupcake/?legacy=1');await fixture(page,{oven:'ready'});await page.screenshot({path:`${folder}/${name}-oven.png`})
+      24 |  const stage=await page.locator('.cc-scene').boundingBox(),work=await page.locator('.cc-work').boundingBox();const metrics:any={stage,work};if(phase==='after')metrics.baselineWork=await baselineBounds(page,'bake')
+    > 25 |  await page.getByRole('button',{name:'문 열기',exact:true}).tap();await page.screenshot({path:`${folder}/${name}-open.png`});const cdp=await context.newCDPSession(page)
+         |                                                          ^
+      26 |  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...await at(page,350,510),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{...await at(page,1030,440),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await expect(page.locator('main')).toHaveAttribute('data-phase','inside');await page.screenshot({path:`${folder}/${name}-inside.png`})
+      27 |  const close=page.getByRole('button',{name:'문 닫고 굽기',exact:true}),button=(await close.boundingBox())!;expect(button.width).toBeGreaterThanOrEqual(48);expect(button.height).toBeGreaterThanOrEqual(48);expect(button.y+button.height).toBeLessThanOrEqual((await page.locator('.cc-dock').boundingBox())!.y+1)
+      28 |  await close.tap();await expect(page.locator('main')).toHaveAttribute('data-phase','done',{timeout:6000});await page.screenshot({path:`${folder}/${name}-baked.png`})
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\cupcake-polish.spec.ts:25:58
+
+    Error Context: test-results\cupcake-polish-cupcake-oven-and-celebration-review-phone\error-context.md
+
+
+
+(node:23612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[132/285] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: small-phone
+  4) tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: small-phone ────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.tap: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '문 열기', exact: true })
+
+
+      23 |  await page.setViewportSize({width,height});await page.goto('prototypes/cooking-v2/cupcake/?legacy=1');await fixture(page,{oven:'ready'});await page.screenshot({path:`${folder}/${name}-oven.png`})
+      24 |  const stage=await page.locator('.cc-scene').boundingBox(),work=await page.locator('.cc-work').boundingBox();const metrics:any={stage,work};if(phase==='after')metrics.baselineWork=await baselineBounds(page,'bake')
+    > 25 |  await page.getByRole('button',{name:'문 열기',exact:true}).tap();await page.screenshot({path:`${folder}/${name}-open.png`});const cdp=await context.newCDPSession(page)
+         |                                                          ^
+      26 |  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...await at(page,350,510),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{...await at(page,1030,440),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await expect(page.locator('main')).toHaveAttribute('data-phase','inside');await page.screenshot({path:`${folder}/${name}-inside.png`})
+      27 |  const close=page.getByRole('button',{name:'문 닫고 굽기',exact:true}),button=(await close.boundingBox())!;expect(button.width).toBeGreaterThanOrEqual(48);expect(button.height).toBeGreaterThanOrEqual(48);expect(button.y+button.height).toBeLessThanOrEqual((await page.locator('.cc-dock').boundingBox())!.y+1)
+      28 |  await close.tap();await expect(page.locator('main')).toHaveAttribute('data-phase','done',{timeout:6000});await page.screenshot({path:`${folder}/${name}-baked.png`})
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\cupcake-polish.spec.ts:25:58
+
+    Error Context: test-results\cupcake-polish-cupcake-ove-5b62e-ebration-review-small-phone\error-context.md
+
+
+(node:16312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[133/285] tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone-landscape
+  5) tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone-landscape ────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.tap: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '문 열기', exact: true })
+
+
+      23 |  await page.setViewportSize({width,height});await page.goto('prototypes/cooking-v2/cupcake/?legacy=1');await fixture(page,{oven:'ready'});await page.screenshot({path:`${folder}/${name}-oven.png`})
+      24 |  const stage=await page.locator('.cc-scene').boundingBox(),work=await page.locator('.cc-work').boundingBox();const metrics:any={stage,work};if(phase==='after')metrics.baselineWork=await baselineBounds(page,'bake')
+    > 25 |  await page.getByRole('button',{name:'문 열기',exact:true}).tap();await page.screenshot({path:`${folder}/${name}-open.png`});const cdp=await context.newCDPSession(page)
+         |                                                          ^
+      26 |  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...await at(page,350,510),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{...await at(page,1030,440),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await expect(page.locator('main')).toHaveAttribute('data-phase','inside');await page.screenshot({path:`${folder}/${name}-inside.png`})
+      27 |  const close=page.getByRole('button',{name:'문 닫고 굽기',exact:true}),button=(await close.boundingBox())!;expect(button.width).toBeGreaterThanOrEqual(48);expect(button.height).toBeGreaterThanOrEqual(48);expect(button.y+button.height).toBeLessThanOrEqual((await page.locator('.cc-dock').boundingBox())!.y+1)
+      28 |  await close.tap();await expect(page.locator('main')).toHaveAttribute('data-phase','done',{timeout:6000});await page.screenshot({path:`${folder}/${name}-baked.png`})
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\cupcake-polish.spec.ts:25:58
+
+    Error Context: test-results\cupcake-polish-cupcake-ove-1d1ab-tion-review-phone-landscape\error-context.md
+
+
+(node:24448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[134/285] tests\cupcake-three.spec.ts:14:1 › stage gates, independent fill, per-cup undo, flavour and decoration isolation
+[135/285] tests\cupcake-three.spec.ts:15:1 › touch ingredients, circular whisk, independent fill, drag oven, three decorations and actual PNG
+[136/285] tests\cupcake-three.spec.ts:23:1 › migration requires explicit consent, retains old bytes and imports only compatible decoration
+[137/285] tests\cupcake-three.spec.ts:24:1 › baking pauses during reset and selection, resumes saved time without moving slots
+[138/285] tests\cupcake-three.spec.ts:25:119 › tablet: fill, oven, decoration and completion fit and touch targets remain accessible
+[139/285] tests\cupcake-three.spec.ts:25:119 › phone-landscape: fill, oven, decoration and completion fit and touch targets remain accessible
+[140/285] tests\cupcake-three.spec.ts:25:119 › phone-portrait: fill, oven, decoration and completion fit and touch targets remain accessible
+[141/285] tests\cupcake-three.spec.ts:26:1 › all originals and approved source PNGs remain byte-identical to parent audits
+[142/285] tests\cupcake-three.spec.ts:27:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
+  6) tests\cupcake-three.spec.ts:27:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front 
+
+    Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'load')
+        at eval (eval at evaluate (:370:30), <anonymous>:3:21)
+        at UtilityScript.evaluate (<anonymous>:372:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:370:30), <anonymous>:3:21)
+        at UtilityScript.evaluate (<anonymous>:372:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\cupcake-three.spec.ts:33:26
+
+    Error Context: test-results\cupcake-three-actual-rende-4b00e-ing-and-protects-bowl-front\error-context.md
+
+
+
+(node:23692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[143/285] tests\cupcake.spec.ts:8:1 › PNG alpha, cream and decoration composition matches the actual SVG
+[144/285] tests\cupcake.spec.ts:11:1 › baking pauses on selection/reset dialog and resumes from saved elapsed time
+[145/285] tests\cupcake.spec.ts:12:1 › touch closing after a tray drag starts baking
+[146/285] tests\cupcake.spec.ts:19:1 › ingredients, circular stirring, oven timing and undo are independent and bounded
+[147/285] tests\cupcake.spec.ts:20:1 › cream growth keeps its natural aspect, flavour preserves toppings and removal/undo preserves IDs
+[148/285] tests\cupcake.spec.ts:21:1 › all nine original PNGs decode; originals match SHA-256 and all food has alpha
+[149/285] tests\cupcake.spec.ts:22:1 › real touch mixing, fill, drag tray, bake, pipe, sprinkle, undo and PNG end-to-end
+[150/285] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: tablet
+[151/285] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: tablet-wide
+[152/285] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: phone
+[153/285] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: small-phone
+[154/285] tests\cupcake.spec.ts:25:160 › layout, all tools and touch targets fit: phone-landscape
+[155/285] tests\cupcake.spec.ts:26:1 › flavour change, remove/undo and saved resume keep exact decoration positions
+[156/285] tests\cupcake.spec.ts:27:1 › reset cancel/confirm, saved stages and foreign save isolation
+[157/285] tests\cupcake.spec.ts:28:1 › touch drag, horizontal scroll and cancellation do not accidentally decorate
+[158/285] tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
+  7) tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: page.evaluate: Test timeout of 90000ms exceeded.
+
+      27 | test('reset cancel/confirm, saved stages and foreign save isolation',async({page})=>{await open(page,pipe(ready(),.6));await page.evaluate(()=>{localStorage.setItem('foreign-cooking-save','keep-me')});const old=(await state(page)).work;await page.getByRole('button',{name:'↻ 다시 만들기',exact:true}).click();await page.getByRole('button',{name:'계속 만들기',exact:true}).click();expect((await state(page)).work).toEqual(old);await page.getByRole('button',{name:'← 요리 선택',exact:true}).click();await page.getByRole('button',{name:/이어서 만들기/}).click();expect((await state(page)).work).toEqual(old);await page.getByRole('button',{name:'↻ 다시 만들기',exact:true}).click();await page.getByRole('button',{name:'처음부터 만들기',exact:true}).click();expect((await state(page)).work).toEqual(fresh().work);expect(await page.evaluate(()=>localStorage.getItem('foreign-cooking-save'))).toBe('keep-me')})
+      28 | test('touch drag, horizontal scroll and cancellation do not accidentally decorate',async({page,context})=>{await page.setViewportSize({width:360,height:800});await open(page,pipe(ready(),1));const cdp=await context.newCDPSession(page),shelf=(await page.locator('.cc-strip').boundingBox())!;await touch(cdp,'touchStart',{x:shelf.x+shelf.width-10,y:shelf.y+35});for(let i=1;i<8;i++)await touch(cdp,'touchMove',{x:shelf.x+shelf.width-10-i*20,y:shelf.y+35});await touch(cdp,'touchEnd');expect((await state(page)).work.sprinkles).toHaveLength(0);const target=page.getByRole('button',{name:'스프링클',exact:true});await target.scrollIntoViewIfNeeded();const r=(await target.boundingBox())!,p=await pos(page,500,400);await touch(cdp,'touchStart',{x:r.x+r.width/2,y:r.y+35});await touch(cdp,'touchMove',p);await touch(cdp,'touchEnd');expect((await state(page)).work.sprinkles).toHaveLength(1);await touch(cdp,'touchStart',{x:r.x+r.width/2,y:r.y+35});await touch(cdp,'touchMove',p);await touch(cdp,'touchCancel');expect((await state(page)).work.sprinkles).toHaveLength(1)})
+    > 29 | test('keyboard stirring and piping, corrupt/blocked saves and offline entry',async({page,context})=>{await open(page);for(const i of ingredients)await page.getByRole('button',{name:i.name+' 넣기',exact:true}).click();await page.getByRole('button',{name:'거품기',exact:true}).click();for(let i=0;i<4;i++){await page.locator('.cc-work').focus();await page.keyboard.press('Enter')}expect((await state(page)).work.mix).toBe(1);await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);await context.setOffline(true);await page.reload();await expect(page.getByLabel('반죽 섞기 공간',{exact:true})).toBeVisible();await context.setOffline(false);await page.evaluate(k=>localStorage.setItem(k,'{"broken":true}'),storageKey);await page.reload();expect((await state(page)).work).toEqual(fresh().work);await page.addInitScript(()=>{Storage.prototype.setItem=()=>{throw Error('blocked')}});await page.reload();await expect(page.getByText('이 기기에 저장할 수 없어요. 놀이는 계속할 수 있어요.')).toBeVisible()})
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                              ^
+      30 |
+      31 |
+      32 |
+        at C:\Users\leedb\.codex\.chatgpt-projects\g-p-6acf3941180c81919a3f07e6aa898d4c\cupcake-worktree\tests\cupcake.spec.ts:29:430
+
+    Error Context: test-results\cupcake-keyboard-stirring--6478e-ked-saves-and-offline-entry\error-context.md
+
+
+
+(node:24140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[159/285] tests\cupcake.spec.ts:34:1 › keyboard ingredient after cancelled drag and 48px shelf controls
+[160/285] tests\dog-wardrobe.spec.ts:10:1 › version 2 migration keeps human looks and history, collapsing dog clothes with explicit priority
+[161/285] tests\dog-wardrobe.spec.ts:19:1 › dog wardrobe has three tabs and switching from human bottoms safely opens dog clothes
+[162/285] tests\dog-wardrobe.spec.ts:23:1 › dog live drag fits before release, replaces outfits and rejects a human target
+[163/285] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot tablet
+[164/285] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot tablet-16x9
+[165/285] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot phone
+[166/285] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot small-phone
+[167/285] tests\dog-wardrobe.spec.ts:29:160 › dog wardrobe screenshot phone-landscape
+[168/285] tests\dog-wardrobe.spec.ts:34:1 › dog garment closeups show all five fitted silhouettes plus the natural base
+[169/285] tests\dog-wardrobe.spec.ts:46:1 › native phone touch drag dresses the dog while the clothes list remains in place
+[170/285] tests\dressup-fitting.spec.ts:8:1 › legacy outfits, dog all-in-one and undo snapshots migrate without erasing IDs
+[171/285] tests\dressup-fitting.spec.ts:16:132 › fitted eyes, four paws and mixed outfits tablet
+[172/285] tests\dressup-fitting.spec.ts:16:132 › fitted eyes, four paws and mixed outfits tablet-16x9
+[173/285] tests\dressup-fitting.spec.ts:16:132 › fitted eyes, four paws and mixed outfits phone
+[174/285] tests\dressup-fitting.spec.ts:16:132 › fitted eyes, four paws and mixed outfits small-phone
+[175/285] tests\dressup-fitting.spec.ts:30:1 › bottoms do not expose a vest or base shorts; dress masks the whole base outfit
+[176/285] tests\dressup-fitting.spec.ts:36:1 › sideways dog has separate fore/hind and near/far legs with a wrapping coat
+[177/285] tests\dressup-fitting.spec.ts:41:1 › live fitting preview is not saved until release and settles without an alignment jump
+[178/285] tests\dressup-fitting.spec.ts:47:1 › old saved looks resume in the fitted renderer and preserve the other games
+[179/285] tests\dressup-fitting.spec.ts:51:1 › boy and girl crowns sit below the head top but above the eyes
+[180/285] tests\dressup-seasons.spec.ts:13:1 › four-season metadata, real recommendation counts and old looks migrate safely
+[181/285] tests\dressup-seasons.spec.ts:20:113 › spring studio tablet
+[182/285] tests\dressup-seasons.spec.ts:20:113 › spring studio phone
+[183/285] tests\dressup-seasons.spec.ts:20:113 › summer studio tablet
+[184/285] tests\dressup-seasons.spec.ts:20:113 › summer studio phone
+[185/285] tests\dressup-seasons.spec.ts:20:113 › autumn studio tablet
+[186/285] tests\dressup-seasons.spec.ts:20:113 › autumn studio phone
+[187/285] tests\dressup-seasons.spec.ts:20:113 › winter studio tablet
+[188/285] tests\dressup-seasons.spec.ts:20:113 › winter studio phone
+[189/285] tests\dressup-seasons.spec.ts:25:1 › season change keeps clothes, selection, undo, resume and the actual photo background
+[190/285] tests\dressup-seasons.spec.ts:30:1 › suit, dress, handbag and hoodie share the open arm rig and compatible slots
+[191/285] tests\dressup-seasons.spec.ts:36:157 › season studio edge short-tablet
+[192/285] tests\dressup-seasons.spec.ts:36:157 › season studio edge small-phone
+[193/285] tests\dressup-seasons.spec.ts:36:157 › season studio edge landscape-phone
+[194/285] tests\dressup-seasons.spec.ts:39:1 › winter stays playable offline and each season random outfit uses compatible recommended items
+[195/285] tests\dressup-seasons.spec.ts:43:1 › handbag native touch drag aligns to the hand on a phone
+[196/285] tests\dressup.spec.ts:11:1 › representative wardrobe metadata, conflicts and independent history
+[197/285] tests\dressup.spec.ts:21:160 › spring fitting layout tablet
+[198/285] tests\dressup.spec.ts:21:160 › spring fitting layout tablet-16x9
+[199/285] tests\dressup.spec.ts:21:160 › spring fitting layout phone
+[200/285] tests\dressup.spec.ts:21:160 › spring fitting layout small-phone
+[201/285] tests\dressup.spec.ts:21:160 › spring fitting layout phone-landscape
+[202/285] tests\dressup.spec.ts:28:1 › actual drag, return, incompatibility, replacement and simultaneous head slots
+[203/285] tests\dressup.spec.ts:36:1 › dress and two-piece fitting, separate dog garments, all-in-one conflict and four shoes
+[204/285] tests\dressup.spec.ts:43:1 › undo, per-character reset, all reset confirmation, random and real resume
+[205/285] tests\dressup.spec.ts:50:1 › one dressed friend can finish, portrait PNG matches the scene and has no UI
+[206/285] tests\dressup.spec.ts:59:1 › finished representative portrait preserves all fitting layers
+[207/285] tests\dressup.spec.ts:64:1 › native phone touch drag and separate wardrobe scroll surface
+[208/285] tests\dressup.spec.ts:69:1 › keyboard tabs, blocked storage and muted fitting
+[209/285] tests\dressup.spec.ts:73:1 › first offline game open and isolated saves including corrupt data recovery
+[210/285] tests\dressup.spec.ts:77:1 › every representative garment fits its canvas; generate fitting review sheets
+[211/285] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: tablet
+[212/285] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: tablet-16x9
+[213/285] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: small-tablet
+[214/285] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: phone
+[215/285] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: small-phone
+[216/285] tests\home-carousel.spec.ts:26:185 › equal real-game cards and fully visible controls: phone-landscape
+[217/285] tests\home-carousel.spec.ts:37:1 › all five real games launch and return home
+[218/285] tests\home-carousel.spec.ts:42:1 › 12 registered entries keep five-card sizing; a 13th appears without editing the component
+[219/285] tests\home-carousel.spec.ts:52:1 › native phone swipe scrolls without launch; a subsequent tap still launches
+[220/285] tests\home-carousel.spec.ts:58:1 › mouse drag blocks click, stops when released, and keyboard scrolling reaches the last game
+[221/285] tests\home-carousel.spec.ts:66:1 › cancelled scroll rejects a trailing click while a fresh tap works
+[222/285] tests\home-carousel.spec.ts:74:1 › home scrolling, resizing and arrows preserve existing saved values
+[223/285] tests\home.spec.ts:3:2 › tablet-16x9
+[224/285] tests\home.spec.ts:3:2 › tablet
+[225/285] tests\home.spec.ts:3:2 › phone
+[226/285] tests\home.spec.ts:3:2 › phone-landscape
+[227/285] tests\home.spec.ts:3:2 › small-phone
+[228/285] tests\home.spec.ts:14:1 › offline shell and scoped settings
+[229/285] tests\home.spec.ts:21:1 › keyboard and blocked storage
+[230/285] tests\landscape-art.spec.ts:3:46 › police-car-robot: wide drawing label hit targets
+tests\landscape-art.spec.ts:3:46 › police-car-robot: wide drawing label hit targets
+police-car-robot 25 186 []
+
+[231/285] tests\landscape-art.spec.ts:3:46 › fire-robot: wide drawing label hit targets
+tests\landscape-art.spec.ts:3:46 › fire-robot: wide drawing label hit targets
+fire-robot 25 223 []
+
+[232/285] tests\landscape-art.spec.ts:3:46 › baby-dinosaur: wide drawing label hit targets
+tests\landscape-art.spec.ts:3:46 › baby-dinosaur: wide drawing label hit targets
+baby-dinosaur 28 130 []
+
+[233/285] tests\landscape-art.spec.ts:3:46 › garden-butterfly: wide drawing label hit targets
+tests\landscape-art.spec.ts:3:46 › garden-butterfly: wide drawing label hit targets
+garden-butterfly 28 180 []
+
+[234/285] tests\meals.spec.ts:16:1 › meal storage validation, per-unit caps and independent recipes
+[235/285] tests\meals.spec.ts:22:1 › spaghetti touch and drag from pot to cream sauce and finished garnish
+[236/285] tests\meals.spec.ts:30:1 › three sandwiches: independent layers, cap, undo, toast lid and fresh start
+[237/285] tests\meals.spec.ts:37:1 › camp skewers drag, grill, automatic finish and per-recipe save isolation
+[238/285] tests\meals.spec.ts:43:160 › three meal layouts tablet
+[239/285] tests\meals.spec.ts:43:160 › three meal layouts tablet-16x9
+[240/285] tests\meals.spec.ts:43:160 › three meal layouts phone
+[241/285] tests\meals.spec.ts:43:160 › three meal layouts small-phone
+[242/285] tests\meals.spec.ts:43:160 › three meal layouts phone-landscape
+[243/285] tests\meals.spec.ts:48:1 › keyboard spaghetti and blocked storage remain playable
+[244/285] tests\meals.spec.ts:52:1 › phone touch selection works across separate panels and the cooking surface
+[245/285] tests\meals.spec.ts:56:1 › short tablet sauce panel stays inside the screen
+[246/285] tests\meals.spec.ts:60:1 › offline saved grill resumes; old pizza and coloring data are untouched
+[247/285] tests\memory-model.spec.ts:5:1 › 15 stages, exact layouts and forty distinct themed pictures
+[248/285] tests\memory-model.spec.ts:10:1 › every stage has exactly a 3 second locked preview
+[249/285] tests\memory-model.spec.ts:13:1 › same physical card cannot match itself, comparing locks input and correct pairs remain
+[250/285] tests\memory-model.spec.ts:17:1 › mismatched pair stays for one second and then closes
+[251/285] tests\memory-model.spec.ts:21:1 › hint replaces a single flip with one unmatched pair for 2 seconds; pause freezes all timers
+[252/285] tests\memory-model.spec.ts:27:1 › all 15 stages complete and completion records remain unique
+[253/285] tests\memory-model.spec.ts:32:1 › replay always changes picture positions, even with deterministic random input
+[254/285] tests\memory-model.spec.ts:35:1 › saved board and completed stages validate independently of transient flips
+[255/285] tests\memory-visual.spec.ts:3:1 › real-clock previews and touch-play captures show front/back/matched cards together
+[256/285] tests\memory.spec.ts:10:1 › all 15 stage counts and three-second preview, with requested reference captures
+[257/285] tests\memory.spec.ts:16:1 › real touch turns pairs, prevents duplicate/third selection and shows mismatch for one second
+[258/285] tests\memory.spec.ts:20:1 › hint closes a single selection, excludes matches and survives pause without racing
+[259/285] tests\memory.spec.ts:23:1 › restart reshuffles, saves a matched board, resumes with preview, and final stage celebrates
+[260/285] tests\memory.spec.ts:27:1 › stage complete, next stage, keyboard selection and replayed completion
+[261/285] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: tablet
+[262/285] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: tablet-16x9
+[263/285] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: phone
+[264/285] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: small-phone
+[265/285] tests\memory.spec.ts:30:180 › twenty cards fit and retain large touch targets: phone-landscape
+[266/285] tests\memory.spec.ts:35:1 › forty original SVG pictures can be reviewed as four contact sheets
+[267/285] tests\memory.spec.ts:42:1 › offline fresh entry, independent saves, and blocked storage remain playable
+[268/285] tests\memory.spec.ts:45:1 › blocked storage and reduced motion do not prevent completion; backgrounding pauses preview
+[269/285] tests\palette-zoom.spec.ts:4:48 › police-car-robot: visible palette and fixed 300 percent hint
+[270/285] tests\palette-zoom.spec.ts:4:48 › fire-robot: visible palette and fixed 300 percent hint
+[271/285] tests\palette-zoom.spec.ts:4:48 › baby-dinosaur: visible palette and fixed 300 percent hint
+[272/285] tests\palette-zoom.spec.ts:4:48 › garden-butterfly: visible palette and fixed 300 percent hint
+[273/285] tests\scene-background.spec.ts:6:46 › police-car-robot: fixed background never paints
+[274/285] tests\scene-background.spec.ts:6:46 › fire-robot: fixed background never paints
+[275/285] tests\scene-background.spec.ts:6:46 › baby-dinosaur: fixed background never paints
+[276/285] tests\scene-background.spec.ts:6:46 › garden-butterfly: fixed background never paints
+[277/285] tests\scene-background.spec.ts:17:1 › offline PNG includes the approved background with its original colors
+[278/285] tests\wardrobe-navigation.spec.ts:5:29 › hidden scrollbar: touch controls reach every spring item for every character/category
+[279/285] tests\wardrobe-navigation.spec.ts:5:29 › hidden scrollbar: touch controls reach every summer item for every character/category
+[280/285] tests\wardrobe-navigation.spec.ts:5:29 › hidden scrollbar: touch controls reach every autumn item for every character/category
+[281/285] tests\wardrobe-navigation.spec.ts:5:29 › hidden scrollbar: touch controls reach every winter item for every character/category
+[282/285] tests\wardrobe-navigation.spec.ts:39:141 › wardrobe controls fit and reach the last item: short-tablet
+[283/285] tests\wardrobe-navigation.spec.ts:39:141 › wardrobe controls fit and reach the last item: phone
+[284/285] tests\wardrobe-navigation.spec.ts:39:141 › wardrobe controls fit and reach the last item: small-phone
+[285/285] tests\wardrobe-navigation.spec.ts:39:141 › wardrobe controls fit and reach the last item: phone-landscape
+  7 failed
+    tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet ──────────────
+    tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: tablet-wide ─────────
+    tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone ───────────────
+    tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: small-phone ─────────
+    tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone-landscape ─────
+    tests\cupcake-three.spec.ts:27:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front 
+    tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry 
+  278 passed (18.8m)

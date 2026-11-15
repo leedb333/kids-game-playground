@@ -1,0 +1,26 @@
+
+[WebServer] (node:13320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 15 tests using 1 worker
+
+
+(node:5668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/15] tests\cupcake-three.spec.ts:15:1 › stage gates, independent fill, per-cup undo, flavour and decoration isolation
+[2/15] tests\cupcake-three.spec.ts:16:1 › touch ingredients, circular whisk, independent fill, drag oven, three decorations and actual PNG
+[3/15] tests\cupcake-three.spec.ts:24:1 › migration requires explicit consent, retains old bytes and imports only compatible decoration
+[4/15] tests\cupcake-three.spec.ts:25:1 › baking pauses during reset and selection, resumes saved time without moving slots
+[5/15] tests\cupcake-three.spec.ts:26:143 › tablet: fill, oven, decoration and completion fit and touch targets remain accessible
+[6/15] tests\cupcake-three.spec.ts:26:143 › phone-landscape: fill, oven, decoration and completion fit and touch targets remain accessible
+[7/15] tests\cupcake-three.spec.ts:26:143 › phone-portrait: fill, oven, decoration and completion fit and touch targets remain accessible
+[8/15] tests\cupcake-three.spec.ts:26:143 › small-phone: fill, oven, decoration and completion fit and touch targets remain accessible
+[9/15] tests\cupcake-three.spec.ts:27:1 › all originals and approved source PNGs remain byte-identical to parent audits
+[10/15] tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
+[11/15] tests\cupcake-three.spec.ts:37:1 › new game reloads offline with approved graphics and never writes unrelated save keys
+[12/15] tests\cupcake-three.spec.ts:38:1 › archiving an unfinished legacy recipe preserves bytes, does not invent an import and survives reset
+[13/15] tests\cupcake-three.spec.ts:39:1 › phone shelf scrolling and cancelled drags never change any cup decoration
+[14/15] tests\cupcake-three.spec.ts:40:1 › blocked browser storage still permits ingredients and gives visible feedback
+[15/15] tests\cupcake-three.spec.ts:41:1 › offline cache manifest contains only files actually emitted by the production build
+  15 passed (1.9m)

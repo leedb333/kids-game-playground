@@ -1,0 +1,107 @@
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 205 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                        0.84 kB │ gzip:   0.49 kB
+dist/prototypes/cooking-v2/index.html                  0.95 kB │ gzip:   0.50 kB
+dist/prototypes/cooking-v2/cupcake/index.html          0.96 kB │ gzip:   0.46 kB
+dist/prototypes/cooking-v2/kitchen/index.html          1.05 kB │ gzip:   0.48 kB
+dist/prototypes/cooking-v2/burger/index.html           1.06 kB │ gzip:   0.49 kB
+dist/sw.js                                             4.72 kB
+dist/assets/sprinkle-purple-DLPNMmSa.png              11.82 kB
+dist/assets/cheese-c-Cu2rpLP-.png                     20.70 kB
+dist/assets/sprinkle-blue-DnQ10ZdB.png                25.94 kB
+dist/assets/cheese-a-Cprx0gVp.png                     26.24 kB
+dist/assets/cheese-b-f2qqUUM4.png                     29.43 kB
+dist/assets/sprinkle-yellow-J6LYMf4T.png              44.19 kB
+dist/assets/cheese-melt-BXSkwG8G.png                  48.68 kB
+dist/assets/cheese-DAZA0aaG.png                      153.52 kB
+dist/assets/sauce-mayonnaise-bowl-DyJAthBV.png       166.04 kB
+dist/assets/sauce-mustard-bowl-BFmCO7Bu.png          174.67 kB
+dist/assets/spatula-Dw5Kv3Pt.png                     176.42 kB
+dist/assets/egg-C6QIJGHK.png                         184.53 kB
+dist/assets/sauce-ketchup-bowl-XxSpOmt_.png          185.59 kB
+dist/assets/mushroom-group-DccAlCDU.png              187.06 kB
+dist/assets/pickle-group-BgCZjJPO.png                199.19 kB
+dist/assets/onion-group-D1alSRj2.png                 205.49 kB
+dist/assets/mushroom-AhBvWUZ0.png                    205.67 kB
+dist/assets/bacon-Bl84e85o.png                       225.01 kB
+dist/assets/tomato-146jjNgc.png                      258.68 kB
+dist/assets/lettuce-0HJK7W26.png                     286.62 kB
+dist/assets/cup-wrapper-back-inside-Ni69tGXx.png     294.07 kB
+dist/assets/plate-BX6nPDIy.png                       314.03 kB
+dist/assets/paprika-CHDqfXhb.png                     318.18 kB
+dist/assets/bun-bottom-CD8w1tIv.png                  326.07 kB
+dist/assets/patty-cooked-CHn5jJN7.png                340.96 kB
+dist/assets/onion-ekbitzAH.png                       355.75 kB
+dist/assets/batter-surface-DC40tNar.png              355.90 kB
+dist/assets/pepperoni-CCubLKZp.png                   374.72 kB
+dist/assets/olive-BhMJByFS.png                       391.28 kB
+dist/assets/spoon-CfiuOtP3.png                       460.49 kB
+dist/assets/sauce-mayonnaise-drizzle-C9oj8ol5.png    482.96 kB
+dist/assets/frying-pan-CEZXvsUC.png                  484.78 kB
+dist/assets/sauce-mustard-drizzle-DMPOCMV3.png       495.60 kB
+dist/assets/sauce-ketchup-drizzle-DYAU3IZA.png       501.35 kB
+dist/assets/tool-whisk-DPTyDUud.png                  533.98 kB
+dist/assets/cheese-stack-X3ozN3Uh.png                594.36 kB
+dist/assets/cup-wrapper-front-BakEZMPN.png           595.49 kB
+dist/assets/lettuce-stack-Dk5UkGUD.png               707.96 kB
+dist/assets/sauce-ketchup-bottle-CIuKttIX.png        811.57 kB
+dist/assets/sauce-mustard-bottle-BJCogLO5.png        843.17 kB
+dist/assets/tomato-stack-D2gTUVQB.png                930.23 kB
+dist/assets/piping-bag-vanilla-Dvhp46kb.png          931.86 kB
+dist/assets/frosting-strawberry-BulyRgl7.png       1,081.92 kB
+dist/assets/topping-sprinkles-Cx1twrK2.png         1,099.00 kB
+dist/assets/ingredient-egg-DBjzRS2x.png            1,112.33 kB
+dist/assets/sauce-mayonnaise-bottle-dkCZ6_4N.png   1,118.14 kB
+dist/assets/cupcake-baked-base-Ds-d36_b.png        1,175.63 kB
+dist/assets/ingredient-flour-DLXg7tJp.png          1,214.42 kB
+dist/assets/mixing-bowl-batter-D9gycb_k.png        1,245.97 kB
+dist/assets/frosting-vanilla-C_zC3AZ9.png          1,283.95 kB
+dist/assets/counter-CsgxQF1H.png                   1,293.62 kB
+dist/assets/ingredient-milk-HY_y6Ze4.png           1,299.32 kB
+dist/assets/cupcake-baked-base-Dx5VH_mI.png        1,342.15 kB
+dist/assets/ingredient-sugar-n1-mr7dA.png          1,355.49 kB
+dist/assets/mixing-bowl-empty-gNDSRzB7.png         1,453.51 kB
+dist/assets/bun-top-DUp-o53N.png                   1,465.90 kB
+dist/assets/room-BBoll5zj.png                      1,473.91 kB
+dist/assets/mixing-bowl-batter-DXeYMQmN.png        1,482.23 kB
+dist/assets/cupcake-tray-gBl74pZQ.png              1,485.27 kB
+dist/assets/board-BDiykiOF.png                     1,512.41 kB
+dist/assets/sauce-CuRAN78v.png                     1,513.87 kB
+dist/assets/patty-raw-CoxOWkLV.png                 1,524.08 kB
+dist/assets/cupcake-tray-3-base-DjRX_7Di.png       1,606.19 kB
+dist/assets/dough-mid-rk23R0q-.png                 1,674.01 kB
+dist/assets/dough-ball-9cYWx7AP.png                1,729.07 kB
+dist/assets/cheese-pile-DDsNSqwi.png               1,819.43 kB
+dist/assets/dough-BKAW1Ueq.png                     2,237.81 kB
+dist/assets/dough-baked-cf4F7LD5.png               2,328.14 kB
+dist/assets/cupcake-kitchen-bg-BFVCbHLR.png        2,896.64 kB
+dist/assets/prototype-BsiNBhlh.css                     8.53 kB │ gzip:   2.58 kB
+dist/assets/index-BUJj0JYU.css                        10.05 kB │ gzip:   2.80 kB
+dist/assets/index-LEwFKfFp.css                        11.96 kB │ gzip:   3.28 kB
+dist/assets/main-BXKvroLM.css                         12.71 kB │ gzip:   3.79 kB
+dist/assets/cookingBurger-C6q3fGIE.css                12.83 kB │ gzip:   3.47 kB
+dist/assets/cookingKitchen-DsRE5N3_.css               13.24 kB │ gzip:   3.50 kB
+dist/assets/cookingCupcake-d4kJ-ttY.css               14.16 kB │ gzip:   3.62 kB
+dist/assets/index-ChyH_zNG.css                        14.86 kB │ gzip:   3.87 kB
+dist/assets/index-GvEP2yf6.css                        19.31 kB │ gzip:   4.67 kB
+dist/assets/index-BlkKfjs8.css                        29.19 kB │ gzip:   6.81 kB
+dist/assets/index-DIO7WNKx.js                          0.07 kB │ gzip:   0.08 kB
+dist/assets/plate-BRvFmUcf.js                          0.07 kB │ gzip:   0.09 kB
+dist/assets/counter-BNS8TFRP.js                        0.13 kB │ gzip:   0.12 kB
+dist/assets/useSavedRecipe-BF7g5eHn.js                 0.25 kB │ gzip:   0.21 kB
+dist/assets/cookingV2-yzGxTR8N.js                      0.37 kB │ gzip:   0.27 kB
+dist/assets/main-BiswvTqo.js                          15.99 kB │ gzip:   6.31 kB
+dist/assets/Workbench-DspRmDu1.js                     18.77 kB │ gzip:   7.73 kB
+dist/assets/cookingKitchen-BaNjkgL2.js                19.42 kB │ gzip:   7.07 kB
+dist/assets/cookingBurger-DXnuLx7c.js                 25.80 kB │ gzip:   9.38 kB
+dist/assets/index-B7phkCZE.js                         29.50 kB │ gzip:  11.78 kB
+dist/assets/index-pmGSyxa5.js                         36.49 kB │ gzip:  12.68 kB
+dist/assets/cookingCupcake-BSgKze8u.js                67.11 kB │ gzip:  21.02 kB
+dist/assets/index-BFiJTZvX.js                         70.87 kB │ gzip:  22.51 kB
+dist/assets/index-TR5idrRk.js                         71.71 kB │ gzip:  23.77 kB
+dist/assets/client-CdRwYkxP.js                       222.58 kB │ gzip:  69.33 kB
+dist/assets/index-nwoqAHgS.js                      1,018.00 kB │ gzip: 395.43 kB
+✓ built in 3.68s

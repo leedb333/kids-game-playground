@@ -1,0 +1,28 @@
+
+[WebServer] (node:7288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 17 tests using 1 worker
+
+(node:19012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/17] tests\bricks.spec.ts:30:1 › cached playground starts in a new offline window and opens all four games
+[2/17] tests\bricks.spec.ts:65:1 › offline first open, isolated progress and muted/blocked storage remain playable
+[3/17] tests\burger-sauces.spec.ts:80:1 › offline reload preserves sauces and other game saves; no sauce remains none
+[4/17] tests\burger.spec.ts:35:1 › offline fresh burger entry, saved cooking, keyboard and blocked storage stay playable
+[5/17] tests\coloring.spec.ts:84:1 › offline first game open, reload persistence and isolated storage
+[6/17] tests\cooking-v2-full.spec.ts:31:1 › reload resumes a baking pizza with identical placement; offline entry preserves all graphics
+[7/17] tests\cooking-v2.spec.ts:51:1 › offline prototype works after cache install without affecting main entry
+[8/17] tests\cooking.spec.ts:52:1 › offline oven restoration and coloring/old cooking saves stay intact
+[9/17] tests\cupcake-three.spec.ts:37:1 › new game reloads offline with approved graphics and never writes unrelated save keys
+[10/17] tests\cupcake-three.spec.ts:41:1 › offline cache manifest contains only files actually emitted by the production build
+[11/17] tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
+[12/17] tests\dressup-seasons.spec.ts:39:1 › winter stays playable offline and each season random outfit uses compatible recommended items
+[13/17] tests\dressup.spec.ts:73:1 › first offline game open and isolated saves including corrupt data recovery
+[14/17] tests\home.spec.ts:14:1 › offline shell and scoped settings
+[15/17] tests\meals.spec.ts:60:1 › offline saved grill resumes; old pizza and coloring data are untouched
+[16/17] tests\memory.spec.ts:42:1 › offline fresh entry, independent saves, and blocked storage remain playable
+[17/17] tests\scene-background.spec.ts:17:1 › offline PNG includes the approved background with its original colors
+  17 passed (1.3m)

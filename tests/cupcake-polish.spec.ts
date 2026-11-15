@@ -5,7 +5,7 @@ import {edit,fresh,layout,storageKey,type Work} from '../src/games/cooking-v2/cu
 const phase=process.env.CUPCAKE_REVIEW_PHASE==='before'?'before':'after'
 const folder=`docs/cupcake-polish/${phase}`
 mkdirSync(folder,{recursive:true})
-async function fixture(page:Page,patch:Partial<Work>){const s=edit(fresh(),{step:'bake',ingredients:['egg','milk','flour','sugar'],mix:1,filled:true,...patch});await page.evaluate(({key,s})=>localStorage.setItem(key,JSON.stringify(s)),{key:storageKey,s});await page.goto('prototypes/cooking-v2/cupcake/#play');await page.reload();await expect(page.getByText('요리 그림을 준비하고 있어요…')).toHaveCount(0)}
+async function fixture(page:Page,patch:Partial<Work>){await expect(page.locator('main.cc-app')).toBeVisible();await expect(page.getByText('요리 그림을 준비하고 있어요…')).toHaveCount(0);const s=edit(fresh(),{step:'bake',ingredients:['egg','milk','flour','sugar'],mix:1,filled:true,...patch});await page.evaluate(({key,s})=>localStorage.setItem(key,JSON.stringify(s)),{key:storageKey,s});await page.goto('prototypes/cooking-v2/cupcake/#legacy-play');await page.reload();await expect(page.getByText('요리 그림을 준비하고 있어요…')).toHaveCount(0)}
 async function at(page:Page,x:number,y:number){const r=(await page.locator('.cc-work').boundingBox())!;return {x:r.x+r.width*x/1400,y:r.y+r.height*y/900}}
 // Compare the old geometry in the same browser: Windows screenshots are review
 // artifacts, not pixel-position expectations for Linux CI with different fonts.
@@ -20,7 +20,7 @@ async function baselineBounds(page:Page,step:'bake'|'complete'){
  `});const bounds=(await page.locator('.cc-work').boundingBox())!;await style.evaluate(e=>(e as HTMLElement).remove());return bounds
 }
 for(const [name,width,height] of [['tablet',1280,800],['tablet-wide',1280,720],['phone',360,800],['small-phone',320,640],['phone-landscape',800,360]] as const)test(`cupcake oven and celebration review: ${name}`,async({page,context})=>{
- await page.setViewportSize({width,height});await page.goto('prototypes/cooking-v2/cupcake/');await fixture(page,{oven:'ready'});await page.screenshot({path:`${folder}/${name}-oven.png`})
+ await page.setViewportSize({width,height});await page.goto('prototypes/cooking-v2/cupcake/#legacy');await fixture(page,{oven:'ready'});await page.screenshot({path:`${folder}/${name}-oven.png`})
  const stage=await page.locator('.cc-scene').boundingBox(),work=await page.locator('.cc-work').boundingBox();const metrics:any={stage,work};if(phase==='after')metrics.baselineWork=await baselineBounds(page,'bake')
  await page.getByRole('button',{name:'문 열기',exact:true}).tap();await page.screenshot({path:`${folder}/${name}-open.png`});const cdp=await context.newCDPSession(page)
  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...await at(page,350,510),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{...await at(page,1030,440),id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await expect(page.locator('main')).toHaveAttribute('data-phase','inside');await page.screenshot({path:`${folder}/${name}-inside.png`})
