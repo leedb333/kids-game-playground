@@ -1,0 +1,33 @@
+{
+  "scope": "development-only existing-asset composition experiment",
+  "labTests": {"passed": 8, "finalComparisonCaptureRecheck": "1 passed; included in the same eight-test scope"},
+  "regressionTests": {
+    "passed": 25,
+    "duration": "2.2m",
+    "coverage": "existing cupcake 17, cupcake layout/oven polish 5, pizza full touch flow 1, burger full touch flow 1, home launch/return for all five games 1",
+    "fullRepositorySuite": false
+  },
+  "productionTypeCheck": "passed",
+  "productionBuild": "passed; existing large-chunk warning remains",
+  "pagesPathVerification": "passed",
+  "experimentExcludedFromProductionBuild": true,
+  "productionCodeOrSaveChanges": false,
+  "sourceImageFilesModified": false,
+  "newGeneratedArtwork": false,
+  "failedCandidateImagesLoaded": false,
+  "testedBrowserViewports": [[1280,800],[1280,720],[360,800],[800,360]],
+  "nativeTouchEventsTested": true,
+  "physicalSamsungDeviceTested": false,
+  "visualResults": {
+    "smallIngredientTextureEffect": "usable as a short effect only; no real empty-bowl filling",
+    "originalBowlExterior": "preserved",
+    "emptyBowlReconstruction": "failed: original is filled",
+    "sharedCupFrontPixels": "281038 opaque foreground pixels unchanged in four states",
+    "emptyCupAndSeamQuality": "failed: missing back/inside and visible seam",
+    "threeCupTrayPlacementAndGroupMovement": "passed for recorded layout",
+    "bakingPositionsAndScreenForegroundPixels": "passed",
+    "naturalRawToBakedAppearance": "failed"
+  },
+  "additionalImagesToReviewFirst": ["cup-wrapper-front.png", "cup-wrapper-back-inside.png", "mixing-bowl-empty.png"],
+  "readyForFullProductionImplementation": false
+}

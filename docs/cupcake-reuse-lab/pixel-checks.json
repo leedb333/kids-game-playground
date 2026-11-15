@@ -1,0 +1,52 @@
+{
+  "wrapper": [
+    {
+      "state": "empty",
+      "count": 281038,
+      "changed": 0
+    },
+    {
+      "state": "filled",
+      "count": 281038,
+      "changed": 0
+    },
+    {
+      "state": "risen",
+      "count": 281038,
+      "changed": 0
+    },
+    {
+      "state": "baked",
+      "count": 281038,
+      "changed": 0
+    }
+  ],
+  "bowlFront": {
+    "count": 1332233,
+    "changed": 0
+  },
+  "slots": [
+    {
+      "id": "cup-1",
+      "x": 393,
+      "y": 680
+    },
+    {
+      "id": "cup-2",
+      "x": 902,
+      "y": 680
+    },
+    {
+      "id": "cup-3",
+      "x": 1404,
+      "y": 680
+    }
+  ],
+  "duration": 3000,
+  "visualApproval": {
+    "emptyBowl": false,
+    "emptyCup": false,
+    "baking": false,
+    "tray": true
+  }
+}

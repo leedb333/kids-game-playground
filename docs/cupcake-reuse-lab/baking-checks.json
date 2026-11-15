@@ -1,0 +1,113 @@
+{
+  "durationMs": 4136,
+  "before": {
+    "mode": "oven",
+    "selected": "egg",
+    "ingredients": [],
+    "pending": null,
+    "mix": 0,
+    "whisk": false,
+    "cupState": "baked",
+    "compare": false,
+    "cups": [
+      {
+        "id": "cup-1",
+        "cream": null,
+        "bake": 0
+      },
+      {
+        "id": "cup-2",
+        "cream": null,
+        "bake": 0
+      },
+      {
+        "id": "cup-3",
+        "cream": null,
+        "bake": 0
+      }
+    ],
+    "selectedCup": "cup-1",
+    "group": {
+      "x": 1030,
+      "y": 285,
+      "scale": 0.4
+    },
+    "inside": true,
+    "baking": false,
+    "elapsed": 0
+  },
+  "middle": {
+    "mode": "oven",
+    "selected": "egg",
+    "ingredients": [],
+    "pending": null,
+    "mix": 0,
+    "whisk": false,
+    "cupState": "baked",
+    "compare": false,
+    "cups": [
+      {
+        "id": "cup-1",
+        "cream": null,
+        "bake": 0.6329666666666669
+      },
+      {
+        "id": "cup-2",
+        "cream": null,
+        "bake": 0.6329666666666669
+      },
+      {
+        "id": "cup-3",
+        "cream": null,
+        "bake": 0.6329666666666669
+      }
+    ],
+    "selectedCup": "cup-1",
+    "group": {
+      "x": 1030,
+      "y": 285,
+      "scale": 0.4
+    },
+    "inside": true,
+    "baking": true,
+    "elapsed": 1898.9000000000005
+  },
+  "after": {
+    "mode": "oven",
+    "selected": "egg",
+    "ingredients": [],
+    "pending": null,
+    "mix": 0,
+    "whisk": false,
+    "cupState": "baked",
+    "compare": false,
+    "cups": [
+      {
+        "id": "cup-1",
+        "cream": null,
+        "bake": 1
+      },
+      {
+        "id": "cup-2",
+        "cream": null,
+        "bake": 1
+      },
+      {
+        "id": "cup-3",
+        "cream": null,
+        "bake": 1
+      }
+    ],
+    "selectedCup": "cup-1",
+    "group": {
+      "x": 1030,
+      "y": 285,
+      "scale": 0.4
+    },
+    "inside": true,
+    "baking": false,
+    "elapsed": 3000
+  },
+  "screenFrontPixelsUnchanged": true,
+  "naturalBakingApproved": false
+}
