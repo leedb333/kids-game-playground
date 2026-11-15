@@ -275,7 +275,7 @@ Running 285 tests using 1 worker
 [140/285] tests\cupcake-three.spec.ts:25:119 › phone-portrait: fill, oven, decoration and completion fit and touch targets remain accessible
 [141/285] tests\cupcake-three.spec.ts:26:1 › all originals and approved source PNGs remain byte-identical to parent audits
 [142/285] tests\cupcake-three.spec.ts:27:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
-  6) tests\cupcake-three.spec.ts:27:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front 
+  6) tests\cupcake-three.spec.ts:27:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
 
     Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'load')
         at eval (eval at evaluate (:370:30), <anonymous>:3:21)
@@ -309,7 +309,7 @@ Running 285 tests using 1 worker
 [156/285] tests\cupcake.spec.ts:27:1 › reset cancel/confirm, saved stages and foreign save isolation
 [157/285] tests\cupcake.spec.ts:28:1 › touch drag, horizontal scroll and cancellation do not accidentally decorate
 [158/285] tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
-  7) tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry 
+  7) tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
 
     Test timeout of 90000ms exceeded.
 
@@ -476,6 +476,6 @@ garden-butterfly 28 180 []
     tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone ───────────────
     tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: small-phone ─────────
     tests\cupcake-polish.spec.ts:22:160 › cupcake oven and celebration review: phone-landscape ─────
-    tests\cupcake-three.spec.ts:27:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front 
-    tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry 
+    tests\cupcake-three.spec.ts:27:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
+    tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
   278 passed (18.8m)

@@ -23,7 +23,7 @@ Running 37 tests using 1 worker
 [13/37] tests\cupcake-three.spec.ts:26:143 › small-phone: fill, oven, decoration and completion fit and touch targets remain accessible
 [14/37] tests\cupcake-three.spec.ts:27:1 › all originals and approved source PNGs remain byte-identical to parent audits
 [15/37] tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
-  1) tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front 
+  1) tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
 
     Error: expect(received).toEqual(expected) // deep equality
 
@@ -79,5 +79,5 @@ Running 37 tests using 1 worker
 [36/37] tests\cupcake.spec.ts:29:1 › keyboard stirring and piping, corrupt/blocked saves and offline entry
 [37/37] tests\cupcake.spec.ts:34:1 › keyboard ingredient after cancelled drag and 48px shelf controls
   1 failed
-    tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front 
+    tests\cupcake-three.spec.ts:28:1 › actual renderer preserves every foreground RGBA through continuous baking and protects bowl front
   36 passed (3.5m)

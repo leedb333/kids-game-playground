@@ -88,4 +88,3 @@ main `ac38e42`와 #27~#30의 open/Draft/미병합을 확인했습니다. `feat/c
 - 새 테스트 `tests/cupcake-three.spec.ts`, 기존 기록 보기 경로에 맞춘 `cupcake.spec.ts`·`cupcake-polish.spec.ts`.
 - 캐시 생성 순서·목록 중복 제거만 보완한 `vite.config.ts`.
 - 이 보고서, 캡처, 수치와 실행 로그. 게임 원본 PNG·다른 게임 코드·저장 키·통합 홈·배포 작업 파일은 변경하지 않았습니다.
-
