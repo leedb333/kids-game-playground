@@ -1,0 +1,627 @@
+{
+  "sourceHashes": [
+    {
+      "name": "mixing-bowl-empty",
+      "sha256": "297e1ec26b963b31bddc0414c788709fa0df170a86854255f59706cc8b30a128",
+      "reference": false
+    },
+    {
+      "name": "mix-egg-layer",
+      "sha256": "9bb4e3d9a35f82fcfe424e85045c95a5459effed16aaa40294da9948288327d1",
+      "reference": false
+    },
+    {
+      "name": "mix-milk-layer",
+      "sha256": "1a666263f3209401dcc543716f24dc631346b502dec332f5f5c2f8ba20936358",
+      "reference": false
+    },
+    {
+      "name": "mix-flour-layer",
+      "sha256": "77e0fdbfecece5f32af74e1e136ceadc7185e92fec16aa57a6e5942bd0273c33",
+      "reference": false
+    },
+    {
+      "name": "mix-sugar-layer",
+      "sha256": "a2a660013f5d62a172d922d2953d85ead407e69b00e2a8efcf4dbfbe36a33409",
+      "reference": false
+    },
+    {
+      "name": "cupcake-cup-empty",
+      "sha256": "f1213aee4d855070acc4a0ba095f3ee60367bb787404b9d8fa3301519de88759",
+      "reference": false
+    },
+    {
+      "name": "cupcake-cup-filled",
+      "sha256": "5161f721f5617b7f6966890faac80cb0e8ff71c28d3e396cff11b2e7dab235d0",
+      "reference": false
+    },
+    {
+      "name": "cupcake-cup-half-baked",
+      "sha256": "baddb1261f74941f6ea8a82dc6b21bfb80087f85276e041bd28a9be6b968ced3",
+      "reference": false
+    },
+    {
+      "name": "cupcake-tray-3-base",
+      "sha256": "fbd710651d94656244439d1026f8b1523eab364402937d39c66d5b60d3d8eda4",
+      "reference": false
+    },
+    {
+      "name": "cupcake-baked-base",
+      "sha256": "ce83f6bae052c64a130ddb4b92bcc917eda15e90117a9adfb072bf8ba79c5c1f",
+      "reference": true
+    },
+    {
+      "name": "mixing-bowl-batter",
+      "sha256": "5e087d5420125de0a6a0be5a6da4fcbaa75d1a4ae10862241d7bed836a8cf7e1",
+      "reference": true
+    },
+    {
+      "name": "cupcake-kitchen-bg",
+      "sha256": "50a68e37c835a34592e80022a06149c1e6c8522fd34aa221b32fc3e87b8cec61",
+      "reference": true
+    },
+    {
+      "name": "cupcake-tray",
+      "sha256": "5195f1cba192ee671ae9edb44108d6ad663eac63268fa0b7d56d202e2fbd672e",
+      "reference": true
+    },
+    {
+      "name": "frosting-strawberry",
+      "sha256": "2b0c210ae042cacf8d3affe9b611e6b5da441f4897e28e774e5445728f18e96e",
+      "reference": true
+    },
+    {
+      "name": "frosting-vanilla",
+      "sha256": "f8bc99b174b89dc57e5afc267e85be516e8d9bdd393d2cff1f99fb2ddb1654ec",
+      "reference": true
+    },
+    {
+      "name": "piping-bag-vanilla",
+      "sha256": "d888f3a759d16d040d82993c66d98865d18f4a43778454d7fa12e20648612fe6",
+      "reference": true
+    },
+    {
+      "name": "tool-whisk",
+      "sha256": "f091e040bd104fd7b08ad26fe57812ab65ac571b166cba06f12f61ee8079b613",
+      "reference": true
+    },
+    {
+      "name": "topping-sprinkles",
+      "sha256": "088747c70591ca938266dd41a0f51573bfacdd225ec6901e941010e79f1163f6",
+      "reference": true
+    },
+    {
+      "name": "cupcake-a-mixing",
+      "sha256": "b624cd4d35dfbd5326a60f64bc5b9f77eac195b6195930fce97337b4944c110e",
+      "reference": true
+    },
+    {
+      "name": "cupcake-b-decorating",
+      "sha256": "320db54137a4e5217a830719d7a1c03b879b67a901863bfc48b68473a3430fd5",
+      "reference": true
+    },
+    {
+      "name": "cupcake-c-complete",
+      "sha256": "c80476f34c17888ec2276935ebe4ad2389342f7f6af98f194396bf87b971b404",
+      "reference": true
+    }
+  ],
+  "reports": [
+    {
+      "name": "mixing-bowl-empty",
+      "sha256": "297e1ec26b963b31bddc0414c788709fa0df170a86854255f59706cc8b30a128",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 754849,
+        "semi": 816947,
+        "edge": 0,
+        "bounds": [
+          55,
+          210,
+          1179,
+          1114
+        ]
+      },
+      "processed": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 798091,
+        "semi": 773705,
+        "edge": 0,
+        "bounds": [
+          55,
+          210,
+          1179,
+          1114
+        ]
+      },
+      "removed": 43242
+    },
+    {
+      "name": "mix-egg-layer",
+      "sha256": "9bb4e3d9a35f82fcfe424e85045c95a5459effed16aaa40294da9948288327d1",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 983958,
+        "semi": 587764,
+        "edge": 0,
+        "bounds": [
+          59,
+          278,
+          1165,
+          946
+        ]
+      },
+      "processed": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 993671,
+        "semi": 578051,
+        "edge": 0,
+        "bounds": [
+          59,
+          278,
+          1165,
+          946
+        ]
+      },
+      "removed": 9713
+    },
+    {
+      "name": "mix-milk-layer",
+      "sha256": "1a666263f3209401dcc543716f24dc631346b502dec332f5f5c2f8ba20936358",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 1070331,
+        "semi": 501878,
+        "edge": 0,
+        "bounds": [
+          90,
+          298,
+          1160,
+          877
+        ]
+      },
+      "processed": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 1086310,
+        "semi": 485899,
+        "edge": 0,
+        "bounds": [
+          90,
+          298,
+          1160,
+          877
+        ]
+      },
+      "removed": 15979
+    },
+    {
+      "name": "mix-flour-layer",
+      "sha256": "77e0fdbfecece5f32af74e1e136ceadc7185e92fec16aa57a6e5942bd0273c33",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 1006381,
+        "semi": 565661,
+        "edge": 0,
+        "bounds": [
+          79,
+          306,
+          1156,
+          925
+        ]
+      },
+      "processed": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 1051965,
+        "semi": 520077,
+        "edge": 0,
+        "bounds": [
+          79,
+          306,
+          1156,
+          925
+        ]
+      },
+      "removed": 45584
+    },
+    {
+      "name": "mix-sugar-layer",
+      "sha256": "a2a660013f5d62a172d922d2953d85ead407e69b00e2a8efcf4dbfbe36a33409",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 989306,
+        "semi": 582925,
+        "edge": 0,
+        "bounds": [
+          64,
+          246,
+          1157,
+          902
+        ]
+      },
+      "processed": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 1012478,
+        "semi": 559753,
+        "edge": 0,
+        "bounds": [
+          64,
+          246,
+          1157,
+          902
+        ]
+      },
+      "removed": 23172
+    },
+    {
+      "name": "cupcake-cup-empty",
+      "sha256": "f1213aee4d855070acc4a0ba095f3ee60367bb787404b9d8fa3301519de88759",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 720322,
+        "semi": 851732,
+        "edge": 0,
+        "bounds": [
+          66,
+          160,
+          1169,
+          1080
+        ]
+      },
+      "processed": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 797680,
+        "semi": 774374,
+        "edge": 0,
+        "bounds": [
+          66,
+          160,
+          1169,
+          1080
+        ]
+      },
+      "removed": 77358
+    },
+    {
+      "name": "cupcake-cup-filled",
+      "sha256": "5161f721f5617b7f6966890faac80cb0e8ff71c28d3e396cff11b2e7dab235d0",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 778605,
+        "semi": 793140,
+        "edge": 0,
+        "bounds": [
+          68,
+          161,
+          1169,
+          1079
+        ]
+      },
+      "processed": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 800426,
+        "semi": 771319,
+        "edge": 0,
+        "bounds": [
+          68,
+          161,
+          1169,
+          1079
+        ]
+      },
+      "removed": 21821
+    },
+    {
+      "name": "cupcake-cup-half-baked",
+      "sha256": "baddb1261f74941f6ea8a82dc6b21bfb80087f85276e041bd28a9be6b968ced3",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 776192,
+        "semi": 795812,
+        "edge": 0,
+        "bounds": [
+          69,
+          161,
+          1167,
+          1078
+        ]
+      },
+      "processed": {
+        "size": [
+          1254,
+          1254
+        ],
+        "zero": 801152,
+        "semi": 770852,
+        "edge": 0,
+        "bounds": [
+          69,
+          161,
+          1167,
+          1078
+        ]
+      },
+      "removed": 24960
+    },
+    {
+      "name": "cupcake-tray-3-base",
+      "sha256": "fbd710651d94656244439d1026f8b1523eab364402937d39c66d5b60d3d8eda4",
+      "colorType": 6,
+      "source": {
+        "size": [
+          1683,
+          935
+        ],
+        "zero": 516495,
+        "semi": 1056778,
+        "edge": 0,
+        "bounds": [
+          15,
+          174,
+          1666,
+          821
+        ]
+      },
+      "processed": {
+        "size": [
+          1800,
+          1000
+        ],
+        "zero": 663058,
+        "semi": 1136831,
+        "edge": 0,
+        "bounds": [
+          17,
+          186,
+          1782,
+          878
+        ]
+      },
+      "removed": 65251
+    }
+  ],
+  "metrics": {
+    "rawCupFront": [
+      {
+        "name": "cupcake-cup-empty",
+        "region": [
+          250,
+          740,
+          1000,
+          1100
+        ],
+        "count": 222472,
+        "changed": 222472,
+        "meanChannelAbsoluteError": 14.683747842425115
+      },
+      {
+        "name": "cupcake-cup-filled",
+        "region": [
+          250,
+          740,
+          1000,
+          1100
+        ],
+        "count": 222472,
+        "changed": 222385,
+        "meanChannelAbsoluteError": 14.794903403574382
+      },
+      {
+        "name": "cupcake-cup-half-baked",
+        "region": [
+          250,
+          740,
+          1000,
+          1100
+        ],
+        "count": 222472,
+        "changed": 222472,
+        "meanChannelAbsoluteError": 15.200551080585422
+      }
+    ],
+    "commonFrontTrials": [
+      {
+        "name": "empty",
+        "count": 299754,
+        "changed": 0,
+        "approved": false,
+        "reason": "visible jagged join and remaining new-wrapper outline"
+      },
+      {
+        "name": "filled",
+        "count": 299754,
+        "changed": 0,
+        "approved": false,
+        "reason": "visible jagged join and remaining new-wrapper outline"
+      },
+      {
+        "name": "half-baked",
+        "count": 299754,
+        "changed": 0,
+        "approved": false,
+        "reason": "visible jagged join and remaining new-wrapper outline"
+      }
+    ],
+    "layerPlacements": {
+      "egg": {
+        "x": 415,
+        "y": 465,
+        "scale": 0.32
+      },
+      "milk": {
+        "x": 790,
+        "y": 460,
+        "scale": 0.28
+      },
+      "flour": {
+        "x": 540,
+        "y": 530,
+        "scale": 0.27
+      },
+      "sugar": {
+        "x": 760,
+        "y": 540,
+        "scale": 0.22
+      }
+    },
+    "bowlProtectedEllipse": {
+      "cx": 622,
+      "cy": 478,
+      "rx": 518,
+      "ry": 181
+    },
+    "bowlExteriorTrial": {
+      "testedPixels": 1272065,
+      "changed": 0
+    },
+    "tray": {
+      "canvas": [
+        1800,
+        1000
+      ],
+      "cupSourceAnchor": [
+        623,
+        1082
+      ],
+      "slots": [
+        {
+          "x": 393,
+          "y": 680
+        },
+        {
+          "x": 902,
+          "y": 680
+        },
+        {
+          "x": 1404,
+          "y": 680
+        }
+      ],
+      "scale": 0.45,
+      "frontOcclusion": "trial: original tray pixels below y=690 copied back; review required",
+      "bakedCupBoxes": [
+        {
+          "left": 174.75,
+          "right": 611.25,
+          "footY": 680
+        },
+        {
+          "left": 683.75,
+          "right": 1120.25,
+          "footY": 680
+        },
+        {
+          "left": 1185.75,
+          "right": 1622.25,
+          "footY": 680
+        }
+      ],
+      "gaps": [
+        72.5,
+        65.5
+      ]
+    }
+  },
+  "decisions": [
+    {
+      "name": "mixing-bowl-empty",
+      "status": "held",
+      "gameAssetUploaded": false
+    },
+    {
+      "name": "mix-egg-layer",
+      "status": "held",
+      "gameAssetUploaded": false
+    },
+    {
+      "name": "mix-milk-layer",
+      "status": "held",
+      "gameAssetUploaded": false
+    },
+    {
+      "name": "mix-flour-layer",
+      "status": "held",
+      "gameAssetUploaded": false
+    },
+    {
+      "name": "mix-sugar-layer",
+      "status": "held",
+      "gameAssetUploaded": false
+    },
+    {
+      "name": "cupcake-cup-empty",
+      "status": "held",
+      "gameAssetUploaded": false
+    },
+    {
+      "name": "cupcake-cup-filled",
+      "status": "held",
+      "gameAssetUploaded": false
+    },
+    {
+      "name": "cupcake-cup-half-baked",
+      "status": "held",
+      "gameAssetUploaded": false
+    },
+    {
+      "name": "cupcake-tray-3-base",
+      "status": "approved",
+      "gameAssetUploaded": true
+    }
+  ],
+  "trayOutputSha256": "daa4ad0f173926c65cecb5403fef7f9907b61dfc68ad408fc7b2e5e525e9f81e",
+  "originalsUnchanged": true,
+  "productionCodeChanged": false
+}
