@@ -1,0 +1,132 @@
+{
+  "sourceHashes": {
+    "cup": "ce83f6bae052c64a130ddb4b92bcc917eda15e90117a9adfb072bf8ba79c5c1f",
+    "bowl": "5e087d5420125de0a6a0be5a6da4fcbaa75d1a4ae10862241d7bed836a8cf7e1",
+    "cupRestore": "278e8c2b631048ccec8fdade2755133d4148002e166b09e56991d2630cef6ba5",
+    "bowlRestore": "6ef19c25780865e1ebab5c5f84d8ab93b1b7d936e1897a5de0788a69c1d1d97b",
+    "surface": "9e357980517bc6ee4ffde4feb61d64f76dbc7f06e0aef375ffaf6d45dfc8fcb9",
+    "tray": "daa4ad0f173926c65cecb5403fef7f9907b61dfc68ad408fc7b2e5e525e9f81e",
+    "egg": "ebc9af731c0f758a0193aa1eded2d6aa4b18239d9b21e9e5cf351d40fa6be355",
+    "milk": "788a2458c36a509da30198f8322027fcc0881d3dd440b0e6c37acf7682393515",
+    "flour": "86df4246d213a9e6fb7611d768346ab50776e3a0ff0ec966ebe75f320caec2a3",
+    "sugar": "ba3abef7b02906bd3b19937fc11535a223ad4b350b003165138b7f42979e71c0"
+  },
+  "cupRestoredFrontBeforeCopy": {
+    "count": 220585,
+    "changed": 219880,
+    "mean": 2.166353106512229
+  },
+  "bowlRestoredExteriorBeforeCopy": {
+    "count": 296000,
+    "changed": 295894,
+    "mean": 3.7820405405405406
+  },
+  "foreground": {
+    "empty": {
+      "count": 310738,
+      "changed": 0,
+      "mean": 0
+    },
+    "filled": {
+      "count": 310738,
+      "changed": 0,
+      "mean": 0
+    },
+    "rising": {
+      "count": 310738,
+      "changed": 0,
+      "mean": 0
+    },
+    "baked": {
+      "count": 310738,
+      "changed": 0,
+      "mean": 0
+    }
+  },
+  "bowlProtected": {
+    "count": 1245480,
+    "changed": 0,
+    "mean": 0
+  },
+  "bowlAlpha": {
+    "count": 1572516,
+    "changed": 0
+  },
+  "bowlEditedPixels": 327036,
+  "frontMaskPixels": 323197,
+  "segmentationFloodPixels": 306267,
+  "ingredientFront": [
+    {
+      "name": "egg",
+      "count": 757416,
+      "changed": 0,
+      "mean": 0
+    },
+    {
+      "name": "milk",
+      "count": 757416,
+      "changed": 0,
+      "mean": 0
+    },
+    {
+      "name": "flour",
+      "count": 757416,
+      "changed": 0,
+      "mean": 0
+    },
+    {
+      "name": "sugar",
+      "count": 757416,
+      "changed": 0,
+      "mean": 0
+    }
+  ],
+  "assets": {
+    "cup-wrapper-front": {
+      "width": 1254,
+      "height": 1254,
+      "transparent": 1249319,
+      "partial": 322997,
+      "edge": 0
+    },
+    "cup-wrapper-back-inside": {
+      "width": 1254,
+      "height": 1254,
+      "transparent": 1427454,
+      "partial": 144668,
+      "edge": 0
+    },
+    "mixing-bowl-empty": {
+      "width": 1254,
+      "height": 1254,
+      "transparent": 670577,
+      "partial": 901326,
+      "edge": 0
+    }
+  },
+  "publishedFileReload": {
+    "count": 310738,
+    "frontChanged": 0,
+    "emptyChanged": 0,
+    "dimensions": {
+      "cup-wrapper-front": [
+        1254,
+        1254
+      ],
+      "cup-wrapper-back-inside": [
+        1254,
+        1254
+      ],
+      "mixing-bowl-empty": [
+        1254,
+        1254
+      ]
+    }
+  },
+  "outputHashes": {
+    "cup-wrapper-front": "bf1a870d4fe8a1f1da87b0557e4e37f17cefb7513999208da89c055c0620850c",
+    "cup-wrapper-back-inside": "c412465bc12416434bf3922a513f283e4c9c208d650f37690a62fab03b1833e1",
+    "mixing-bowl-empty": "a277d5b6ac0f408ccc268dbf77391086754b0b8ea122eafd3047eeabf673f733"
+  },
+  "published": true
+}
