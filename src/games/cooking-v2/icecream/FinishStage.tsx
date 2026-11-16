@@ -6,7 +6,7 @@ import {fresh,type State} from './model'
 export function FinishStage({s,images,update,saved}:{s:State;images:Images;update:(s:State)=>void;saved:boolean}){
  const picture=useMemo(()=>finishImage(s,images),[s,images]),canvas=useRef<HTMLCanvasElement>(null),resetButton=useRef<HTMLButtonElement>(null)
  const [reset,setReset]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState('')
- useEffect(()=>{const context=canvas.current!.getContext('2d')!;context.clearRect(0,0,1400,1400);context.drawImage(picture,0,0)},[picture])
+ useEffect(()=>{const context=canvas.current!.getContext('2d',{willReadFrequently:true})!;context.clearRect(0,0,1400,1400);context.drawImage(picture,0,0)},[picture])
  function cancel(){setReset(false);resetButton.current?.focus()}
  async function save(){setBusy(true);setMessage('');try{
   const blob=await pngBlob(picture),url=URL.createObjectURL(blob),link=document.createElement('a')
