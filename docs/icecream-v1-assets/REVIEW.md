@@ -6,7 +6,7 @@ main d75d43c 기준 assets/icecream-v1-reviewed. 게임 코드·기존 이미지
 
 원본 6개 정상 디코딩. ZIP의 실제 이름은 모두 .png.png. source 2장은 1774×887 / 1536×1024 RGBA, reference 4장은 1586×992 RGB. 투명 RGB에 남은 색 때문에 뷰어에서 배경이 보일 수 있으나 실제 알파 0이다. source 원본 2장은 originals에 변경 없이 보존, reference 4장은 public/assets/reference/cooking-v2/icecream에 내용 변경 없이 확장자만 정리했다. source-hashes.json에 6개 원본 SHA-256 기록.
 
-**요청 18종 중 17종 사용 가능, 레인보우샤베트 1종 보류. 전체 10가지 맛 준비 완료는 아니다.**
+**최종 보완 완료: 스쿱 10종 + 용기 2종 + 토핑 6종 = 총 18종 준비. 신규 레인보우 검수는 [RAINBOW-FINAL.md](RAINBOW-FINAL.md)를 참고하세요. 아래 보류 설명은 초기 붉은 후보에 대한 기록입니다.**
 
 ## 최종 게임용 PNG
 
@@ -14,7 +14,7 @@ public/assets/cooking-v2/icecream/ 하위:
 
 | 폴더 | 파일 | 규격/결과 |
 |---|---|---|
-| scoops | scoop-vanilla.png, scoop-chocolate.png, scoop-strawberry.png, scoop-mint-choco.png, scoop-cookies-cream.png, scoop-mango.png, scoop-blueberry.png, scoop-pistachio.png, scoop-cotton-candy.png | 각 1024×1024 RGBA / 9종 통과 |
+| scoops | scoop-vanilla.png, scoop-chocolate.png, scoop-strawberry.png, scoop-mint-choco.png, scoop-cookies-cream.png, scoop-mango.png, scoop-blueberry.png, scoop-pistachio.png, scoop-cotton-candy.png | 각 1024×1024 RGBA / 기존 9종 통과 + 신규 scoop-rainbow-sherbet.png 통과 |
 | containers | container-cup.png, container-cone.png | 각 1024×1024 RGBA / 2종 통과 |
 | toppings | topping-sprinkles.png, topping-choco-cookie.png, topping-candy.png, topping-choco-syrup.png, topping-cherry.png, topping-heart-wafer.png | 각 512×512 RGBA / 6종 스프라이트 통과 |
 
@@ -57,4 +57,4 @@ compositions.png 및 composition-1~8.png는 실제 분리 PNG를 이용한 결�
 
 어두운 배경 contact-dark.png에서 원본 반투명 가장자리·이웃 픽셀·색을 확인했다. 밝은 배경 compositions.png에서 8조합의 접촉·겹침·크기·전체 높이를 확인했다. 원본 해시, 최종 PNG 알파·해상도 검사 수행. 원본은 보존했다. 게임 코드가 없는 에셋 작업이므로 게임 빌드·터치 조작·PNG 다운로드 기능·실제 갤럭시탭 플레이·토핑 개수 제한은 이번 검수 대상이 아니며 실행했다고 보고하지 않는다.
 
-다음 개발은 9맛으로 제한한 시험판은 가능하나, 요구한 10맛 완전판은 무지개 스쿱 1장 보완 후 진행 권장. 완성형 PNG 저장은 동일 합성 좌표를 사용하면 된다. main 병합·배포는 수행하지 않는다.
+최종 보완으로 10맛 스쿱 쌓기 시험판 개발 시작 가능. 초기 붉은 후보는 기록으로만 보존하고 새 승인 원본을 사용했다. 완성형 PNG 저장은 동일 합성 좌표를 사용하면 된다. main 병합·배포는 수행하지 않는다.

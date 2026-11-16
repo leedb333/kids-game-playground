@@ -203,4 +203,17 @@
         "bottom":  "459",
         "sha256":  "E4B49130E3D3C85851C81A3306C90E9D296BAFEA4D87B40668F45B2D71E7224C"
     }
+,
+{
+  "file": "scoop-rainbow-sherbet.png",
+  "width": "1024",
+  "height": "1024",
+  "transparent": "591576",
+  "semitransparent": "455547",
+  "left": "112",
+  "top": "178",
+  "right": "911",
+  "bottom": "919",
+  "sha256": "22A11605B1E78B41B39B8977AB648272CCC21C314FEC9F830EB0544B01DCC552"
+}
 ]

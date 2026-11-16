@@ -1,0 +1,23 @@
+{
+  "inputSha256": "C621E784DB17C1CEF9FE799E7C8EB3740778EBAC2CD03B8FB90ADFF734F6D1AF",
+  "output": {
+    "file": "scoop-rainbow-sherbet.png",
+    "width": "1024",
+    "height": "1024",
+    "transparent": "591576",
+    "semitransparent": "455547",
+    "left": "112",
+    "top": "178",
+    "right": "911",
+    "bottom": "919",
+    "sha256": "22A11605B1E78B41B39B8977AB648272CCC21C314FEC9F830EB0544B01DCC552"
+  },
+  "previous17Unchanged": true,
+  "nativeBounds": "816x757",
+  "uniformScale": 0.9803921568627451,
+  "bottomAnchor": 920,
+  "centerX": 512,
+  "compositionCanvas": "800x1160",
+  "cup": "container width400 bottom1130; scoop width430 firstBottom900 rise215",
+  "cone": "container width330 bottom1130; scoop width360 firstBottom770 rise170"
+}
