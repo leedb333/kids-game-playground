@@ -1,0 +1,32 @@
+﻿[
+    {
+        "file":  "icecream-reference-01.png.png",
+        "sha256":  "FFD3384CEE39DE0DCA5C0E9933E37C9FEA2657B259153323AD68289F6D8DBE0F",
+        "bytes":  1787469
+    },
+    {
+        "file":  "icecream-reference-02.png.png",
+        "sha256":  "30B7E58E025C2FE762855450D35BE755BFCABC54C8AA375532C70FE3FAD3057D",
+        "bytes":  1860103
+    },
+    {
+        "file":  "icecream-reference-03.png.png",
+        "sha256":  "4DCABC3F6C31D22659BFBE5EF5C0BB07F9B3342DDB182AE1498E6BAE2491BC0F",
+        "bytes":  1807046
+    },
+    {
+        "file":  "icecream-reference-04.png.png",
+        "sha256":  "FFA8495185769166E6B24630E1F7FEAD2E2279FB05300A1AAC7CAF66152E3BB4",
+        "bytes":  1878737
+    },
+    {
+        "file":  "icecream-cup-cone-toppings.png.png",
+        "sha256":  "68024C3C5F6ABF93282BD15A48843842843B97DF8D0DF9625B4CEB9DBA407911",
+        "bytes":  1931167
+    },
+    {
+        "file":  "icecream-scoops-10.png.png",
+        "sha256":  "061E526F61D81D05A7212951DF494287EB5CCFBDEE5E3C48013281A875575061",
+        "bytes":  1874553
+    }
+]
