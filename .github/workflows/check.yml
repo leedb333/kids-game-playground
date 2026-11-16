@@ -21,17 +21,17 @@ jobs:
         if: startsWith(github.head_ref, 'release/cooking-v2-cupcake-three')
         run: pnpm test:cupcake-release --reporter=line
       - name: Icecream prototype checks only
-        if: github.head_ref == 'feat/cooking-v2-icecream-scoop-prototype'
-        run: pnpm exec playwright test tests/icecream.spec.ts --reporter=line
+        if: startsWith(github.head_ref, 'feat/cooking-v2-icecream-')
+        run: pnpm exec playwright test tests/icecream.spec.ts tests/icecream-toppings.spec.ts --reporter=line
       - name: Icecream review captures
-        if: always() && github.head_ref == 'feat/cooking-v2-icecream-scoop-prototype'
+        if: always() && startsWith(github.head_ref, 'feat/cooking-v2-icecream-')
         uses: actions/upload-artifact@v4
         with:
           name: icecream-prototype-captures
           path: playwright-report/icecream
           if-no-files-found: ignore
       - name: Regular regression checks
-        if: ${{ !startsWith(github.head_ref, 'release/cooking-v2-cupcake-three') && github.head_ref != 'feat/cooking-v2-icecream-scoop-prototype' }}
+        if: ${{ !startsWith(github.head_ref, 'release/cooking-v2-cupcake-three') && !startsWith(github.head_ref, 'feat/cooking-v2-icecream-') }}
         run: pnpm test
       - name: Cupcake review artifacts
         if: always() && startsWith(github.head_ref, 'release/cooking-v2-cupcake-three')
