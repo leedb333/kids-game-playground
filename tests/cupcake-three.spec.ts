@@ -12,6 +12,18 @@ async function open(p:Page,g?:m.Game){if(g)await p.addInitScript(({key,g})=>{if(
 async function pos(p:Page,x:number,y:number){const r=(await p.locator('.cc-work').boundingBox())!,s=await p.locator('main').getAttribute('data-step');return{x:r.x+x/(s==='bake'?1400:s==='fill'?1800:s==='mix'?1254:1000)*r.width,y:r.y+y/(s==='bake'?900:s==='fill'?1000:s==='mix'?1254:1000)*r.height}}
 async function touch(c:CDPSession,type:'touchStart'|'touchMove'|'touchEnd'|'touchCancel',p?:{x:number;y:number}){await c.send('Input.dispatchTouchEvent',{type,touchPoints:p?[{...p,id:1}]:[]})}
 function ready(step:m.Step='decorate'){const g=m.freshGame();return m.edit(g,{step,ingredients:old.ingredients.map(i=>i.id),mix:1,oven:step==='bake'?'ready':'revealed',elapsed:step==='bake'?0:3000,cups:g.work.cups.map(c=>({...c,fill:1}))})}
+
+test('tablet mixing: recognizable ingredients, gradual whisk, undo and saved batter',async({page,context})=>{
+ await page.setViewportSize({width:1280,height:800});await open(page);
+ for(const name of ['달걀','우유','밀가루','설탕']){await page.getByRole('button',{name:name+' 넣기',exact:true}).tap();await page.waitForTimeout(550)}
+ await page.screenshot({path:folder+'/mix-after-ingredients.png'});await expect(page.getByRole('button',{name:'다음 단계 →',exact:true})).toBeDisabled();
+ const cdp=await context.newCDPSession(page);await page.getByRole('button',{name:'거품기',exact:true}).tap();
+ await touch(cdp,'touchStart',await pos(page,850,450));
+ for(let i=1;i<=265;i++){const a=i/60*Math.PI*2;await touch(cdp,'touchMove',await pos(page,622+228*Math.cos(a),450+70*Math.sin(a)));if(i===90)await page.screenshot({path:folder+'/mix-during-whisk.png'})}
+ await touch(cdp,'touchEnd');expect((await state(page)).work.mix).toBe(1);await page.screenshot({path:folder+'/mix-after-whisk.png'});await expect(page.getByRole('button',{name:'다음 단계 →',exact:true})).toBeEnabled();
+ await page.reload();expect((await state(page)).work.mix).toBe(1);expect((await state(page)).work.ingredients).toHaveLength(4);await page.getByRole('button',{name:'↶ 되돌리기',exact:true}).click();expect((await state(page)).work.mix).toBeLessThan(1);
+ const bounds=await page.locator('.cc-work').boundingBox();expect(bounds!.x).toBeGreaterThanOrEqual(0);expect(bounds!.x+bounds!.width).toBeLessThanOrEqual(1280);
+})
 test('stage gates, independent fill, per-cup undo, flavour and decoration isolation',()=>{let g=m.freshGame();expect(m.advance(g)).toBe(g);g=m.edit(g,{mix:1,ingredients:old.ingredients.map(i=>i.id)});g=m.advance(g);g=m.fill(g,0,.25);expect(g.work.cups.map(c=>c.fill)).toEqual([.25,0,0]);expect(m.advance(g)).toBe(g);for(const i of [0,1,2])g=m.fill(g,i,1);expect(m.advance(g).work.step).toBe('bake');g=ready();g=m.cupEdit(g,c=>old.pipe(c,1));g=m.cupEdit(g,c=>old.sprinkle(c,.5,.6));const first=g.work.cups[0];g=m.edit(g,{selected:1},false);g=m.cupEdit(g,c=>old.edit(c,{cream:'strawberry'}));expect(m.advance(g)).toBe(g);expect(g.work.cups[0]).toEqual(first);g=m.cupEdit(g,c=>old.pipe(c,1));g=m.undo(g);expect(g.work.cups[1].decor.work.piping).toBe(0);expect(g.work.cups[0]).toEqual(first);expect(m.valid({...g.work,selected:9})).toBe(false);expect(m.valid({...g.work,cups:[first]})).toBe(false)})
 test('touch ingredients, circular whisk, independent fill, drag oven, three decorations and actual PNG',async({page,context})=>{
  await page.setViewportSize({width:1280,height:800});await open(page);await page.screenshot({path:folder+'/01-empty-bowl.png'});const cdp=await context.newCDPSession(page)
