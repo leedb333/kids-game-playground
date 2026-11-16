@@ -7,7 +7,8 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:cupcake-release": "playwright test --config tests/cupcake-release.config.ts"
   },
   "dependencies": {
     "react": "^19.2.0",
