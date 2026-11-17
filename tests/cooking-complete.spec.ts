@@ -1,0 +1,33 @@
+import {test,expect,type Page} from '@playwright/test'
+import {mkdirSync,readFileSync,existsSync,writeFileSync} from 'node:fs'
+import {resolve} from 'node:path'
+import {newSession,sessionKey} from '../src/games/cooking-v2/full/session'
+import {fresh as burger,storageKey as burgerKey} from '../src/games/cooking-v2/burger/model'
+import {freshGame,edit,storageKey as cupcakeKey} from '../src/games/cooking-v2/cupcake/three/model'
+import {fresh as icecream,key as iceKey} from '../src/games/cooking-v2/icecream/model'
+const folder='playwright-report/cooking-complete',hub='prototypes/cooking-v2/kitchen/'
+mkdirSync(folder,{recursive:true});test.setTimeout(90000)
+const recipes=[
+ {id:'pizza',name:'피자',key:sessionKey,url:hub+'#pizza',ready:'.cv2-dough-tools',reset:'↻ 다시 만들기',confirm:'처음부터 만들기'},
+ {id:'burger',name:'햄버거',key:burgerKey,url:'prototypes/cooking-v2/burger/#play',ready:'.bg-grilling',reset:'↻ 다시 만들기',confirm:'처음부터 만들기'},
+ {id:'cupcake',name:'컵케이크',key:cupcakeKey,url:'prototypes/cooking-v2/cupcake/#play',ready:'.cc-work',reset:'↻ 다시 만들기',confirm:'처음부터 만들기'},
+ {id:'icecream',name:'아이스크림',key:iceKey,url:'prototypes/cooking-v2/icecream/',ready:'.ic-scene',reset:'↻ 처음부터 다시',confirm:'처음부터 만들기'}
+]
+function seeds(){return {[sessionKey]:{...newSession(),rolling:.5},[burgerKey]:{...burger(),sound:false,design:{...burger().design,selected:[...burger().design.selected,'onion']}},[cupcakeKey]:edit(freshGame(),{ingredients:['egg']}),[iceKey]:{...icecream(),step:2,scoops:['vanilla']}}}
+async function seed(p:Page){await p.addInitScript(values=>{if(!sessionStorage.getItem('complete-review')){for(const [k,v]of Object.entries(values))localStorage.setItem(k,JSON.stringify(v));localStorage.setItem('unrelated-complete-review','keep');sessionStorage.setItem('complete-review','yes')}},seeds())}
+async function wait(p:Page,r:typeof recipes[number]){await expect(p.locator(r.ready)).toBeVisible({timeout:15000});await expect(p.getByText(/그림을 준비하고 있어요/)).toHaveCount(0,{timeout:15000})}
+for(const [device,width,height]of [['tablet',1280,800],['portrait',390,844],['landscape',844,390]]as const)test('complete review: four equal cards and correct entry '+device,async({page})=>{
+ await page.setViewportSize({width,height});await page.goto(hub);const cards=page.locator('.cv2-menu-cards>button,.cv2-menu-cards>a');await expect(cards).toHaveCount(4);await expect(cards.first()).toBeEnabled({timeout:15000});await expect(page.getByText(/준비 중|다음에 만나요/)).toHaveCount(0);
+ await page.screenshot({path:folder+'/menu-'+device+'.png'});const boxes=await cards.evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,bottom:r.bottom,right:r.right}}));for(const b of boxes){expect(b.w).toBeCloseTo(boxes[0].w,0);expect(b.h).toBeCloseTo(boxes[0].h,0);expect(b.w).toBeGreaterThan(140);expect(b.h).toBeGreaterThan(145);expect(b.y).toBeGreaterThanOrEqual(0);expect(b.bottom).toBeLessThanOrEqual(height);expect(b.right).toBeLessThanOrEqual(width)}
+ for(const r of recipes){await page.goto(hub);if(r.id==='pizza')await page.getByRole('button',{name:/피자 만들기/}).tap();else await page.getByRole('link',{name:r.name+' 만들기',exact:true}).tap();await wait(page,r);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);for(const control of await page.locator('header button,header a').all()){const b=await control.boundingBox();if(b){expect(b.x).toBeGreaterThanOrEqual(0);expect(b.x+b.width).toBeLessThanOrEqual(width+1);expect(b.y+b.height).toBeLessThanOrEqual(height+1)}}await page.screenshot({path:folder+'/'+device+'-'+r.id+'.png'});if(r.id==='pizza')await page.getByRole('button',{name:'요리 선택으로 돌아가기',exact:true}).tap();else await page.getByRole(r.id==='icecream'?'link':'button',{name:'← 요리 선택',exact:true}).tap();await expect(cards).toHaveCount(4)}
+ await page.getByRole('button',{name:'기존 놀이터로 돌아가기',exact:true}).tap();await expect(page).toHaveURL(/\/kids-game-playground\/$/)
+})
+for(const r of recipes)test('complete review: '+r.id+' resume reset cancellation and cross-recipe isolation',async({page})=>{
+ await seed(page);await page.goto(r.url);await wait(page,r);const sound=page.getByRole('button',{name:/소리/}),soundBefore=await sound.textContent();await sound.tap();await expect(sound).not.toHaveText(soundBefore!);if(r.id!=='pizza'){await page.reload();await wait(page,r);await expect(sound).not.toHaveText(soundBefore!)}await sound.tap();await expect(sound).toHaveText(soundBefore!);const get=()=>page.evaluate(()=>Object.fromEntries(Object.keys(localStorage).map(k=>[k,localStorage.getItem(k)])));const before=await get();await page.reload();await wait(page,r);expect((await get())[r.key]).toBe(before[r.key]);
+ await page.getByRole('button',{name:r.reset,exact:true}).tap();await expect(page.getByRole('dialog')).toBeVisible();await page.getByRole('dialog').getByRole('button',{name:'계속 만들기',exact:true}).tap();expect((await get())[r.key]).toBe(before[r.key]);
+ await page.getByRole('button',{name:r.reset,exact:true}).tap();await page.getByRole('dialog').getByRole('button',{name:r.confirm,exact:true}).tap();const after=await get();for(const other of recipes.filter(v=>v.key!==r.key))expect(after[other.key]).toBe(before[other.key]);expect(after['unrelated-complete-review']).toBe('keep');expect(after[r.key]).not.toBe(before[r.key]);await page.reload();await wait(page,r);expect((await get())[r.key]).toBe(after[r.key]);
+ writeFileSync(folder+'/isolation-'+r.id+'.json',JSON.stringify({key:r.key,othersUnchanged:true,cancelUnchanged:true,reloadIdentical:true},null,2))
+})
+test.describe('offline review',()=>{test.use({serviceWorkers:'allow'});test('complete review: all four URLs cache files and offline recipe switching',async({page,context})=>{
+ const sw=readFileSync('dist/sw.js','utf8'),files=JSON.parse(sw.match(/const FILES=(\[.*?\]);/)![1])as string[];expect(files.filter(f=>!existsSync(resolve('dist',f)))).toEqual([]);for(const r of ['kitchen','burger','cupcake','icecream'])expect(files).toContain('./prototypes/cooking-v2/'+r+'/index.html');await page.goto(hub);await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);await context.setOffline(true);for(const r of recipes){await page.goto(r.url);await wait(page,r);await page.goto(hub);await expect(page.locator('.cv2-menu-cards>a')).toHaveCount(3);await expect(page.getByRole('button',{name:/피자 만들기/})).toBeEnabled()}writeFileSync(folder+'/offline.json',JSON.stringify({files:files.length,missing:[],fourRecipes:true,menu:true},null,2));await context.setOffline(false)
+})})
