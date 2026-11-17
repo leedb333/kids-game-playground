@@ -1,0 +1,101 @@
+{
+  "sourcePR36": "c95da48cb7ea054b0b995d7c848e15fe3d940ec3",
+  "main": "d75d43c67a788e6ab8bcec3f4d91d5f6320de3c6",
+  "files": [
+    {
+      "path": "public/assets/cooking-v2/icecream/background/icecream-shop-background.png",
+      "sha256": "61333c95bd8292cd0ab433be7ec97f273b4f27b2741d9e7488f5d933a3ff90b0",
+      "bytes": 1637788
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/containers/container-cone.png",
+      "sha256": "4704ba1b12454dc298f714edf6706f1c54d52b51893c0b19d8a5fb1e49cafd68",
+      "bytes": 754111
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/containers/container-cup.png",
+      "sha256": "8ed643370ff14a2dad120304abb93d83bccaa03cc98def7de4d2f5833f707af0",
+      "bytes": 716932
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-blueberry.png",
+      "sha256": "f0988fa4b55676c4d643efdf2b2714b3f5dec8082eb6066482ca2fd7aa0a825b",
+      "bytes": 1289824
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-chocolate.png",
+      "sha256": "f6f0d99715fcdfd17541213f0abd1bfda25c315b51beca600cfcb828005d344a",
+      "bytes": 1337661
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-cookies-cream.png",
+      "sha256": "04c9755550f916d875dfa8e26fb0a978129fa7cda37b9e088f3eca463434e9f1",
+      "bytes": 1181416
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-cotton-candy.png",
+      "sha256": "db7eec83b5056bd44f58d0f47e92949bbd1b724edca8e6c14317e7f99d7c49ab",
+      "bytes": 1170907
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-mango.png",
+      "sha256": "1b80a08bd48f02abcb5dfb51e480b57db422db6511dc6b06b89b3fc8bcbaa19b",
+      "bytes": 1215721
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-mint-choco.png",
+      "sha256": "aa1cc275e81608caf933537734cac222f733647fde2a3f685cbfbedee3d4e89c",
+      "bytes": 1330922
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-pistachio.png",
+      "sha256": "616c86c68e13d45ee6a0e7dfb4f96ab8559ac0f8fe6f004f0e7fbda952200626",
+      "bytes": 1301533
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-rainbow-sherbet.png",
+      "sha256": "22a11605b1e78b41b39b8977ab648272ccc21c314fec9f830eb0544b01dcc552",
+      "bytes": 1238908
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-strawberry.png",
+      "sha256": "ccf85d6fc4f74ee3fe2006c590ecc1ee979a34df0cabf4a90c5583cc5757e904",
+      "bytes": 1213869
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/scoops/scoop-vanilla.png",
+      "sha256": "76f0a4bf67380f7220758f96919a2d250c4567aec30ec8d0ee2b76e9977b91e9",
+      "bytes": 1097053
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/toppings/topping-candy.png",
+      "sha256": "e2cffe72569cb420f56d3c9c2e4379c670988b84816af1fe87b862f46e4df418",
+      "bytes": 239982
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/toppings/topping-cherry.png",
+      "sha256": "47bedb25f625841bbe713ddd42881b00d863333762ef655d9eb1e51701abba5c",
+      "bytes": 200066
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/toppings/topping-choco-cookie.png",
+      "sha256": "46a957e837dc99af59c2b0cb89736b82af19da01488a316c7d8efe7f9aeb5190",
+      "bytes": 188999
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/toppings/topping-choco-syrup.png",
+      "sha256": "985f13830b60a9ffa67c02e108cb714faa173d648d91bc513b0eb4b8f7f94982",
+      "bytes": 186943
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/toppings/topping-heart-wafer.png",
+      "sha256": "d8304d1d970eaa373723744031d3261daab4b28f36691271318ea54071e05684",
+      "bytes": 313829
+    },
+    {
+      "path": "public/assets/cooking-v2/icecream/toppings/topping-sprinkles.png",
+      "sha256": "e4b49130e3d3c85851c81a3306c90e9d296bafea4d87b40668f45b2d71e7224c",
+      "bytes": 296950
+    }
+  ]
+}
