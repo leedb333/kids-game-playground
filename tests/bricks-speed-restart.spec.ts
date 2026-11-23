@@ -15,7 +15,7 @@ test('audit all ten stages at compact/reference/portrait sizes; no pattern-depen
   report.push({stage:s.id,base:s.speed,beforeAt511:before,afterAt511:e.speed,referenceAt620:createEngine(s,620).speed,measuredAt511:Math.hypot(...(()=>{launch(e);return [e.balls[0].vx,e.balls[0].vy] as const})()),units:'world units/second; field width=1000'})
  }
  expect(report[7].beforeAt511).toBe(138);expect(report[8].beforeAt511).toBe(138);expect(report[7].afterAt511).toBeCloseTo(268.0277419355);expect(report[8].afterAt511).toBeCloseTo(274.9509677419);expect(ballSpeedConfig.boost).toBe(1.2)
- mkdirSync('docs/brick-speed-restart',{recursive:true});writeFileSync('docs/brick-speed-restart/speed-audit.json',JSON.stringify(report,null,2)+'\n')
+ mkdirSync('test-results/review/brick-speed-restart',{recursive:true});writeFileSync('test-results/review/brick-speed-restart/speed-audit.json',JSON.stringify(report,null,2)+'\n')
 })
 
 test('30/60/90/120/144Hz and jitter move all stages by elapsed seconds, not by frame count',()=>{
@@ -59,7 +59,7 @@ for(const id of [1,8,9])test(`stage ${id}: cancel a moving game, confirm reset, 
 
 for(const [name,width,height] of [['tablet',1280,800],['tablet-16x9',1280,720],['phone',360,800],['small-phone',320,640],['phone-landscape',800,360]] as const)test(`paused cancel and restart controls fit without shrinking the field: ${name}`,async({page})=>{
  await page.setViewportSize({width,height});await enter(page,9);const c=page.locator('.brick-field>canvas'),field=(await c.boundingBox())!;await page.getByRole('button',{name:'일시정지',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'다시 시작',exact:true}).click();const dialog=page.getByRole('dialog',{name:'이 단계를 처음부터 다시 시작할까요?',exact:true});await expect(dialog).toBeVisible();await expect(dialog.getByRole('button',{name:'취소',exact:true})).toBeFocused();await dialog.press('Escape');await expect(c).toHaveAttribute('data-phase','paused');await expect(page.getByRole('heading',{name:'잠깐 쉬어 가요',exact:true})).toBeVisible();await page.getByRole('dialog').getByRole('button',{name:'다시 시작',exact:true}).click()
- const confirm=dialog.getByRole('button',{name:'다시 시작 확인',exact:true}),b=(await confirm.boundingBox())!;expect(b.width).toBeGreaterThanOrEqual(48);expect(b.height).toBeGreaterThanOrEqual(48);expect(b.x).toBeGreaterThanOrEqual(0);expect(b.x+b.width).toBeLessThanOrEqual(width);expect(b.y+b.height).toBeLessThanOrEqual(height);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect((await c.boundingBox())!.height).toBe(field.height);await page.screenshot({path:`docs/brick-speed-restart/confirm-${name}.png`,fullPage:true});await confirm.click();await expect(c).toHaveAttribute('data-phase','ready');await page.screenshot({path:`docs/brick-speed-restart/ready-${name}.png`,fullPage:true})
+ const confirm=dialog.getByRole('button',{name:'다시 시작 확인',exact:true}),b=(await confirm.boundingBox())!;expect(b.width).toBeGreaterThanOrEqual(48);expect(b.height).toBeGreaterThanOrEqual(48);expect(b.x).toBeGreaterThanOrEqual(0);expect(b.x+b.width).toBeLessThanOrEqual(width);expect(b.y+b.height).toBeLessThanOrEqual(height);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect((await c.boundingBox())!.height).toBe(field.height);await page.screenshot({path:`test-results/review/brick-speed-restart/confirm-${name}.png`,fullPage:true});await confirm.click();await expect(c).toHaveAttribute('data-phase','ready');await page.screenshot({path:`test-results/review/brick-speed-restart/ready-${name}.png`,fullPage:true})
 })
 
 test('real browser audits target/actual launch speed and paused/resumed velocity in all ten stages',async({page})=>{
@@ -72,5 +72,5 @@ test('real browser audits target/actual launch speed and paused/resumed velocity
   await page.getByRole('button',{name:'일시정지',exact:true}).click();await page.waitForTimeout(120);expect(Number(await c.getAttribute('data-actual-ball-speeds'))).toBeCloseTo(target,3);await page.getByRole('dialog').getByRole('button',{name:'계속하기',exact:true}).click();await expect(c).toHaveAttribute('data-phase','playing');expect(Number(await c.getAttribute('data-actual-ball-speeds'))).toBeCloseTo(target,3);await page.getByRole('button',{name:'일시정지',exact:true}).click()
   const rect=(await c.boundingBox())!;report.push({stage:s.id,worldHeight:Number(await c.getAttribute('data-world-height')),target,actual,cssPixelsPerSecond:actual*rect.width/1000,viewport:'1280x720'})
  }
- writeFileSync('docs/brick-speed-restart/browser-speed-audit.json',JSON.stringify(report,null,2)+'\n')
+ writeFileSync('test-results/review/brick-speed-restart/browser-speed-audit.json',JSON.stringify(report,null,2)+'\n')
 })

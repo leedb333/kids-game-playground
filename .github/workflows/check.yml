@@ -17,50 +17,10 @@ jobs:
       - run: pnpm build
       - run: node scripts/verify-dist.mjs
       - run: pnpm exec playwright install --with-deps chromium
-      - name: Cupcake release checks (single worker)
-        if: startsWith(github.head_ref, 'release/cooking-v2-cupcake-three')
-        run: pnpm test:cupcake-release --reporter=line
-      - name: Icecream integration checks
-        if: startsWith(github.head_ref, 'release/cooking-v2-icecream')
-        run: pnpm exec playwright test tests/icecream.spec.ts tests/icecream-toppings.spec.ts tests/icecream-release.spec.ts --reporter=line
-      - name: Retained games core smoke only
-        if: startsWith(github.head_ref, 'release/cooking-v2-icecream')
-        run: |
-          pnpm exec playwright test tests/cupcake-release-smoke.spec.ts --grep "retained " --reporter=line
-          pnpm exec playwright test tests/cupcake-three.spec.ts --grep "tablet mixing:" --reporter=line
-      - name: Icecream integration captures
-        if: always() && startsWith(github.head_ref, 'release/cooking-v2-icecream')
-        uses: actions/upload-artifact@v4
-        with:
-          name: icecream-release-review
-          path: playwright-report/icecream
-          if-no-files-found: ignore
-      - name: Four cooking recipes core review
-        if: startsWith(github.head_ref, 'release/cooking-v2-complete')
-        run: pnpm exec playwright test --config tests/cooking-complete.config.ts --reporter=line
-      - name: Four cooking recipes review captures
-        if: always() && startsWith(github.head_ref, 'release/cooking-v2-complete')
-        uses: actions/upload-artifact@v4
-        with:
-          name: cooking-complete-review
-          path: |
-            playwright-report/cooking-complete
-            playwright-report/cupcake-release
-            playwright-report/icecream
-            docs/cooking-v2-full/*.png
-            docs/burger-prototype/*.png
-          if-no-files-found: ignore
-      - name: Regular regression checks
-        if: ${{ !startsWith(github.head_ref, 'release/cooking-v2-cupcake-three') && !startsWith(github.head_ref, 'release/cooking-v2-icecream') && !startsWith(github.head_ref, 'release/cooking-v2-complete') }}
-        run: pnpm test
-      - name: Cupcake review artifacts
-        if: always() && startsWith(github.head_ref, 'release/cooking-v2-cupcake-three')
-        uses: actions/upload-artifact@v4
-        with:
-          name: cupcake-release-checks
-          path: playwright-report/cupcake-release
-          if-no-files-found: ignore
+      - run: pnpm test
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: pages-preview
-          path: dist
+          name: playground-review
+          path: test-results/
+          if-no-files-found: ignore

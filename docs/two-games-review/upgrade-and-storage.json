@@ -1,0 +1,42 @@
+{
+  "previousPlaygroundCacheRemoved": true,
+  "playgroundUrls": [
+    "/kids-game-playground/",
+    "/kids-game-playground/assets/index-BUJj0JYU.css",
+    "/kids-game-playground/assets/index-CI56tynM.css",
+    "/kids-game-playground/assets/index-CNQbZMBY.js",
+    "/kids-game-playground/assets/index-ChyH_zNG.css",
+    "/kids-game-playground/assets/index-Dn5bAJwi.js",
+    "/kids-game-playground/assets/index-DxN3_wsz.js",
+    "/kids-game-playground/assets/index-jzVRabRf.js",
+    "/kids-game-playground/icon-192.png",
+    "/kids-game-playground/icon-512.png",
+    "/kids-game-playground/icon.svg",
+    "/kids-game-playground/index.html",
+    "/kids-game-playground/manifest.webmanifest"
+  ],
+  "independentCaches": [
+    {
+      "name": "kids-coloring-studio",
+      "urls": 12
+    },
+    {
+      "name": "kids-cooking-studio",
+      "urls": 159
+    }
+  ],
+  "protectedKeys": [
+    "kids-game-playground:v1:game:coloring:police-car-robot:r4",
+    "kids-game-playground:v1:game:coloring:fire-robot:r4",
+    "kids-game-playground:v1:game:coloring:baby-dinosaur:r4",
+    "kids-game-playground:v1:game:coloring:garden-butterfly:r4",
+    "kids-game-playground:v1:game:cooking-v2:pizza:prototype:r1",
+    "kids-game-playground:v1:game:cooking-v2:pizza:full:r1",
+    "kids-game-playground:v1:game:cooking-v2:burger:prototype:r1",
+    "kids-game-playground:v1:game:cooking-v2:cupcake:prototype:r1",
+    "kids-game-playground:v1:game:cooking-v2:cupcake:three:r2",
+    "kids-cooking-v2-icecream-v1",
+    "kids-game-playground:v1:game:dressup:spring:r1"
+  ],
+  "valuesUnchanged": true
+}

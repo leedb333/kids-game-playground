@@ -26,7 +26,7 @@
 - `*-complete.png`: 실제 게임에서 저장한 완성 이미지
 - `*-manifest.json`: 변환 영역과 원본 해시
 
-원본 경찰차·공룡·나비는 `../coloring-v4-preview/`, 확대 소방차는 `fire-city-larger.png`입니다. 이전 원화와 생성 지시는 `../coloring-v3/`에 보존합니다. 변환 도구는 `scripts/coloring-scenes/`에 있습니다.
+원본 경찰차·공룡·나비는 `../coloring-v4-preview/`, 확대 소방차는 `fire-city-larger.png`입니다. 이전 원화와 생성 지시는 `../coloring-v3/`에 보존합니다. 당시 변환 도구는 [정리 전 기준 커밋의 scripts/coloring-scenes](https://github.com/leedb333/kids-game-playground/tree/d608a79becc6ea9731c7ddf72ef8671fe25eb92e/scripts/coloring-scenes)에 있습니다.
 
 작업은 PR #3에서 검토합니다. 자동 병합·배포는 하지 않습니다. 기존 kids-color-by-number 저장소는 변경하지 않습니다.
 
