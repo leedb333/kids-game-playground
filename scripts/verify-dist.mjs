@@ -1,15 +1,38 @@
-import { readFileSync, existsSync } from 'node:fs'
-import { resolve } from 'node:path'
+import assert from 'node:assert/strict'
+import { readFileSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
+
 const base = process.env.BASE_PATH || '/kids-game-playground/'
+const origin = 'https://example.invalid'
 const html = readFileSync('dist/index.html', 'utf8')
 const manifest = JSON.parse(readFileSync('dist/manifest.webmanifest', 'utf8'))
-const urls = [...html.matchAll(/(?:src|href)="([^"]+)"/g)].map(match => match[1])
-for (const url of urls) {
-  if (!url.startsWith(base)) throw new Error(`Unexpected asset path: ${url}`)
-  if (!existsSync(resolve('dist', url.slice(base.length)))) throw new Error(`Missing asset: ${url}`)
+for (const key of ['id', 'start_url', 'scope']) assert.equal(manifest[key], './', key)
+const files = JSON.parse(readFileSync('dist/sw.js', 'utf8').match(/^const FILES = (.+)$/m)[1])
+const cached = new Set(files)
+
+assert.equal(cached.size, files.length)
+assert.ok(cached.has('./'))
+assert.ok(cached.has('./index.html'))
+for (const file of files) {
+  const url = new URL(file, origin + base)
+  assert.equal(url.origin, origin)
+  assert.ok(url.pathname.startsWith(base))
+  if (file !== './') readFileSync(join('dist', url.pathname.slice(base.length)))
 }
-for (const file of ['sw.js', 'icon-192.png', 'icon-512.png', ...['police','fire','dinosaur','butterfly'].map(name=>`assets/coloring-v4/${name}.png`)]) {
-  if (!existsSync(resolve('dist', file))) throw new Error(`Missing offline/install file: ${file}`)
+for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
+  assert.ok(url.startsWith(base), url)
+  assert.ok(cached.has('./' + url.slice(base.length)), url)
 }
-if (manifest.start_url !== './' || manifest.scope !== './') throw new Error('Manifest must stay inside repository path')
-console.log(`Pages files verified for ${base}`)
+for (const icon of manifest.icons) assert.ok(cached.has('./' + icon.src), icon.src)
+
+const assets = readdirSync('dist/assets')
+assert.ok(assets.every(file => !/^(coloring-v4|cooking-v2)$/.test(file)))
+for (const file of assets.filter(file => /\.(js|css)$/.test(file))) assert.ok(cached.has('./assets/' + file))
+
+for (const recipe of ['', 'kitchen/', 'burger/', 'cupcake/', 'icecream/']) {
+  const notice = `prototypes/cooking-v2/${recipe}index.html`
+  const body = readFileSync(join('dist', notice), 'utf8')
+  assert.ok(body.includes('https://leedb333.github.io/kids-cooking-studio/'))
+  assert.ok(!body.includes('<script') && !cached.has('./' + notice))
+}
+console.log(`Pages files and ${files.length} precache URLs verified for ${base}`)

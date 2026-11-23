@@ -1,4 +1,4 @@
-import {writeFileSync} from 'node:fs'
+import {mkdirSync,writeFileSync} from 'node:fs'
 import {test,expect} from '@playwright/test'
 import {stages,stageBricks} from '../src/games/brick-breaker/stages'
 import {createEngine,launch,movePaddle,step,sweepCircleRect,togglePause} from '../src/games/brick-breaker/engine'
@@ -60,5 +60,6 @@ test('all ten real layouts can clear through simulated paddle control without ed
   if(e.phase==='ready'){const gold=e.bricks.find(b=>b.gold),target=gold?gold.x+gold.w/2:500;movePaddle(e,target-(e.paddle.y-(gold?gold.y+gold.h:40)-e.balls[0].r*2-3)*.24/Math.sqrt(1-.24**2));launch(e)}
   if(ticks/120%60>50){movePaddle(e,e.balls[0].x<500?900:100)}else if(e.balls[0].vy>0){const time=Math.max(0,(e.paddle.y-e.balls[0].r-e.balls[0].y)/e.balls[0].vy),span=1000-2*e.balls[0].r,raw=e.balls[0].x-e.balls[0].r+e.balls[0].vx*time,wrapped=((raw%(2*span))+2*span)%(2*span),landing=e.balls[0].r+(wrapped>span?2*span-wrapped:wrapped);movePaddle(e,landing)}step(e,1/120);ticks++
  }expect(e.phase,`stage ${stage.id}, ${ticks/120}s, misses ${e.misses}, remaining ${e.bricks.length}`).toBe('cleared');reports.push({stage:stage.id,seconds:Math.round(ticks/120*10)/10,misses:e.misses,remaining:e.bricks.length,reason:e.clearReason})}
- writeFileSync('docs/brick-breaker/simulation.json',JSON.stringify(reports,null,2))
+ mkdirSync('test-results/review/brick-breaker',{recursive:true})
+ writeFileSync('test-results/review/brick-breaker/simulation.json',JSON.stringify(reports,null,2))
 })
