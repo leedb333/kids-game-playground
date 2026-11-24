@@ -2,8 +2,11 @@ import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import { levels } from './src/games/jigsaw-puzzle/catalog'
 
-const installFiles = ['icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest']
+const installFiles = ['icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest',
+  ...levels.flatMap(level => level.pictures.map(picture => picture.path)),
+]
 
 function offline(): Plugin {
   return {

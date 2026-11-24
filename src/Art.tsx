@@ -3,4 +3,11 @@ export function Child({girl=false}:{girl?:boolean}) {return <svg viewBox="0 0 16
 export function GameArt({id}:{id:GameId}) {return <svg viewBox="0 0 240 230" aria-hidden="true" className="game-art"><g stroke="#343951" strokeWidth="5" strokeLinejoin="round" strokeLinecap="round">
 {id==='bricks'&&<>{[0,1,2,3].map(row=>[0,1,2].map(col=><rect key={row+'-'+col} x={22+col*66} y={27+row*29} width="63" height="26" rx="6" fill={['#ff7d7c','#ffdc48','#a4e452','#63d5f5'][row]}/>))}<path d="m86 186 61-49m-42 50 57-51" stroke="#fff" strokeWidth="10"/><circle cx="165" cy="133" r="21" fill="#fff"/><rect x="51" y="193" width="138" height="24" rx="12" fill="#38b5ed"/><path d="M69 200h69" stroke="#c6f5ff" strokeWidth="5"/></>}
 {id==='memory'&&<><g transform="rotate(-12 87 116)"><rect x="27" y="30" width="115" height="161" rx="23" fill="#f4bdde" stroke="#bf76ac"/><rect x="36" y="39" width="97" height="142" rx="17" fill="#fbd9ec" stroke="#fff3fa" strokeWidth="3"/><path d="m84 77 12 25 28 4-20 20 4 28-24-13-25 13 5-28-20-20 28-4Z" fill="#ffe47e" stroke="#d5aa52"/></g><g transform="rotate(12 159 129)"><rect x="104" y="56" width="112" height="151" rx="23" fill="#fff9ef" stroke="#8fcaf0"/><circle cx="133" cy="103" r="14" fill="#e8b389"/><circle cx="185" cy="103" r="14" fill="#e8b389"/><ellipse cx="159" cy="132" rx="39" ry="35" fill="#f2c399"/><path d="M139 130q5-7 10 0m21 0q5-7 10 0m-31 15q10 13 20 0" fill="none" stroke="#996647" strokeWidth="4"/><ellipse cx="159" cy="141" rx="5" ry="3" fill="#996647" stroke="none"/></g></>}
+{id==='jigsaw-puzzle'&&<>
+  <rect x="25" y="28" width="190" height="172" rx="24" fill="#fff4d9"/>
+  <path d="M46 55h65v22c-25-9-25 29 0 20v25H88c10 25-28 25-19 0H46z" fill="#f2a2c9"/>
+  <path d="M111 55h68v67h-25c9-25-30-25-21 0h-22V97c-25 9-25-29 0-20z" fill="#97d8fb"/>
+  <path d="M46 122h23c-9 25 29 25 19 0h23v68H46z" fill="#b5e78f"/>
+  <path d="M132 134h22c-9-25 30-25 21 0h25v66h-68z" fill="#ffc575" transform="rotate(-10 165 167)"/>
+</>}
 </g></svg>}
