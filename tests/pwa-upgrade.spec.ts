@@ -4,12 +4,14 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { resolve, extname } from 'node:path'
 
 const builds = process.env.PLAYGROUND_UPGRADE_BUILDS
+const jigsawBaseline = process.env.PLAYGROUND_JIGSAW_BASELINE
+const cardCount = jigsawBaseline ? 3 : 5
 const playground = '/kids-game-playground/'
 const coloring = '/kids-coloring-studio/'
 const cooking = '/kids-cooking-studio/'
 const contentTypes: Record<string, string> = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
-  '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json',
+  '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json',
 }
 
 test('an installed playground upgrades offline without touching independent apps', async ({ context }, info) => {
@@ -21,7 +23,7 @@ test('an installed playground upgrades offline without touching independent apps
     const prefix = [playground, coloring, cooking].find(prefix => path.startsWith(prefix))
     if (!prefix) { response.writeHead(404).end(); return }
     const relative = path.slice(prefix.length)
-    const root = prefix === playground ? upgraded ? resolve('dist') : resolve(builds!, 'baseline') :
+    const root = prefix === playground ? upgraded ? resolve('dist') : resolve(jigsawBaseline || resolve(builds!, 'baseline')) :
       resolve(builds!, prefix.slice(1, -1))
     const file = resolve(root, relative.endsWith('/') || !relative ? relative + 'index.html' : relative)
     if (!file.startsWith(root + '/')) { response.writeHead(404).end(); return }
@@ -39,9 +41,9 @@ test('an installed playground upgrades offline without touching independent apps
     const origin = 'http://127.0.0.1:' + address.port
     const [old, art, food] = await Promise.all([context.newPage(), context.newPage(), context.newPage()])
     await old.goto(origin + playground)
-    await expect(old.locator('.card')).toHaveCount(5)
+    await expect(old.locator('.card')).toHaveCount(cardCount)
     await old.screenshot({ path: 'test-results/review/home-before.png', fullPage: true })
-    const protectedValues = await old.evaluate(async () => {
+    const protectedValues = await old.evaluate(async includePuzzle => {
       const data: Record<string, string> = {}
       const prefix = 'kids-game-playground:v1:game:'
       for (const id of ['police-car-robot', 'fire-robot', 'baby-dinosaur', 'garden-butterfly'])
@@ -52,10 +54,15 @@ test('an installed playground upgrades offline without touching independent apps
         version: 1, container: 'cup', scoops: ['vanilla'], step: 2, completed: false, sound: false, toppings: [],
       })
       data[prefix + 'dressup:spring:r1'] = 'protected legacy fixture'
+      if (includePuzzle) data[prefix + 'jigsaw-puzzle:L04-01:r2'] = JSON.stringify({
+        version: 1, geometry: 2, imageId: 'L04-01', level: 4,
+        rows: 4, columns: 5, pieceCount: 20, placed: [0],
+        remaining: Array.from({ length: 19 }, (_, index) => index + 1), complete: false,
+      })
       for (const [key, value] of Object.entries(data)) localStorage.setItem(key, value)
       await navigator.serviceWorker.ready
       return data
-    })
+    }, Boolean(jigsawBaseline))
     await old.waitForFunction(() => navigator.serviceWorker.controller)
     await art.goto(origin + coloring)
     await food.goto(origin + cooking)
@@ -71,7 +78,7 @@ test('an installed playground upgrades offline without touching independent apps
     })
     const before = await cacheInventory()
     const oldCache = Object.keys(before).find(name => name.startsWith('kids-playground-' + origin + playground + '-'))!
-    expect(before[oldCache].some(url => url.includes('cooking-v2'))).toBe(true)
+    expect(before[oldCache].some(url => url.includes(jigsawBaseline ? 'assets/puzzle' : 'cooking-v2'))).toBe(true)
     for (const root of ['kids-coloring-studio:', 'kids-cooking-studio:'])
       expect(Object.keys(before).some(name => name.startsWith(root))).toBe(true)
 
@@ -81,12 +88,13 @@ test('an installed playground upgrades offline without touching independent apps
     expect(await cacheInventory()).toHaveProperty([oldCache])
     await context.setOffline(true)
     await old.reload()
-    await expect(old.locator('.card')).toHaveCount(5)
+    await expect(old.locator('.card')).toHaveCount(cardCount)
     await old.getByRole('button', { name: '벽돌깨기', exact: true }).click()
     await expect(old.locator('.brick-game')).toBeVisible()
     await old.close()
 
-    await expect.poll(async () => Object.keys(await cacheInventory())).not.toContain(oldCache)
+    // Poll names without opening a cache that activation may just have deleted.
+    await expect.poll(() => art.evaluate(() => caches.keys()), { timeout: 20_000 }).not.toContain(oldCache)
     const next = await context.newPage()
     await next.goto(origin + playground)
     await expect(next.locator('.card')).toHaveCount(3)
@@ -94,6 +102,17 @@ test('an installed playground upgrades offline without touching independent apps
       await next.getByRole('button', { name: title, exact: true }).click()
       await expect(next.locator(selector)).toBeVisible()
       await next.screenshot({ path: 'test-results/review/offline-' + selector.slice(1) + '.png', fullPage: true })
+      await next.getByRole('button', { name: '홈으로 이동' }).click()
+    }
+    if (jigsawBaseline) {
+      await next.getByRole('button', { name: '그림 퍼즐 맞추기', exact: true }).click()
+      await next.getByRole('button', { name: /^4단계/ }).click()
+      await next.getByRole('button', { name: '이어하기' }).click()
+      await expect(next.getByRole('status', { name: '진행 수량' })).toHaveText('1 / 20')
+      await expect(next.locator('[data-piece]')).toHaveCount(19)
+      await expect.poll(() => next.evaluate(() => JSON.parse(
+        localStorage.getItem('kids-game-playground:v1:game:jigsaw-puzzle:L04-01:r3') ?? '{}',
+      ).geometry)).toBe(3)
       await next.getByRole('button', { name: '홈으로 이동' }).click()
     }
     await next.screenshot({ path: "test-results/review/home-after.png", fullPage: true })

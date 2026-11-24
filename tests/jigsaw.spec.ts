@@ -13,7 +13,7 @@ for (const [index, level] of levels.entries()) {
   test(`level ${level.id} geometry, placement bounds and save validation`, () => {
     const { rows, columns } = level
     expect([rows, columns]).toEqual([[3, 3], [3, 4], [4, 4], [4, 5], [5, 5]][index])
-    const pieces = makePieces(rows, columns)
+    const pieces = makePieces(rows, columns, level.id >= 3 ? level.pictures[0].id : undefined)
     expect(pieces).toHaveLength([9, 12, 16, 20, 25][index])
     for (const { id, x, y, width, height, edges } of pieces) {
       const row = Math.floor(id / columns), col = id % columns
@@ -34,11 +34,11 @@ for (const [index, level] of levels.entries()) {
     expect(undo(solved).complete).toBe(false)
     expect(restore({ ...initial, placed: [initial.remaining[0]] }, level, picture)).toBeNull()
     expect(restore({ ...initial, remaining: initial.remaining.map(() => 0) }, level, picture)).toBeNull()
-    expect(restore({ ...initial, geometry: initial.geometry === 1 ? 2 : 1 }, level, picture)).toBeNull()
+    expect(restore({ ...initial, geometry: initial.geometry === 1 ? 3 : 1 }, level, picture)).toBeNull()
     expect(restore({ ...initial, rows: rows + 1 }, level, picture)).toBeNull()
     expect(restore({ ...initial, pieceCount: pieces.length - 1 }, level, picture)).toBeNull()
     const legacy = { ...initial, geometry: 1, rows: undefined, columns: undefined, pieceCount: undefined }
-    if (index < 3) expect(restore(legacy, level, picture)).toEqual(initial)
+    if (index < 2) expect(restore(legacy, level, picture)).toEqual(initial)
     else expect(restore(legacy, level, picture)).toBeNull()
   })
 }
@@ -292,6 +292,90 @@ test('old 9–16 progress continues and old 24/32 records stay isolated', async 
   await expect(page.locator('.jigsaw-picture').first()).toContainText('이전 퍼즐 완성')
   expect(await page.evaluate(keys => keys.map(key => localStorage.getItem(key)), keys.slice(3))).toEqual(originals.slice(3))
   const records = await page.evaluate(keys => keys.map(key => JSON.parse(localStorage.getItem(key)!)),
-    ['L04-01', 'L05-01'].map(id => storage + saveKey(id, 2)))
-  expect(records.map(value => [value.geometry, value.rows, value.columns, value.pieceCount])).toEqual([[2, 4, 5, 20], [2, 5, 5, 25]])
+    ['L04-01', 'L05-01'].map(id => storage + saveKey(id, 3)))
+  expect(records.map(value => [value.geometry, value.rows, value.columns, value.pieceCount])).toEqual([[3, 4, 5, 20], [3, 5, 5, 25]])
+})
+
+test('same-grid progress and completion migrate into r3 without rewriting the source', async ({ page }) => {
+  const source = levels.slice(2).map(level => {
+    const picture = level.pictures[0], complete = level.id === 5
+    const ids = Array.from({ length: level.rows * level.columns }, (_, id) => id).reverse()
+    return {
+      key: storage + saveKey(picture.id, level.id === 3 ? 1 : 2),
+      nextKey: storage + saveKey(picture.id, 3),
+      value: {
+        version: 1, geometry: level.id === 3 ? 1 : 2, imageId: picture.id, level: level.id,
+        rows: level.rows, columns: level.columns, pieceCount: ids.length,
+        complete, placed: complete ? ids : ids.slice(0, 2), remaining: complete ? [] : ids.slice(2),
+      },
+    }
+  })
+  await page.goto('./')
+  await page.evaluate(records => records.forEach(({ key, value }) => localStorage.setItem(key, JSON.stringify(value))), source)
+  for (const [index, record] of source.entries()) {
+    const { value, key, nextKey } = record
+    await open(page, index + 3, value.complete ? '완성 그림 보기' : '이어하기')
+    await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText(`${value.placed.length} / ${value.pieceCount}`)
+    expect(await page.locator('[data-piece]').evaluateAll(items => items.map(item => Number((item as HTMLElement).dataset.piece))))
+      .toEqual(value.remaining)
+    expect(await page.evaluate(key => localStorage.getItem(key), key)).toBe(JSON.stringify(value))
+    expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), nextKey)).toEqual({ ...value, geometry: 3 })
+    if (index === 1) {
+      const badKey = storage + saveKey('L04-02', 2)
+      const malformed = JSON.stringify({ ...value, imageId: 'L04-02', rows: 5, columns: 4 })
+      await page.evaluate(({ badKey, malformed }) => localStorage.setItem(badKey, malformed), { badKey, malformed })
+      await page.getByRole('button', { name: '← 그림 선택' }).tap()
+      const card = page.locator('.jigsaw-picture').nth(1)
+      await expect(card.getByRole('progressbar')).toHaveCount(0)
+      await expect(card.getByRole('button', { name: /퍼즐 시작$/ })).toBeVisible()
+      expect(await page.evaluate(key => localStorage.getItem(key), badKey)).toBe(malformed)
+    }
+    if (value.complete) {
+      await expect(page.getByText('퍼즐 완성!').first()).toBeVisible()
+      await page.screenshot({ path: review + 'varied-complete.png' })
+    }
+  }
+})
+
+test('all galleries show accurate progress and stacked, nonwrapping touch buttons', async ({ page }) => {
+  const fixtures = levels.flatMap(level => level.pictures.map(picture => {
+    const initial = fresh(level, picture)
+    return [storage + saveKey(picture.id, initial.geometry), place(initial, initial.remaining[0])] as const
+  }))
+  await page.goto('./')
+  await page.evaluate(records => records.forEach(([key, value]) => localStorage.setItem(key, JSON.stringify(value))), fixtures)
+  await page.getByRole('button', { name: title, exact: true }).tap()
+  for (const level of levels) {
+    await page.getByRole('button', { name: new RegExp(`^${level.id}단계`) }).tap()
+    await expect(page.getByText(`${level.rows * level.columns}조각 중 1개 맞춤`)).toHaveCount(4)
+    const bars = page.getByRole('progressbar')
+    await expect(bars).toHaveCount(4)
+    for (const bar of await bars.all()) {
+      await expect(bar).toHaveAttribute('max', String(level.rows * level.columns))
+      await expect(bar).toHaveAttribute('value', '1')
+    }
+    if (level.id === 2) {
+      for (const [width, height] of [[1280, 720], [1280, 800], [800, 360], [360, 800], [320, 640]]) {
+        await page.setViewportSize({ width, height })
+        expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
+        expect(await page.locator('.jigsaw-picture-actions').evaluateAll(groups => groups.every(group => {
+          const [one, two] = [...group.querySelectorAll('button')]
+          const a = one.getBoundingClientRect(), b = two.getBoundingClientRect()
+          return a.bottom < b.top && a.width === b.width && a.height >= 48 && b.height >= 48 &&
+            [one, two].every(button => {
+              const range = document.createRange()
+              range.selectNodeContents(button)
+              return range.getClientRects().length === 1 && range.getBoundingClientRect().width <= button.clientWidth
+            })
+        }))).toBe(true)
+        if (width === 1280 && height === 720) {
+          await page.locator('.jigsaw-picture img').evaluateAll(images =>
+            Promise.all(images.map(image => (image as HTMLImageElement).decode())))
+          await page.screenshot({ path: review + 'stacked-progress.png' })
+        }
+      }
+      await page.setViewportSize({ width: 1280, height: 720 })
+    }
+    await page.getByRole('button', { name: '← 난이도' }).tap()
+  }
 })
