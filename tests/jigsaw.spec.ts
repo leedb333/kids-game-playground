@@ -12,8 +12,9 @@ const reverse = <T,>(curves: T[][]) => [...curves].reverse().map(curve => [...cu
 for (const [index, level] of levels.entries()) {
   test(`level ${level.id} geometry, placement bounds and save validation`, () => {
     const { rows, columns } = level
+    expect([rows, columns]).toEqual([[3, 3], [3, 4], [4, 4], [4, 5], [5, 5]][index])
     const pieces = makePieces(rows, columns)
-    expect(pieces).toHaveLength([9, 12, 16, 24, 32][index])
+    expect(pieces).toHaveLength([9, 12, 16, 20, 25][index])
     for (const { id, x, y, width, height, edges } of pieces) {
       const row = Math.floor(id / columns), col = id % columns
       if (col < columns - 1) expect(edges[1]).toEqual(reverse(pieces[id + 1].edges[3]))
@@ -33,7 +34,12 @@ for (const [index, level] of levels.entries()) {
     expect(undo(solved).complete).toBe(false)
     expect(restore({ ...initial, placed: [initial.remaining[0]] }, level, picture)).toBeNull()
     expect(restore({ ...initial, remaining: initial.remaining.map(() => 0) }, level, picture)).toBeNull()
-    expect(restore({ ...initial, geometry: 2 }, level, picture)).toBeNull()
+    expect(restore({ ...initial, geometry: initial.geometry === 1 ? 2 : 1 }, level, picture)).toBeNull()
+    expect(restore({ ...initial, rows: rows + 1 }, level, picture)).toBeNull()
+    expect(restore({ ...initial, pieceCount: pieces.length - 1 }, level, picture)).toBeNull()
+    const legacy = { ...initial, geometry: 1, rows: undefined, columns: undefined, pieceCount: undefined }
+    if (index < 3) expect(restore(legacy, level, picture)).toEqual(initial)
+    else expect(restore(legacy, level, picture)).toBeNull()
   })
 }
 
@@ -41,7 +47,7 @@ async function open(page: Page, level: number, action = '퍼즐 시작') {
   await page.goto('./')
   await page.getByRole('button', { name: title, exact: true }).tap()
   await page.getByRole('button', { name: new RegExp(`^${level}단계`) }).tap()
-  await page.locator('.jigsaw-picture').first().getByRole('button', { name: action, exact: true }).tap()
+  await page.locator('.jigsaw-picture').first().getByRole('button', { name: action === '퍼즐 시작' ? /퍼즐 시작$/ : action, exact: action !== '퍼즐 시작' }).tap()
   await expect(page.getByRole('group', { name: '퍼즐판' })).toBeVisible()
 }
 
@@ -52,6 +58,12 @@ test('all 20 source images decode and every level opens with the exact piece cou
   await page.goto('./')
   await page.getByRole('button', { name: title, exact: true }).tap()
   await expect(page.locator('.jigsaw-levels button')).toHaveCount(5)
+  expect(await page.locator('.jigsaw-levels img').evaluateAll(async images =>
+    Promise.all(images.map(async image => {
+      await (image as HTMLImageElement).decode()
+      return image.getAttribute('src')?.split('/').at(-1)
+    })),
+  )).toEqual(['L01-01.webp', 'L02-02.webp', 'L03-03.webp', 'L04-03.webp', 'L05-04.webp'])
   await page.screenshot({ path: review + 'levels.png' })
   for (const level of levels) {
     await page.getByRole('button', { name: new RegExp(`^${level.id}단계`) }).tap()
@@ -66,9 +78,26 @@ test('all 20 source images decode and every level opens with the exact piece cou
       })).toEqual([1254, 1254])
     }
     if (level.id === 1) await page.screenshot({ path: review + 'gallery.png' })
-    await cards.first().getByRole('button', { name: '퍼즐 시작' }).tap()
-    await expect(page.locator('[data-piece]')).toHaveCount(level.rows * level.columns)
-    await page.getByRole('button', { name: '← 그림 선택' }).tap()
+    for (const [index, picture] of level.pictures.entries()) {
+      await cards.nth(index).getByRole('button', { name: /퍼즐 시작$/ }).tap()
+      const tiles = page.locator('[data-piece]')
+      await expect(tiles).toHaveCount(level.rows * level.columns)
+      for (const image of await tiles.locator('image').all())
+        await expect(image).toHaveAttribute('href', '/kids-game-playground/' + picture.path)
+      if (index === 0) {
+        const tray = page.getByRole('group', { name: '조각 보관함' })
+        await expect(tray).toHaveAttribute('data-columns', String(level.trayColumns))
+        if (level.id <= 2) expect(await tray.evaluate(el => el.scrollHeight - el.clientHeight)).toBeLessThanOrEqual(1)
+        if (level.id >= 3) expect(await tray.evaluate(el => el.scrollHeight > el.clientHeight)).toBe(true)
+        expect(await tiles.locator('path[stroke]').evaluateAll(paths => paths.every(element => {
+          const p = element as SVGPathElement
+          const b = p.getBBox(), v = p.ownerSVGElement!.viewBox.baseVal
+          return b.x >= v.x && b.y >= v.y && b.x + b.width <= v.x + v.width && b.y + b.height <= v.y + v.height
+        }))).toBe(true)
+        await page.screenshot({ path: review + 'play-level-' + level.id + '.png' })
+      }
+      await page.getByRole('button', { name: '← 그림 선택' }).tap()
+    }
     await page.getByRole('button', { name: '← 난이도' }).tap()
   }
 })
@@ -84,9 +113,9 @@ test('mouse drop, invalid return, hint, save, undo, reset confirmation and solut
   await page.getByRole('button', { name: /소리 ON/ }).tap()
 
   const bounds = await boardBox(page)
-  const tile = (await pieceButton(page, 0).boundingBox())!
+  const tile = (await pieceButton(page, 0).locator('.jigsaw-piece-grab').boundingBox())!
   async function drag(x: number, y: number) {
-    await page.mouse.move(tile.x + tile.width / 2, tile.y + 25)
+    await page.mouse.move(tile.x + tile.width / 2, tile.y + tile.height / 2)
     await page.mouse.down()
     await page.mouse.move(bounds.x + bounds.width * x, bounds.y + bounds.height * y, { steps: 8 })
     await expect(page.locator('.jigsaw-ghost')).toBeVisible()
@@ -129,16 +158,15 @@ test('mouse drop, invalid return, hint, save, undo, reset confirmation and solut
   await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('1 / 9')
 })
 
-test('native touch scroll, drag grip, cancellation and dense layout across viewports', async ({ page, context }) => {
+test('native touch lane scrolling, direct piece drag, cancellation and dense layout across viewports', async ({ page, context }) => {
   await page.setViewportSize({ width: 1280, height: 720 })
   await open(page, 4)
   const tray = page.getByRole('group', { name: '조각 보관함' })
   const cdp = await context.newCDPSession(page)
   const touch = (type: 'touchStart' | 'touchMove' | 'touchEnd' | 'touchCancel', ...touchPoints: { x: number; y: number }[]) =>
     cdp.send('Input.dispatchTouchEvent', { type, touchPoints })
-  const tile = tray.locator('[data-piece]').nth(1)
-  const box = (await tile.boundingBox())!
-  const scrollX = box.x + box.width / 2, scrollY = box.y + 45
+  const box = (await tray.boundingBox())!
+  const scrollX = box.x + box.width - 23, scrollY = box.y + 160
   await touch('touchStart', { x: scrollX, y: scrollY })
   for (let dy = 8; dy <= 56; dy += 8) await touch('touchMove', { x: scrollX, y: scrollY - dy })
   await touch('touchEnd')
@@ -147,30 +175,44 @@ test('native touch scroll, drag grip, cancellation and dense layout across viewp
 
   const lowerTile = tray.locator('[data-piece]').nth(6)
   const id = Number(await lowerTile.getAttribute('data-piece'))
-  const grip = lowerTile.locator('.jigsaw-grip')
-  await grip.scrollIntoViewIfNeeded()
+  const piece = lowerTile.locator('.jigsaw-piece-grab')
+  await piece.scrollIntoViewIfNeeded()
+  await expect(page.locator('.jigsaw-grip')).toHaveCount(0)
   const beforeDrop = await tray.evaluate(el => el.scrollTop)
   expect(beforeDrop).toBeGreaterThan(0)
-  const g = (await grip.boundingBox())!, board = await boardBox(page)
+  const g = (await piece.boundingBox())!, board = await boardBox(page)
   const from = { x: g.x + g.width / 2, y: g.y + g.height / 2 }
-  const target = { x: board.x + (id % 6 + .5) * board.width / 6, y: board.y + (Math.floor(id / 6) + .5) * board.height / 4 + 28 }
+  const target = { x: board.x + (id % 5 + .5) * board.width / 5, y: board.y + (Math.floor(id / 5) + .5) * board.height / 4 + 24 }
   await touch('touchStart', from)
   await touch('touchMove', target)
   await expect(page.locator('.jigsaw-ghost')).toBeVisible()
   await touch('touchCancel')
   await expect(page.locator('.jigsaw-ghost')).toHaveCount(0)
-  await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('0 / 24')
+  await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('0 / 20')
   await touch('touchStart', from)
   await touch('touchMove', target)
   await touch('touchEnd')
-  await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('1 / 24')
+  await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('1 / 20')
   expect(await tray.evaluate(el => el.scrollTop)).toBeGreaterThan(0)
   await page.screenshot({ path: review + 'tablet-1280x720.png' })
 
   await open(page, 5)
-  await expect(tray).toHaveAttribute('data-dense', 'true')
+  await expect(tray).toHaveAttribute('data-columns', '2')
   await pieceButton(page, 0).tap()
   await page.getByRole('button', { name: '1행 1열에 놓기' }).tap()
+  await page.setViewportSize({ width: 800, height: 360 })
+  await tray.evaluate(el => { el.scrollTop = 0 })
+  const phonePiece = tray.locator('[data-piece]').first()
+  const phoneId = Number(await phonePiece.getAttribute('data-piece'))
+  const phoneRect = (await phonePiece.locator('.jigsaw-piece-grab').boundingBox())!
+  const phoneBoard = await boardBox(page)
+  await touch('touchStart', { x: phoneRect.x + phoneRect.width / 2, y: phoneRect.y + phoneRect.height / 2 })
+  await touch('touchMove', {
+    x: phoneBoard.x + (phoneId % 5 + .5) * phoneBoard.width / 5,
+    y: phoneBoard.y + (Math.floor(phoneId / 5) + .5) * phoneBoard.height / 5 + 24,
+  })
+  await expect(page.locator('.jigsaw-ghost')).toBeVisible()
+  await touch('touchEnd')
   for (const [name, width, height] of [['phone-landscape', 800, 360], ['phone-portrait', 360, 800]] as const) {
     await page.setViewportSize({ width, height })
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width)
@@ -178,7 +220,7 @@ test('native touch scroll, drag grip, cancellation and dense layout across viewp
     expect(Math.abs(bounds.width - bounds.height)).toBeLessThan(1)
     expect(await tray.evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(2)
     expect(await tray.evaluate(el => el.scrollHeight > el.clientHeight)).toBe(true)
-    await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('1 / 32')
+    await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('2 / 25')
     await page.screenshot({ path: review + name + '.png', fullPage: true })
   }
 })
@@ -195,7 +237,7 @@ test('offline fresh puzzle uses its precached image and protects other storage a
   await page.waitForFunction(() => !!navigator.serviceWorker.controller)
   await context.setOffline(true)
   await open(page, 5)
-  await expect(page.locator('[data-piece]')).toHaveCount(32)
+  await expect(page.locator('[data-piece]')).toHaveCount(25)
   const cachedImages = await page.evaluate(async () => {
     const names = await caches.keys()
     const key = names.find(name => name.startsWith('kids-playground-'))!
@@ -218,10 +260,38 @@ test.describe('image failure', () => {
     await page.getByRole('button', { name: title, exact: true }).tap()
     await page.getByRole('button', { name: /^1단계/ }).tap()
     await expect(page.locator('.jigsaw-image-error')).toBeVisible()
-    await page.locator('.jigsaw-picture').first().getByRole('button', { name: '퍼즐 시작' }).tap()
+    await page.locator('.jigsaw-picture').first().getByRole('button', { name: /퍼즐 시작$/ }).tap()
     await expect(page.getByRole('alert')).toContainText('그림을 불러오지 못했어요')
     await page.unroute('**/L01-01.webp')
     await page.getByRole('button', { name: '다시 불러오기' }).tap()
     await expect(page.locator('[data-piece]')).toHaveCount(9)
   })
+})
+
+test('old 9–16 progress continues and old 24/32 records stay isolated', async ({ page }) => {
+  const keys = ['L01-01', 'L02-01', 'L03-01', 'L04-01', 'L05-01'].map(id => storage + saveKey(id))
+  const originals = [9, 12, 16, 24, 32].map((count, index) => {
+    const all = Array.from({ length: count }, (_, id) => id)
+    return JSON.stringify({
+      version: 1, geometry: 1, imageId: `L0${index + 1}-01`, level: index + 1,
+      placed: index === 4 ? all : [0], remaining: index === 4 ? [] : all.slice(1), complete: index === 4,
+    })
+  })
+  await page.goto('./')
+  await page.evaluate(({ keys, originals }) => keys.forEach((key, i) => localStorage.setItem(key, originals[i])), { keys, originals })
+  for (const [index, count] of [9, 12, 16].entries()) {
+    await open(page, index + 1, '이어하기')
+    await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText(`1 / ${count}`)
+    await expect(pieceButton(page, 0)).toHaveCount(0)
+  }
+  await open(page, 4)
+  await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('0 / 20')
+  await open(page, 5)
+  await expect(page.getByRole('status', { name: '진행 수량' })).toHaveText('0 / 25')
+  await page.getByRole('button', { name: '← 그림 선택' }).tap()
+  await expect(page.locator('.jigsaw-picture').first()).toContainText('이전 퍼즐 완성')
+  expect(await page.evaluate(keys => keys.map(key => localStorage.getItem(key)), keys.slice(3))).toEqual(originals.slice(3))
+  const records = await page.evaluate(keys => keys.map(key => JSON.parse(localStorage.getItem(key)!)),
+    ['L04-01', 'L05-01'].map(id => storage + saveKey(id, 2)))
+  expect(records.map(value => [value.geometry, value.rows, value.columns, value.pieceCount])).toEqual([[2, 4, 5, 20], [2, 5, 5, 25]])
 })

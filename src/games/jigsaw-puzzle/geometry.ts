@@ -42,8 +42,17 @@ export function makePieces(rows: number, columns: number) {
     const row = Math.floor(id / columns), col = id % columns
     const x = col * width, y = row * height
     const edges = [horizontal[row][col], vertical[row][col + 1], reverse(horizontal[row + 1][col]), reverse(vertical[row][col])]
+    // The profile's outward peak is at the midpoint of its symmetric top
+    // curve. The other segments stay inside that peak and the edge endpoints.
+    const points = edges.flat().flatMap(([a, b, c, d]) => [
+      a, d,
+      a.map((axis, i) => (axis + 3 * b[i] + 3 * c[i] + d[i]) / 8),
+    ])
+    const xs = points.map(point => point[0]), ys = points.map(point => point[1])
+    const minX = Math.min(...xs), minY = Math.min(...ys)
+    const bounds = { x: minX, y: minY, width: Math.max(...xs) - minX, height: Math.max(...ys) - minY }
     const path = `M ${x} ${y} ` + edges.flat().map(([, a, b, c]) => `C ${a.join(' ')} ${b.join(' ')} ${c.join(' ')}`).join(' ') + ' Z'
-    return { id, x, y, width, height, padding, path, edges }
+    return { id, x, y, width, height, bounds, path, edges }
   })
 }
 export type Piece = ReturnType<typeof makePieces>[number]

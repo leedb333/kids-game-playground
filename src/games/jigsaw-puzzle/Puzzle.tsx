@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useId, useMemo, useRef, useState, type PointerEvent } from 'react'
+import { memo, useContext, useEffect, useId, useMemo, useRef, useState, type PointerEvent, type CSSProperties } from 'react'
 import { SoundContext } from '../GameSettings'
 import type { Level, Picture } from './catalog'
 import { fits, makePieces, size, type Piece } from './geometry'
@@ -7,8 +7,8 @@ import { fresh, place, saveProgress, undo } from './progress'
 
 const PieceImage = memo(function PieceImage({ piece, url }: { piece: Piece; url: string }) {
   const clip = useId()
-  const { x, y, width, height, padding } = piece
-  return <svg aria-hidden="true" viewBox={`${x - padding} ${y - padding} ${width + padding * 2} ${height + padding * 2}`}>
+  const { x, y, width, height } = piece.bounds
+  return <svg aria-hidden="true" viewBox={`${x - 3} ${y - 3} ${width + 6} ${height + 6}`}>
     <clipPath id={clip}><path d={piece.path} /></clipPath>
     <image href={url} width={size} height={size} clipPath={`url(#${clip})`} />
     <path d={piece.path} fill="none" stroke="#4f5579" strokeWidth="1" vectorEffect="non-scaling-stroke" />
@@ -17,7 +17,14 @@ const PieceImage = memo(function PieceImage({ piece, url }: { piece: Piece; url:
 
 type Drag = {
   id: number; pointer: number; fromX: number; fromY: number
-  x: number; y: number; offset: number; scale: number
+  grabX: number; grabY: number; touch: boolean; scale: number; moved: boolean
+}
+
+type Ghost = { id: number; x: number; y: number; scale: number }
+
+function liftedY(current: Drag, event: PointerEvent<HTMLButtonElement>) {
+  const distance = Math.hypot(event.clientX - current.fromX, event.clientY - current.fromY)
+  return event.clientY - (current.touch ? Math.min(24, Math.max(0, distance - 8) / 3) : 0)
 }
 
 export function Puzzle({ level, picture, initial, onBack }: {
@@ -30,7 +37,7 @@ export function Puzzle({ level, picture, initial, onBack }: {
   const [status, setStatus] = useState('')
   const [image, setImage] = useState<'loading' | 'ready' | 'error'>('loading')
   const [attempt, setAttempt] = useState(0)
-  const [ghost, setGhost] = useState<Drag | null>(null)
+  const [ghost, setGhost] = useState<Ghost | null>(null)
   const drag = useRef<Drag | null>(null)
   const board = useRef<HTMLDivElement>(null)
   const tray = useRef<HTMLDivElement>(null)
@@ -39,6 +46,8 @@ export function Puzzle({ level, picture, initial, onBack }: {
   const audio = useRef<AudioContext | null>(null)
   const sound = useContext(SoundContext)
   const pieces = useMemo(() => makePieces(level.rows, level.columns), [level.rows, level.columns])
+  const maxWidth = Math.max(...pieces.map(piece => piece.bounds.width + 6))
+  const maxHeight = Math.max(...pieces.map(piece => piece.bounds.height + 6))
   const url = pictureURL(picture)
   const clip = useId()
 
@@ -94,10 +103,18 @@ export function Puzzle({ level, picture, initial, onBack }: {
 
   function start(event: PointerEvent<HTMLButtonElement>, id: number) {
     if (event.button !== 0 || !event.isPrimary || drag.current || !board.current) return
-    const scale = board.current.getBoundingClientRect().width / size
+    const touch = event.pointerType === 'touch'
+    // Native vertical panning starts in the tray lane and around the artwork.
+    if (touch && !(event.target as Element).closest('.jigsaw-piece-grab')) return
+    const piece = pieces[id]
+    const matrix = event.currentTarget.querySelector('svg')?.getScreenCTM()
+    const point = matrix ? new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse()) : null
+    const { x, y, width, height } = piece.bounds
+    const grabX = point ? Math.max(x, Math.min(x + width, point.x)) : piece.x + piece.width / 2
+    const grabY = point ? Math.max(y, Math.min(y + height, point.y)) : piece.y + piece.height / 2
     drag.current = {
-      id, pointer: event.pointerId, fromX: event.clientX, fromY: event.clientY,
-      x: event.clientX, y: event.clientY, scale, offset: event.pointerType === 'touch' ? Math.min(28, pieces[id].height * scale / 2) : 0,
+      id, pointer: event.pointerId, fromX: event.clientX, fromY: event.clientY, grabX, grabY,
+      scale: board.current.getBoundingClientRect().width / size, touch, moved: false,
     }
     event.currentTarget.setPointerCapture(event.pointerId)
   }
@@ -105,8 +122,14 @@ export function Puzzle({ level, picture, initial, onBack }: {
   function move(event: PointerEvent<HTMLButtonElement>) {
     const current = drag.current
     if (!current || current.pointer !== event.pointerId) return
-    if (Math.hypot(event.clientX - current.fromX, event.clientY - current.fromY) < 8 && !ghost) return
-    setGhost({ ...current, x: event.clientX, y: event.clientY - current.offset })
+    if (!current.moved && Math.hypot(event.clientX - current.fromX, event.clientY - current.fromY) < 8) return
+    current.moved = true
+    const bounds = pieces[current.id].bounds
+    setGhost({
+      id: current.id, scale: current.scale,
+      x: event.clientX - (current.grabX - bounds.x + 3) * current.scale,
+      y: liftedY(current, event) - (current.grabY - bounds.y + 3) * current.scale,
+    })
   }
 
   function finish(event: PointerEvent<HTMLButtonElement>, cancelled = false) {
@@ -115,14 +138,17 @@ export function Puzzle({ level, picture, initial, onBack }: {
     drag.current = null
     setGhost(null)
     if (cancelled) return
-    if (Math.hypot(event.clientX - current.fromX, event.clientY - current.fromY) < 8 && !ghost) {
+    if (!current.moved && Math.hypot(event.clientX - current.fromX, event.clientY - current.fromY) < 8) {
       setSelected(current.id)
       setStatus('선택한 조각을 퍼즐판에 놓아 보세요.')
       return
     }
     const bounds = board.current?.getBoundingClientRect()
-    if (bounds) tryPlace(current.id, (event.clientX - bounds.left) / bounds.width * size,
-      (event.clientY - current.offset - bounds.top) / bounds.height * size)
+    if (!bounds) return
+    const piece = pieces[current.id]
+    const x = (event.clientX - bounds.left) / bounds.width * size - current.grabX + piece.x + piece.width / 2
+    const y = (liftedY(current, event) - bounds.top) / bounds.height * size - current.grabY + piece.y + piece.height / 2
+    tryPlace(current.id, x, y)
   }
 
   function restart() {
@@ -175,8 +201,9 @@ export function Puzzle({ level, picture, initial, onBack }: {
       {progress.complete
         ? <div className="jigsaw-celebrate"><strong>퍼즐 완성!</strong><p>{picture.title} 그림을 모두 맞췄어요.</p><button onClick={onBack}>다음 그림 고르기</button></div>
         : <div className="jigsaw-tray-panel">
-          <p id="jigsaw-tray-help">손잡이를 끌거나 조각과 자리를 눌러요.</p>
-          <div className="jigsaw-tray" data-dense={pieces.length >= 24} ref={tray} tabIndex={0}
+          <p id="jigsaw-tray-help">조각을 끌어서 맞춰요! <span>조각과 자리를 차례로 눌러도 돼요.</span><span className="sr-only"> 보관함 여백을 밀면 아래 조각을 볼 수 있어요.</span></p>
+          <div className="jigsaw-tray" data-columns={level.trayColumns} data-level={level.id} ref={tray} tabIndex={0}
+            style={{ '--piece-aspect': maxWidth / maxHeight } as CSSProperties}
             role="group" aria-label="조각 보관함" aria-describedby="jigsaw-tray-help">
             {progress.remaining.map(id => <button key={id} data-piece={id} type="button" aria-label={`조각 ${id + 1}`}
               aria-pressed={selected === id} onClick={event => {
@@ -188,16 +215,22 @@ export function Puzzle({ level, picture, initial, onBack }: {
               }}
               onPointerDown={event => start(event, id)} onPointerMove={move} onPointerUp={finish}
               onPointerCancel={event => finish(event, true)} onLostPointerCapture={event => finish(event, true)}>
-              <PieceImage piece={pieces[id]} url={url} />
-              <span className="jigsaw-grip" aria-hidden="true">⠿</span>
+              <span className="jigsaw-piece-envelope">
+                <span className="jigsaw-piece-grab" style={{
+                  width: `${(pieces[id].bounds.width + 6) / maxWidth * 100}%`,
+                  height: `${(pieces[id].bounds.height + 6) / maxHeight * 100}%`,
+                }}>
+                  <PieceImage piece={pieces[id]} url={url} />
+                </span>
+              </span>
             </button>)}
           </div>
         </div>}
     </div>}
     {ghost && <div className="jigsaw-ghost" style={{
       left: ghost.x, top: ghost.y,
-      width: (pieces[ghost.id].width + pieces[ghost.id].padding * 2) * ghost.scale,
-      height: (pieces[ghost.id].height + pieces[ghost.id].padding * 2) * ghost.scale,
+      width: (pieces[ghost.id].bounds.width + 6) * ghost.scale,
+      height: (pieces[ghost.id].bounds.height + 6) * ghost.scale,
     }}><PieceImage piece={pieces[ghost.id]} url={url} /></div>}
     <dialog ref={dialog} aria-labelledby="jigsaw-confirm-title">
       <h3 id="jigsaw-confirm-title">이 그림을 다시 시작할까요?</h3>

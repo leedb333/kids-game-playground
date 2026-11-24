@@ -1,0 +1,566 @@
+{
+  "before": [
+    {
+      "viewport": "1280x720",
+      "level": 1,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        376
+      ],
+      "cell": [
+        131.7,
+        116
+      ],
+      "art": [
+        62,
+        62
+      ],
+      "space": [
+        69.7,
+        54
+      ],
+      "occupancy": 25.2,
+      "visible": 9,
+      "scrolls": false,
+      "count": 9
+    },
+    {
+      "viewport": "1280x720",
+      "level": 2,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        500
+      ],
+      "cell": [
+        131.7,
+        116
+      ],
+      "art": [
+        45.7,
+        59.3
+      ],
+      "space": [
+        86,
+        56.7
+      ],
+      "occupancy": 17.9,
+      "visible": 12,
+      "scrolls": false,
+      "count": 12
+    },
+    {
+      "viewport": "1280x720",
+      "level": 3,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        513
+      ],
+      "cell": [
+        131.7,
+        116
+      ],
+      "art": [
+        56,
+        56
+      ],
+      "space": [
+        75.7,
+        60
+      ],
+      "occupancy": 20.8,
+      "visible": 12,
+      "scrolls": true,
+      "count": 16
+    },
+    {
+      "viewport": "1280x720",
+      "level": 4,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        513
+      ],
+      "cell": [
+        201.5,
+        116
+      ],
+      "art": [
+        41.9,
+        60.5
+      ],
+      "space": [
+        159.7,
+        55.5
+      ],
+      "occupancy": 10.9,
+      "visible": 8,
+      "scrolls": true,
+      "count": 24
+    },
+    {
+      "viewport": "1280x720",
+      "level": 5,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        513
+      ],
+      "cell": [
+        201.5,
+        116
+      ],
+      "art": [
+        33.4,
+        63.3
+      ],
+      "space": [
+        168.1,
+        52.7
+      ],
+      "occupancy": 9.1,
+      "visible": 8,
+      "scrolls": true,
+      "count": 32
+    },
+    {
+      "viewport": "1280x800",
+      "level": 1,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        376
+      ],
+      "cell": [
+        131.7,
+        116
+      ],
+      "art": [
+        62,
+        62
+      ],
+      "space": [
+        69.7,
+        54
+      ],
+      "occupancy": 25.2,
+      "visible": 9,
+      "scrolls": false,
+      "count": 9
+    },
+    {
+      "viewport": "1280x800",
+      "level": 2,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        500
+      ],
+      "cell": [
+        131.7,
+        116
+      ],
+      "art": [
+        45.7,
+        59.3
+      ],
+      "space": [
+        86,
+        56.7
+      ],
+      "occupancy": 17.9,
+      "visible": 12,
+      "scrolls": false,
+      "count": 12
+    },
+    {
+      "viewport": "1280x800",
+      "level": 3,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        593
+      ],
+      "cell": [
+        131.7,
+        116
+      ],
+      "art": [
+        56,
+        56
+      ],
+      "space": [
+        75.7,
+        60
+      ],
+      "occupancy": 20.8,
+      "visible": 12,
+      "scrolls": true,
+      "count": 16
+    },
+    {
+      "viewport": "1280x800",
+      "level": 4,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        593
+      ],
+      "cell": [
+        201.5,
+        116
+      ],
+      "art": [
+        41.9,
+        60.5
+      ],
+      "space": [
+        159.7,
+        55.5
+      ],
+      "occupancy": 10.9,
+      "visible": 8,
+      "scrolls": true,
+      "count": 24
+    },
+    {
+      "viewport": "1280x800",
+      "level": 5,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        593
+      ],
+      "cell": [
+        201.5,
+        116
+      ],
+      "art": [
+        33.4,
+        63.3
+      ],
+      "space": [
+        168.1,
+        52.7
+      ],
+      "occupancy": 9.1,
+      "visible": 8,
+      "scrolls": true,
+      "count": 32
+    }
+  ],
+  "after": [
+    {
+      "viewport": "1280x720",
+      "level": 1,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        474
+      ],
+      "cell": [
+        132.3,
+        150
+      ],
+      "art": [
+        104.6,
+        104.6
+      ],
+      "space": [
+        27.8,
+        45.4
+      ],
+      "occupancy": 55.1,
+      "visible": 9,
+      "scrolls": false,
+      "count": 9
+    },
+    {
+      "viewport": "1280x720",
+      "level": 2,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        510
+      ],
+      "cell": [
+        132.3,
+        120
+      ],
+      "art": [
+        69.5,
+        90.2
+      ],
+      "space": [
+        62.9,
+        29.8
+      ],
+      "occupancy": 39.8,
+      "visible": 12,
+      "scrolls": false,
+      "count": 12
+    },
+    {
+      "viewport": "1280x720",
+      "level": 3,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        512
+      ],
+      "cell": [
+        123.7,
+        150
+      ],
+      "art": [
+        87.6,
+        87.6
+      ],
+      "space": [
+        36,
+        62.4
+      ],
+      "occupancy": 41.9,
+      "visible": 9,
+      "scrolls": true,
+      "count": 16
+    },
+    {
+      "viewport": "1280x720",
+      "level": 4,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        512
+      ],
+      "cell": [
+        188.5,
+        150
+      ],
+      "art": [
+        91.6,
+        112.1
+      ],
+      "space": [
+        96.9,
+        37.9
+      ],
+      "occupancy": 36.6,
+      "visible": 6,
+      "scrolls": true,
+      "count": 20
+    },
+    {
+      "viewport": "1280x720",
+      "level": 5,
+      "board": [
+        537,
+        537
+      ],
+      "tray": [
+        438,
+        512
+      ],
+      "cell": [
+        188.5,
+        150
+      ],
+      "art": [
+        118.2,
+        118.2
+      ],
+      "space": [
+        70.3,
+        31.8
+      ],
+      "occupancy": 49.4,
+      "visible": 6,
+      "scrolls": true,
+      "count": 25
+    },
+    {
+      "viewport": "1280x800",
+      "level": 1,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        474
+      ],
+      "cell": [
+        132.3,
+        150
+      ],
+      "art": [
+        104.6,
+        104.6
+      ],
+      "space": [
+        27.8,
+        45.4
+      ],
+      "occupancy": 55.1,
+      "visible": 9,
+      "scrolls": false,
+      "count": 9
+    },
+    {
+      "viewport": "1280x800",
+      "level": 2,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        510
+      ],
+      "cell": [
+        132.3,
+        120
+      ],
+      "art": [
+        69.5,
+        90.2
+      ],
+      "space": [
+        62.9,
+        29.8
+      ],
+      "occupancy": 39.8,
+      "visible": 12,
+      "scrolls": false,
+      "count": 12
+    },
+    {
+      "viewport": "1280x800",
+      "level": 3,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        592
+      ],
+      "cell": [
+        123.7,
+        150
+      ],
+      "art": [
+        87.6,
+        87.6
+      ],
+      "space": [
+        36,
+        62.4
+      ],
+      "occupancy": 41.9,
+      "visible": 9,
+      "scrolls": true,
+      "count": 16
+    },
+    {
+      "viewport": "1280x800",
+      "level": 4,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        592
+      ],
+      "cell": [
+        188.5,
+        150
+      ],
+      "art": [
+        91.6,
+        112.1
+      ],
+      "space": [
+        96.9,
+        37.9
+      ],
+      "occupancy": 36.6,
+      "visible": 6,
+      "scrolls": true,
+      "count": 20
+    },
+    {
+      "viewport": "1280x800",
+      "level": 5,
+      "board": [
+        617,
+        617
+      ],
+      "tray": [
+        438,
+        592
+      ],
+      "cell": [
+        188.5,
+        150
+      ],
+      "art": [
+        118.2,
+        118.2
+      ],
+      "space": [
+        70.3,
+        31.8
+      ],
+      "occupancy": 49.4,
+      "visible": 6,
+      "scrolls": true,
+      "count": 25
+    }
+  ]
+}
