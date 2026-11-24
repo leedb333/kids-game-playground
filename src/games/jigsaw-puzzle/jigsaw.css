@@ -152,8 +152,27 @@
 .jigsaw-levels img { max-width: 280px; }
 .jigsaw-image-error { display: grid; place-items: center; padding: 10px; }
 .jigsaw-picture :is(p, h3) { margin: 0 4px; }
-.jigsaw-picture .jigsaw-actions { margin: auto 4px 4px; }
-.jigsaw-picture .jigsaw-actions button { flex: 1; }
+.jigsaw-picture .jigsaw-picture-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  margin: auto 4px 4px;
+}
+.jigsaw-picture-actions button { white-space: nowrap; padding-inline: 6px; }
+.jigsaw-picture-actions button:first-child { background: #e5f5d0; border-color: #9abb72; }
+.jigsaw-picture progress {
+  width: calc(100% - 8px);
+  height: 7px;
+  margin-inline: 4px;
+  appearance: none;
+  overflow: hidden;
+  border: 0;
+  border-radius: 8px;
+  background: #ecf3e5;
+}
+.jigsaw-picture progress::-webkit-progress-bar { background: #ecf3e5; }
+.jigsaw-picture progress::-webkit-progress-value { background: #82b65b; border-radius: 8px; }
+.jigsaw-picture progress::-moz-progress-bar { background: #82b65b; border-radius: 8px; }
 
 .jigsaw-top,
 .jigsaw-actions {
@@ -211,7 +230,7 @@
 
 .jigsaw-tray-panel { min-width: 0; }
 .jigsaw-tray-panel p { margin: 0 0 8px; font-size: .9rem; word-break: keep-all; }
-.jigsaw-tray-panel p span { color: #506183; font-weight: 400; }
+.jigsaw-tray-secondary { display: block; color: #506183; font-size: .8rem; font-weight: 400; line-height: 1.3; }
 
 .jigsaw-tray {
   --tile-size: clamp(92px, calc((100svh - 240px) / 3), 150px);
@@ -222,7 +241,7 @@
   align-content: start;
   gap: 6px;
   padding: 6px var(--lane) 6px 6px;
-  max-height: clamp(200px, calc(100svh - 208px), 660px);
+  max-height: clamp(200px, calc(100svh - 223px), 660px);
   overflow-y: auto;
   overscroll-behavior-y: contain;
   scrollbar-gutter: stable;
@@ -234,7 +253,7 @@
 @media (min-width: 1001px) {
   .jigsaw-tray[data-level="1"],
   .jigsaw-tray[data-level="2"] { --lane: 8px; }
-  .jigsaw-tray[data-level="2"] { --tile-size: 120px; }
+  .jigsaw-tray[data-level="2"] { --tile-size: 120px; max-height: clamp(200px, calc(100svh - 208px), 660px); }
 }
 
 .jigsaw-tray-panel:has(.jigsaw-tray[data-level="3"], .jigsaw-tray[data-columns="2"]) {
@@ -316,11 +335,11 @@
   .playground:has(.jigsaw) .playing-name { display: none; }
   .jigsaw-workspace { grid-template-columns: minmax(0, 1fr); }
   .jigsaw { --board-size: min(100%, 440px); }
-  .jigsaw-tray { --tile-size: 120px; max-height: max(150px, calc(100svh - min(100vw, 440px) - 207px)); }
+  .jigsaw-tray { --tile-size: 120px; max-height: max(150px, calc(100svh - min(100vw, 440px) - 222px)); }
   .jigsaw-levels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .jigsaw .jigsaw-pictures { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 }
 @media (max-height: 500px) and (min-width: 601px) {
   .jigsaw { --board-size: min(100%, max(170px, calc(100svh - 158px))); }
-  .jigsaw-tray { --tile-size: 108px; --lane: 28px; max-height: max(110px, calc(100svh - 214px)); }
+  .jigsaw-tray { --tile-size: 108px; --lane: 28px; max-height: max(110px, calc(100svh - 229px)); }
 }

@@ -1,0 +1,302 @@
+[
+  {
+    "id": "L03-01",
+    "title": "공룡",
+    "count": 16,
+    "uniqueBefore": 14,
+    "uniqueAfter": 16,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        6,
+        11
+      ],
+      "nearPairs": 14
+    },
+    "after": {
+      "closest": 0.9524,
+      "closestIds": [
+        1,
+        2
+      ],
+      "nearPairs": 1
+    }
+  },
+  {
+    "id": "L03-02",
+    "title": "거북이",
+    "count": 16,
+    "uniqueBefore": 14,
+    "uniqueAfter": 16,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        6,
+        11
+      ],
+      "nearPairs": 14
+    },
+    "after": {
+      "closest": 0.9446,
+      "closestIds": [
+        4,
+        8
+      ],
+      "nearPairs": 0
+    }
+  },
+  {
+    "id": "L03-03",
+    "title": "동화 속 성",
+    "count": 16,
+    "uniqueBefore": 14,
+    "uniqueAfter": 16,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        6,
+        11
+      ],
+      "nearPairs": 14
+    },
+    "after": {
+      "closest": 0.9407,
+      "closestIds": [
+        9,
+        13
+      ],
+      "nearPairs": 0
+    }
+  },
+  {
+    "id": "L03-04",
+    "title": "로봇",
+    "count": 16,
+    "uniqueBefore": 14,
+    "uniqueAfter": 16,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        6,
+        11
+      ],
+      "nearPairs": 14
+    },
+    "after": {
+      "closest": 0.935,
+      "closestIds": [
+        14,
+        16
+      ],
+      "nearPairs": 0
+    }
+  },
+  {
+    "id": "L04-01",
+    "title": "봄",
+    "count": 20,
+    "uniqueBefore": 14,
+    "uniqueAfter": 20,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        2,
+        4
+      ],
+      "nearPairs": 27
+    },
+    "after": {
+      "closest": 0.9607,
+      "closestIds": [
+        10,
+        20
+      ],
+      "nearPairs": 3
+    }
+  },
+  {
+    "id": "L04-02",
+    "title": "여름",
+    "count": 20,
+    "uniqueBefore": 14,
+    "uniqueAfter": 20,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        2,
+        4
+      ],
+      "nearPairs": 27
+    },
+    "after": {
+      "closest": 0.9526,
+      "closestIds": [
+        5,
+        15
+      ],
+      "nearPairs": 1
+    }
+  },
+  {
+    "id": "L04-03",
+    "title": "가을",
+    "count": 20,
+    "uniqueBefore": 14,
+    "uniqueAfter": 20,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        2,
+        4
+      ],
+      "nearPairs": 27
+    },
+    "after": {
+      "closest": 0.9591,
+      "closestIds": [
+        1,
+        4
+      ],
+      "nearPairs": 1
+    }
+  },
+  {
+    "id": "L04-04",
+    "title": "겨울",
+    "count": 20,
+    "uniqueBefore": 14,
+    "uniqueAfter": 20,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        2,
+        4
+      ],
+      "nearPairs": 27
+    },
+    "after": {
+      "closest": 0.9349,
+      "closestIds": [
+        15,
+        20
+      ],
+      "nearPairs": 0
+    }
+  },
+  {
+    "id": "L05-01",
+    "title": "범퍼카",
+    "count": 25,
+    "uniqueBefore": 14,
+    "uniqueAfter": 25,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        2,
+        4
+      ],
+      "nearPairs": 48
+    },
+    "after": {
+      "closest": 0.9555,
+      "closestIds": [
+        23,
+        24
+      ],
+      "nearPairs": 1
+    }
+  },
+  {
+    "id": "L05-02",
+    "title": "회전목마",
+    "count": 25,
+    "uniqueBefore": 14,
+    "uniqueAfter": 25,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        2,
+        4
+      ],
+      "nearPairs": 48
+    },
+    "after": {
+      "closest": 0.9386,
+      "closestIds": [
+        4,
+        21
+      ],
+      "nearPairs": 0
+    }
+  },
+  {
+    "id": "L05-03",
+    "title": "후룸라이드",
+    "count": 25,
+    "uniqueBefore": 14,
+    "uniqueAfter": 25,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        2,
+        4
+      ],
+      "nearPairs": 48
+    },
+    "after": {
+      "closest": 0.9459,
+      "closestIds": [
+        11,
+        16
+      ],
+      "nearPairs": 0
+    }
+  },
+  {
+    "id": "L05-04",
+    "title": "롤러코스터",
+    "count": 25,
+    "uniqueBefore": 14,
+    "uniqueAfter": 25,
+    "gaps": 0,
+    "overlaps": 0,
+    "before": {
+      "closest": 1,
+      "closestIds": [
+        2,
+        4
+      ],
+      "nearPairs": 48
+    },
+    "after": {
+      "closest": 0.9561,
+      "closestIds": [
+        21,
+        23
+      ],
+      "nearPairs": 2
+    }
+  }
+]

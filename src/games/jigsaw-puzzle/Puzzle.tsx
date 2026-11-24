@@ -1,7 +1,7 @@
 import { memo, useContext, useEffect, useId, useMemo, useRef, useState, type PointerEvent, type CSSProperties } from 'react'
 import { SoundContext } from '../GameSettings'
 import type { Level, Picture } from './catalog'
-import { fits, makePieces, size, type Piece } from './geometry'
+import { fits, geometryFor, makePieces, size, variedGeometry, type Piece } from './geometry'
 import { pictureURL } from './images'
 import { fresh, place, saveProgress, undo } from './progress'
 
@@ -45,7 +45,9 @@ export function Puzzle({ level, picture, initial, onBack }: {
   const title = useRef<HTMLHeadingElement>(null)
   const audio = useRef<AudioContext | null>(null)
   const sound = useContext(SoundContext)
-  const pieces = useMemo(() => makePieces(level.rows, level.columns), [level.rows, level.columns])
+  const pieces = useMemo(() => makePieces(
+    level.rows, level.columns, geometryFor(level) === variedGeometry ? picture.id : undefined,
+  ), [level, picture.id])
   const maxWidth = Math.max(...pieces.map(piece => piece.bounds.width + 6))
   const maxHeight = Math.max(...pieces.map(piece => piece.bounds.height + 6))
   const url = pictureURL(picture)
@@ -201,7 +203,7 @@ export function Puzzle({ level, picture, initial, onBack }: {
       {progress.complete
         ? <div className="jigsaw-celebrate"><strong>퍼즐 완성!</strong><p>{picture.title} 그림을 모두 맞췄어요.</p><button onClick={onBack}>다음 그림 고르기</button></div>
         : <div className="jigsaw-tray-panel">
-          <p id="jigsaw-tray-help">조각을 끌어서 맞춰요! <span>조각과 자리를 차례로 눌러도 돼요.</span><span className="sr-only"> 보관함 여백을 밀면 아래 조각을 볼 수 있어요.</span></p>
+          <p id="jigsaw-tray-help"><strong>조각을 끌어 맞춰요!</strong> <span className="jigsaw-tray-secondary">조각과 자리를 차례로 눌러도 돼요.</span><span className="sr-only"> 보관함 여백을 밀면 아래 조각을 볼 수 있어요.</span></p>
           <div className="jigsaw-tray" data-columns={level.trayColumns} data-level={level.id} ref={tray} tabIndex={0}
             style={{ '--piece-aspect': maxWidth / maxHeight } as CSSProperties}
             role="group" aria-label="조각 보관함" aria-describedby="jigsaw-tray-help">

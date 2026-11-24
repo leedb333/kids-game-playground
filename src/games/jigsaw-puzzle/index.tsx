@@ -27,9 +27,10 @@ function PictureCard({ level, picture, onPlay }: {
     </button> : <>
       {artwork}
       <h3>{picture.title}</h3>
-      <p>{saved.complete ? '완성!' : `${saved.placed.length} / ${level.rows * level.columns} 조각`}</p>
+      <p>{saved.complete ? '완성!' : `${saved.pieceCount}조각 중 ${saved.placed.length}개 맞춤`}</p>
+      <progress aria-label={`${picture.title} 맞춘 조각`} max={saved.pieceCount} value={saved.placed.length} />
       {completedBefore && <p className="jigsaw-earlier">이전 퍼즐 완성</p>}
-      <div className="jigsaw-actions">
+      <div className="jigsaw-actions jigsaw-picture-actions">
         <button onClick={() => onPlay({ picture, progress: saved })}>
           {saved.complete ? '완성 그림 보기' : '이어하기'}
         </button>

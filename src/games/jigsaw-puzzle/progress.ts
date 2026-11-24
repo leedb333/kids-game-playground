@@ -1,9 +1,10 @@
 import { read, write } from '../../storage'
+import { geometryFor, variedGeometry } from './geometry'
 import type { Level, Picture } from './catalog'
 
 type Progress = {
   version: 1
-  geometry: 1 | 2
+  geometry: 1 | 2 | 3
   imageId: string
   level: number
   rows: number
@@ -15,7 +16,6 @@ type Progress = {
 }
 
 export const saveKey = (id: string, geometry = 1) => `game:jigsaw-puzzle:${id}:r${geometry}`
-const geometryFor = (level: Level) => level.id >= 4 ? 2 : 1
 
 export function fresh(level: Level, picture: Picture): Progress {
   const remaining = Array.from({ length: level.rows * level.columns }, (_, id) => id)
@@ -29,7 +29,7 @@ export function fresh(level: Level, picture: Picture): Progress {
   }
 }
 
-function decode(raw: unknown, level: Level, picture: Picture, geometry: 1 | 2, rows: number, columns: number): Progress | null {
+function decode(raw: unknown, level: Level, picture: Picture, geometry: 1 | 2 | 3, rows: number, columns: number): Progress | null {
   const value = raw as Partial<Progress> | null
   if (!value || value.version !== 1 || value.geometry !== geometry || value.imageId !== picture.id ||
       value.level !== level.id || !Array.isArray(value.placed) || !Array.isArray(value.remaining) ||
@@ -45,12 +45,21 @@ function decode(raw: unknown, level: Level, picture: Picture, geometry: 1 | 2, r
 export const restore = (raw: unknown, level: Level, picture: Picture) =>
   decode(raw, level, picture, geometryFor(level), level.rows, level.columns)
 
-export const loadProgress = (level: Level, picture: Picture) =>
-  restore(read<unknown>(saveKey(picture.id, geometryFor(level)), null), level, picture)
+export function loadProgress(level: Level, picture: Picture): Progress | null {
+  const geometry = geometryFor(level)
+  const current = read<unknown>(saveKey(picture.id, geometry), null)
+  if (current !== null || geometry !== variedGeometry) return restore(current, level, picture)
+  const previous = level.id >= 4 ? 2 : 1
+  // The IDs are row-major in both versions, so only same-grid records can move.
+  // Keep the original key. The upgraded record is saved only when play opens.
+  const compatible = decode(read<unknown>(saveKey(picture.id, previous), null),
+    level, picture, previous, level.rows, level.columns)
+  return compatible && { ...compatible, geometry }
+}
 export const saveProgress = (value: Progress) => write(saveKey(value.imageId, value.geometry), value)
 
 export function completedLegacyPuzzle(level: Level, picture: Picture) {
-  if (geometryFor(level) === 1) return false
+  if (level.id < 4) return false
   const old = read<unknown>(saveKey(picture.id), null)
   return decode(old, level, picture, 1, 4, level.id === 4 ? 6 : 8)?.complete === true
 }
