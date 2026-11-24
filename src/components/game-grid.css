@@ -49,3 +49,9 @@
   .playground:not(.is-playing) .welcome,
   .playground:not(.is-playing) > footer { display: none; }
 }
+
+@media (min-width: 900px) {
+  .home-games .game-grid:has(> :nth-child(3)) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

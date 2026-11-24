@@ -25,6 +25,14 @@ for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
 }
 for (const icon of manifest.icons) assert.ok(cached.has('./' + icon.src), icon.src)
 
+for (let level = 1; level <= 5; level++) {
+  for (let image = 1; image <= 4; image++) {
+    const path = `assets/puzzle/level-0${level}/L0${level}-0${image}.webp`
+    assert.ok(cached.has('./' + path), path)
+    assert.deepEqual(readFileSync(join('dist', path)), readFileSync(join('public', path)))
+  }
+}
+
 const assets = readdirSync('dist/assets')
 assert.ok(assets.every(file => !/^(coloring-v4|cooking-v2)$/.test(file)))
 for (const file of assets.filter(file => /\.(js|css)$/.test(file))) assert.ok(cached.has('./assets/' + file))
