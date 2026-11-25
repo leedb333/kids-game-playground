@@ -5,7 +5,7 @@ import { read, write } from './storage'
 import { Child } from './Art'
 import {GameGrid} from './components/GameGrid'
 import './styles.css'
-import {SoundContext} from './games/GameSettings'
+import {GameHomeContext, SoundContext} from './games/GameSettings'
 
 class GameBoundary extends Component<{children:React.ReactNode;onHome:()=>void},{failed:boolean}> {
   state={failed:false}
@@ -27,7 +27,7 @@ function App(){
     <nav className="toolbar" aria-label="공통 메뉴"><button className="home" onClick={home} aria-label="홈으로 이동"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m3 15 13-12 13 12M7 13v16h7v-9h5v9h7V13" fill="white" stroke="currentColor" strokeWidth="3" strokeLinejoin="round"/></svg><span>홈</span></button>{active&&<span className="playing-name">✦ {active.title}</span>}<button className="sound" aria-pressed={sound} onClick={toggleSound}><span aria-hidden="true">{sound?'◖))':'◖×'}</span> 소리 {sound?'ON':'OFF'}</button></nav>
     {!active&&<header className="hero"><div className="child boy"><Child/></div><div className="hero-copy"><h1 tabIndex={-1}><span>어린이</span> <span>게임</span> <span>놀이터</span></h1></div><div className="child girl"><Child girl/></div></header>}
     <main id="games" tabIndex={-1}>
-      {active&&Game?<section className="game-shell" aria-label={active.title}><GameBoundary key={active.id} onHome={home}><Suspense fallback={<p role="status">놀이를 불러오고 있어요…</p>}><SoundContext.Provider value={sound}><Game/></SoundContext.Provider></Suspense></GameBoundary></section>:<GameGrid games={games} onChoose={open}/>}
+      {active&&Game?<section className="game-shell" aria-label={active.title}><GameBoundary key={active.id} onHome={home}><Suspense fallback={<p role="status">놀이를 불러오고 있어요…</p>}><GameHomeContext.Provider value={home}><SoundContext.Provider value={sound}><Game/></SoundContext.Provider></GameHomeContext.Provider></Suspense></GameBoundary></section>:<GameGrid games={games} onChoose={open}/>}
     </main><footer>광고 없이 · 회원가입 없이 · 안심하고 놀아요</footer><span role="status" className="sr-only">{notice}</span>
   </div>
 }

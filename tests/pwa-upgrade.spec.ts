@@ -97,7 +97,7 @@ test('an installed playground upgrades offline without touching independent apps
     await expect.poll(() => art.evaluate(() => caches.keys()), { timeout: 20_000 }).not.toContain(oldCache)
     const next = await context.newPage()
     await next.goto(origin + playground)
-    await expect(next.locator('.card')).toHaveCount(3)
+    await expect(next.locator('.card')).toHaveCount(4)
     for (const [title, selector] of [['벽돌깨기', '.brick-game'], ['반짝반짝 짝꿍 카드', '.memory-game']]) {
       await next.getByRole('button', { name: title, exact: true }).click()
       await expect(next.locator(selector)).toBeVisible()
@@ -115,6 +115,10 @@ test('an installed playground upgrades offline without touching independent apps
       ).geometry)).toBe(3)
       await next.getByRole('button', { name: '홈으로 이동' }).click()
     }
+    await next.getByRole('button', { name: '출동! 소방차 미로', exact: true }).click()
+    await next.getByRole('button', { name: '출동하기' }).click()
+    await expect(next.locator('.maze-board')).toBeVisible()
+    await next.getByRole('button', { name: '홈으로', exact: true }).click()
     await next.screenshot({ path: "test-results/review/home-after.png", fullPage: true })
     const after = await cacheInventory()
     for (const [name, urls] of Object.entries(before)) {
