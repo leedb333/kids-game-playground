@@ -241,9 +241,14 @@ test('offline fresh puzzle uses its precached image and protects other storage a
   const cachedImages = await page.evaluate(async () => {
     const names = await caches.keys()
     const key = names.find(name => name.startsWith('kids-playground-'))!
-    return (await (await caches.open(key)).keys()).filter(request => request.url.endsWith('.webp')).length
+    const scope = (await navigator.serviceWorker.getRegistration())!.scope
+    return (await (await caches.open(key)).keys())
+      .map(request => request.url.slice(scope.length))
+      .filter(path => path.startsWith('assets/puzzle/') && path.endsWith('.webp'))
+      .sort()
   })
-  expect(cachedImages).toBe(20)
+  expect(cachedImages).toHaveLength(20)
+  expect(cachedImages).toEqual(levels.flatMap(level => level.pictures.map(picture => picture.path)).sort())
   expect(await page.evaluate(() => caches.keys())).toEqual(expect.arrayContaining(['kids-coloring-studio:fixture', 'kids-cooking-studio:fixture']))
   for (const suffix of ['game:bricks:r1', 'game:memory-card:r1', 'game:coloring:police-car-robot:r4', 'game:cooking-v2:pizza:full:r1'])
     expect(await page.evaluate(key => localStorage.getItem(key), storage + suffix)).toBe('protected test record')
