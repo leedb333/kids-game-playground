@@ -5,7 +5,11 @@ import { mazes, type Point } from '../src/games/firetruck-maze/maps'
 import { decode, depart, nextMaze, saveKey, type Run } from '../src/games/firetruck-maze/progress'
 import { connect, distance, hintRoute, parked, position, remember, shortest, stepTo, travel, validateMaze } from '../src/games/firetruck-maze/roads'
 
-const [maze] = mazes
+const maze = mazes.find(maze => maze.id === 'M05')!
+function pilotDeparture() {
+  let draw = 0
+  return depart(undefined, () => draw++ === 5 ? 0 : .99999)
+}
 const graph = connect(maze)
 const key = 'kids-game-playground:v1:' + saveKey
 const title = '출동! 소방차 미로'
@@ -16,7 +20,17 @@ async function intro(page: Page) {
   await page.getByRole('button', { name: title, exact: true }).tap()
   await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible()
 }
-const go = (page: Page) => page.getByRole('button', { name: '출동하기' }).tap()
+async function go(page: Page) {
+  await page.evaluate(() => {
+    const random = Math.random
+    let draw = 0
+    Math.random = () => {
+      if (draw === 8) Math.random = random
+      return draw++ === 5 ? 0 : .99999
+    }
+  })
+  await page.getByRole('button', { name: '출동하기' }).tap()
+}
 const saved = (page: Page) => page.evaluate(key => JSON.parse(localStorage.getItem(key)!), key)
 const review = 'test-results/firetruck-maze-review'
 async function capture(page: Page, name: string) {
@@ -40,7 +54,7 @@ async function tapRoute(page: Page, from: string, goal: string) {
 }
 
 test('M05 road geometry, ordered routes and clipped hint are valid', () => {
-  expect(mazes.map(m => [m.id, m.version, m.difficulty, m.theme])).toEqual([['M05', 2, 7, '아파트 단지']])
+  expect([maze.id, maze.version, maze.difficulty, maze.theme]).toEqual(['M05', 2, '하', '아파트 단지'])
   const review = validateMaze(maze)
   expect([review.deadEnds, review.junctions, review.turns]).toEqual([10, 8, 13])
   expect(review.routes.map(route => route.length)).toEqual([1104, 737, 811, 959])
@@ -103,7 +117,7 @@ test('M05 road geometry, ordered routes and clipped hint are valid', () => {
 })
 
 test('versioned saves validate partial travel, ordered targets, completion and rotation', () => {
-  const first = depart()
+  const first = pilotDeparture()
   const pastFirst = shortest(graph, maze.start, maze.fires[1].stop).path
   expect(decode({ ...first, pose: parked(pastFirst.at(-1)!), trail: pastFirst })).toBeNull()
   expect(decode({ ...first, mazeVersion: 1 })).toBeNull()
@@ -111,10 +125,14 @@ test('versioned saves validate partial travel, ordered targets, completion and r
   expect(decode(partial)).toEqual(partial)
   for (const invalid of [null, 1, {}, { ...first, mazeVersion: 0 }, { ...first, mazeId: 'M10' },
     { ...first, target: '3' }, { ...first, extinguished: ['2'] }, { ...first, complete: true },
-    { ...first, trail: ['1,7', '7,7'] }, { ...first, rotation: { last: 'M05', remaining: ['M05'] } },
+    { ...first, trail: ['1,7', '7,7'] },
     { ...partial, pose: { ...partial.pose, offset: 999 } }, { ...partial, pose: { ...partial.pose, to: '10,1' } },
   ]) expect(decode(invalid)).toBeNull()
-  expect(depart(first)).toEqual(first)
+  expect(decode({ ...first, rotation: { last: 'M05', remaining: ['M05'] } })).toEqual({
+    ...first, rotation: { last: 'M05', remaining: [] },
+  })
+  expect(depart(first).mazeId).toBe(first.rotation.remaining[0])
+  expect(nextMaze(['M05'], { last: 'M05', remaining: [] }).last).toBe('M05')
   const ids = ['A', 'B', 'C', 'D']
   let rotation: ReturnType<typeof nextMaze> | undefined
   const seen = Array.from({ length: 12 }, () => {
@@ -263,13 +281,14 @@ test('full dispatch uses ordered objectives, timed spray, hints, completion and 
   await expect(page.locator('.maze-finished')).toHaveCSS('opacity', '1')
   await capture(page, '11-complete')
   await page.getByRole('button', { name: '다시 하기' }).tap()
-  await expect(truck(page)).toHaveAttribute('data-node', maze.start)
-  expect((await saved(page)).complete).toBe(false)
+  const nextRun = depart(pilotDeparture())
+  await expect(truck(page)).toHaveAttribute('data-node', mazes.find(m => m.id === nextRun.mazeId)!.start)
+  expect(await saved(page)).toEqual(nextRun)
 })
 
 test('interruption restores the unextinguished fire and game reset only writes its own key', async ({ page }) => {
   const first = maze.fires[0].stop
-  const run: Run = { ...depart(), pose: parked(first), trail: shortest(graph, maze.start, first).path }
+  const run: Run = { ...pilotDeparture(), pose: parked(first), trail: shortest(graph, maze.start, first).path }
   const prefix = 'kids-game-playground:v1:'
   const protectedValues = Object.fromEntries([
     'game:bricks:r1', 'game:memory-card:r1', 'game:jigsaw-puzzle:L01-01:r3', 'game:jigsaw-puzzle:L01-01:r2',
@@ -313,8 +332,9 @@ test('interruption restores the unextinguished fire and game reset only writes i
   await intro(page)
   await page.getByRole('button', { name: '새로 시작하기' }).tap()
   await page.getByRole('button', { name: '새로 출동' }).tap()
-  await expect(truck(page)).toHaveAttribute('data-node', maze.start)
-  expect(await saved(page)).toEqual(depart())
+  const newRun = depart(run)
+  await expect(truck(page)).toHaveAttribute('data-node', mazes.find(m => m.id === newRun.mazeId)!.start)
+  expect(await saved(page)).toEqual(newRun)
   expect(await page.evaluate(keys => Object.fromEntries(keys.map(key => [key, localStorage.getItem(key)])), Object.keys(protectedValues)))
     .toEqual(protectedValues)
   await page.getByRole('button', { name: '홈으로', exact: true }).tap()
@@ -327,7 +347,7 @@ test('interruption restores the unextinguished fire and game reset only writes i
 test('v1 progress is kept and prompts a fresh start on the revised map', async ({ page }) => {
   await page.goto('./')
   const legacyKey = key.replace(/r2$/, 'r1')
-  const legacy = { ...depart(), mazeVersion: 1 }
+  const legacy = { ...pilotDeparture(), mazeVersion: 1, rotation: { last: 'M05', remaining: [] } }
   await page.evaluate(({ legacyKey, legacy, key }) => {
     localStorage.setItem(legacyKey, JSON.stringify(legacy))
     localStorage.setItem(key, JSON.stringify(legacy))
@@ -337,7 +357,7 @@ test('v1 progress is kept and prompts a fresh start on the revised map', async (
   await expect(page.getByRole('button', { name: '이어하기' })).toHaveCount(0)
   await capture(page, '16-map-update')
   await go(page)
-  expect(await saved(page)).toEqual(depart())
+  expect(await saved(page)).toEqual(pilotDeparture())
   expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(JSON.stringify(legacy))
 })
 

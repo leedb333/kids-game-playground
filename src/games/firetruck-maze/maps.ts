@@ -1,14 +1,20 @@
+import { cityMaps } from './city-maps'
+
 export type Point = { x: number; y: number }
 type Grid = readonly [column: number, row: number]
 type Road = readonly [string, string]
-type Lot = Point & { width: number; height: number; style: number }
+export type BuildingKind = 'house' | 'shop' | 'tower' | 'school' | 'hospital'
+export type Lot = Point & { width: number; height: number; style: number; kind?: BuildingKind }
+export type Park = Lot & { feature?: 'garden' | 'playground' | 'field' | 'plaza' }
+export type Waterway = Point & { width: number; height: number; kind: 'river' | 'lake' | 'inlet'; bridges?: number[] }
+export type Difficulty = '하' | '중' | '상' | '최상'
 export type Fire = Lot & { id: string; stop: string }
 export type Maze = {
-  id: string; version: number; difficulty: number; theme: string
+  id: string; version: number; difficulty: Difficulty; theme: string
   width: number; height: number; roadWidth: number
   nodes: Record<string, Point>; roads: Road[]
   start: string; fires: Fire[]; station: Lot & { stop: string }
-  buildings: Lot[]; parks: Lot[]
+  buildings: Lot[]; parks: Park[]; water?: Waterway; ground?: string
 }
 
 const nodeId = (grid: Grid) => grid.join(',')
@@ -51,8 +57,8 @@ const fires = [
 ]
 const station = { ...lot(7.96, 5.98, 78, 51), stop: '7,6' }
 
-export const mazes: readonly Maze[] = [{
-  id: 'M05', version: 2, difficulty: 7, theme: '아파트 단지',
+const pilot: Maze = {
+  id: 'M05', version: 2, difficulty: '하', theme: '아파트 단지',
   width: 1060, height: 700, roadWidth: 46, ...makeNetwork(streets),
   start: '1,7', fires, station,
   buildings: [
@@ -74,4 +80,6 @@ export const mazes: readonly Maze[] = [{
     lot(9.1, 5.98, 61, 63), lot(3.2, 7.93, 52, 68),
     lot(4.87, 8.01, 65, 52), lot(11, 6.4, 44, 17),
   ],
-}]
+}
+
+export const mazes: readonly Maze[] = [...cityMaps, pilot].sort((a, b) => a.id.localeCompare(b.id))

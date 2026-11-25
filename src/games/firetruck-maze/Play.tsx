@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from 'react'
+import { useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type PointerEvent } from 'react'
 import { Building, City, Flame, Truck, Water, flamePoint } from './Art'
 import type { Point } from './maps'
 import { graphs, nextTarget, save, type Run } from './progress'
@@ -61,7 +61,7 @@ export function Play({ initial, home, again, audio }: {
     if (!board) { finishHeading.current?.focus(); return }
     const observer = new ResizeObserver(([entry]) => {
       const scale = entry.contentRect.width / maze.width
-      if (scale > 0) setRadius(Math.min(70, Math.max(28, 22 / scale)))
+      if (scale > 0) setRadius(Math.max(28, 22 / scale))
     })
     observer.observe(board)
     return () => observer.disconnect()
@@ -133,12 +133,20 @@ export function Play({ initial, home, again, audio }: {
     return matrix ? new DOMPoint(x, y).matrixTransform(matrix.inverse()) : null
   }
 
+  function nearStop(point: Point) {
+    const pose = live.current.pose
+    const here = position(graph, pose)
+    return adjacentStops(graph, pose).find(id => {
+      const d = distance(point, maze.nodes[id])
+      return d <= Math.min(radius, 34) && d < distance(point, here)
+    })
+  }
+
   function hold(event: PointerEvent<SVGSVGElement>) {
     if (!event.isPrimary || event.button !== 0) return
-    truckClick.current = (event.target as Element).closest('[data-truck]') !== null
-    if (!truckClick.current || drag.current || !canMove()) return
     const p = local(event.clientX, event.clientY)
-    if (!p) return
+    truckClick.current = (event.target as Element).closest('[data-truck]') !== null && !!p && !nearStop(p)
+    if (!p || !truckClick.current || drag.current || !canMove()) return
     const truck = position(graph, live.current.pose)
     drag.current = { id: event.pointerId, dx: truck.x - p.x, dy: truck.y - p.y }
     event.currentTarget.setPointerCapture(event.pointerId)
@@ -168,7 +176,7 @@ export function Play({ initial, home, again, audio }: {
     if (truckClick.current || drag.current || !canMove()) return
     const p = local(event.clientX, event.clientY)
     if (!p) return
-    const neighbor = adjacentStops(graph, live.current.pose).find(id => distance(p, maze.nodes[id]) <= Math.min(radius, 34))
+    const neighbor = nearStop(p)
     if (neighbor) step(neighbor)
   }
 
@@ -210,7 +218,7 @@ export function Play({ initial, home, again, audio }: {
   const radians = run.pose.heading * Math.PI / 180
   const nozzle = { x: at.x + 7 * Math.cos(radians), y: at.y + 7 * Math.sin(radians) }
 
-  return <div className="fire-maze-play">
+  return <div className="fire-maze-play" style={{ '--maze-aspect': maze.width / maze.height } as CSSProperties}>
     <header className="maze-dashboard"><strong role="status" aria-label="진압 수량">화재 진압 {run.extinguished.length} / {maze.fires.length}</strong></header>
     <div className="maze-workspace">
       <svg ref={svg} className="maze-board" viewBox={`0 0 ${maze.width} ${maze.height}`}

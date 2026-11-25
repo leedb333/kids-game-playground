@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import type { Maze, Point } from './maps'
+import type { Maze, Park, Point, Waterway } from './maps'
 
 // Centered around the truck, facing right. Can be replaced independently.
 export function Truck({ scale = 1 }: { scale?: number }) {
@@ -31,7 +31,7 @@ const palettes = [
 type Lot = Maze['buildings'][number]
 
 export function Building({ lot, station = false }: { lot: Lot; station?: boolean }) {
-  const { x, y, width: w, height: h, style } = lot
+  const { x, y, width: w, height: h, style, kind } = lot
   const [wall, edge, roof] = station ? ['#f56e72', '#ab3f5b', '#fff4db'] : palettes[style % palettes.length]
   const columns = w >= 65 ? 3 : 2
   return <g transform={`translate(${x - w / 2} ${y - h / 2})`}>
@@ -42,13 +42,70 @@ export function Building({ lot, station = false }: { lot: Lot; station?: boolean
       ? <><rect x={w / 2 - 19} y="23" width="38" height={h - 23} rx="3" fill="#733d54" />
         <path d={`M${w/2-12} 31h24m-24 6h24`} stroke="#f4a6a4" strokeWidth="2" />
         <text x={w / 2} y="14" textAnchor="middle" fill="#75374a" fontSize="13" fontWeight="800">소방서</text></>
-      : <g fill="#e6f6ff" stroke={edge} strokeWidth="1.2">
+      : kind === 'house' ? <>
+        <path d={`M1 22 ${w / 2} 4 ${w - 1} 22Z`} fill={edge} stroke={edge} strokeWidth="2" />
+        <rect x={w * .11} y={h * .55} width={w * .22} height={h * .23} rx="2" fill="#e6f6ff" />
+        <rect x={w * .66} y={h * .59} width={w * .19} height={h * .41} rx="2" fill={edge} />
+      </> : kind === 'shop' ? <>
+        <rect x={w * .1} y={h * .48} width={w * .8} height={h * .45} rx="2" fill="#e6f6ff" stroke={edge} />
+        <path d={`M4 ${h * .44}h${w-8}`} stroke={edge} strokeWidth="10" />
+        <path d={`M4 ${h * .44}h${w-8}`} stroke="#fff8de" strokeWidth="10" strokeDasharray="7 7" />
+      </> : kind === 'tower' ? <>
+        <rect x={w * .16} y="5" width={w * .68} height={h - 11} rx="3" fill="#536c9a" />
+        <path d={`M${w * .36} 8v${h-16}M${w * .63} 8v${h-16}`} stroke="#c1e6fa" strokeWidth="4" />
+        <path d={`M7 ${h * .7}h${w - 14}`} stroke={roof} strokeWidth="4" />
+      </> : kind === 'hospital' || kind === 'school' ? <>
+        <rect x="5" y="7" width={w - 10} height={h * .39} rx="4" fill="#fff4e7" />
+        {kind === 'hospital'
+          ? <path d={`M${w / 2 - 8} 17h16m-8-8v16`} stroke="#d9546b" strokeWidth="5" />
+          : <path d={`M${w / 2 - 9} 19h18l-9-9z`} fill="#9a77a1" />}
+        <rect x={w * .36} y={h * .6} width={w * .28} height={h * .4} rx="2" fill={edge} />
+      </> : <g fill="#e6f6ff" stroke={edge} strokeWidth="1.2">
         {Array.from({ length: columns }, (_, i) => <g key={i} transform={`translate(${9 + i * (w - 26) / (columns - 1)} 0)`}>
           <rect y="20" width="8" height="9" rx="2" /><rect y="32" width="8" height="8" rx="2" />
         </g>)}
         <path d={`M${w/2-5} ${h}v-7q5-6 10 0v7`} fill={edge} />
       </g>}
   </g>
+}
+
+function Landscaping({ lot }: { lot: Park }) {
+  const { x, y, width, height, feature } = lot
+  return <g transform={`translate(${x} ${y})`}>
+    <rect x={-width / 2} y={-height / 2} width={width} height={height} rx="12"
+      fill={feature === 'plaza' ? '#efdcb1' : '#a8d98a'} />
+    {feature === 'field' ? <>
+      <rect x={-width * .43} y={-height * .38} width={width * .86} height={height * .76}
+        rx="3" fill="#7dc795" stroke="#f8f4c5" strokeWidth="2" />
+      <path d={`M0 ${-height * .38}v${height * .76}`} stroke="#f8f4c5" />
+      <circle r={Math.min(width, height) * .17} fill="none" stroke="#f8f4c5" />
+    </> : feature === 'playground' ? <>
+      <path d="M-20 13-11-13 0 13m-11-26H6L17 13M0 13h16" fill="none"
+        stroke="#886baa" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="17" cy="-8" r="6" fill="#f7cf68" />
+    </> : feature === 'plaza' ? <>
+      <circle r={Math.min(width, height) * .3} fill="#82cde3" stroke="#f9f7e0" strokeWidth="3" />
+      <circle r="4" fill="#e4f7fb" />
+    </> : <>
+      <path d="M-19 11Q0-16 19 6" stroke="#f4e8b1" strokeWidth="6" fill="none" />
+      <Plant x={-15} y={-11} large /><Plant x={18} y={11} />
+      <circle cx="12" cy="-13" r="3" fill="#ffda71" /><circle cx="19" cy="-14" r="2.6" fill="#fff1b6" />
+    </>}
+  </g>
+}
+
+function Waterfront({ water }: { water: Waterway }) {
+  const { kind, x, y, width, height, bridges } = water
+  return <>
+    {kind === 'river' ? <rect x={x} y={y} width={width} height={height} fill="#85d4e9" /> :
+      <rect x={x} y={y} width={width} height={height} rx={Math.min(width, height) * .37}
+        fill="#85d4e9" stroke="#d8efb5" strokeWidth="9" />}
+    {[.2, .42, .64, .8].map((fraction, i) => <path key={fraction}
+      d={`M${x + width * (i % 2 ? .42 : .19)} ${y + height * fraction}q13-7 24 0t24 0`}
+      fill="none" stroke="#d6f3fc" strokeLinecap="round" strokeWidth="3" />)}
+    {bridges?.map(deck => <rect key={deck} x={x - 9} y={deck - 33} width={width + 18} height="66"
+      rx="5" fill="#ffe5a5" stroke="#b49882" strokeWidth="4" />)}
+  </>
 }
 
 export const City = memo(function City({ maze }: { maze: Maze }) {
@@ -58,14 +115,12 @@ export const City = memo(function City({ maze }: { maze: Maze }) {
   }).join('')
   const start = maze.nodes[maze.start]
   return <>
-    <rect width={maze.width} height={maze.height} fill="#c9e9aa" />
-    <path d="M-10 39Q190-15 372 48T750 22T1080 41M-10 669Q160 609 325 667T698 661T1080 666" stroke="#dff2bd" strokeWidth="39" fill="none" />
-    {maze.parks.map((lot, i) => <g key={i} transform={`translate(${lot.x} ${lot.y})`}>
-      <rect x={-lot.width / 2} y={-lot.height / 2} width={lot.width} height={lot.height} rx="12" fill="#a8d98a" />
-      <path d="M-19 11Q0-16 19 6" stroke="#f4e8b1" strokeWidth="6" fill="none" />
-      <Plant x={-15} y={-11} large /><Plant x={18} y={11} />
-      <circle cx="12" cy="-13" r="3" fill="#ffda71" /><circle cx="19" cy="-14" r="2.6" fill="#fff1b6" />
-    </g>)}
+    <rect width={maze.width} height={maze.height} fill={maze.ground ?? '#c9e9aa'} />
+    {maze.ground ? <path d={`M0 24Q${maze.width / 2} 2 ${maze.width} 27M0 ${maze.height - 25}q${maze.width / 2} -22 ${maze.width} 0`}
+      stroke="#ffffff42" strokeWidth="24" fill="none" /> :
+      <path d="M-10 39Q190-15 372 48T750 22T1080 41M-10 669Q160 609 325 667T698 661T1080 666" stroke="#dff2bd" strokeWidth="39" fill="none" />}
+    {maze.water && <Waterfront water={maze.water} />}
+    {maze.parks.map((lot, i) => <Landscaping key={i} lot={lot} />)}
     {maze.buildings.map((lot, i) => <Building key={i} lot={lot} />)}
     <g strokeLinecap="round" strokeLinejoin="round" fill="none">
       <path d={road} stroke="#f6edcb" strokeWidth={maze.roadWidth + 12} />

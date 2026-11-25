@@ -140,6 +140,12 @@ function reachable(graph: Graph, start: string, blocked?: string) {
   return visited
 }
 
+function pathTurns(maze: Maze, path: string[]) {
+  return path.slice(1, -1).filter((node, index) =>
+    bearing(maze.nodes[path[index]], maze.nodes[node]) !==
+    bearing(maze.nodes[node], maze.nodes[path[index + 2]])).length
+}
+
 export function validateMaze(maze: Maze) {
   const graph = connect(maze)
   const stops = [maze.start, ...maze.fires.map(f => f.stop), maze.station.stop]
@@ -175,16 +181,20 @@ export function validateMaze(maze: Maze) {
     .filter(entry => !onSolution.has(entry))
     .map(entry => {
       const nodes = [...reachable(graph, entry, from)]
-      return { from, entry, nodes, junctions: nodes.filter(node => graph.links.get(node)!.length >= 3),
-        deadEnds: nodes.filter(node => graph.links.get(node)!.length === 1) }
+      const deadEnds = nodes.filter(node => graph.links.get(node)!.length === 1)
+      const exits = deadEnds.map(leaf => shortest(graph, from, leaf))
+      return { from, entry, nodes, junctions: nodes.filter(node => graph.links.get(node)!.length >= 3), deadEnds,
+        depth: Math.max(...exits.map(route => route.path.length - 1)),
+        distance: Math.max(...exits.map(route => route.length)),
+        turns: Math.max(...exits.map(route => pathTurns(maze, route.path))) }
     }))
-  const turns = solution.path.slice(1, -1).filter((node, index) =>
-    bearing(maze.nodes[solution.path[index]], maze.nodes[node]) !==
-    bearing(maze.nodes[node], maze.nodes[solution.path[index + 2]])).length
 
   return {
-    solution, turns, branches,
-    routes: stops.slice(1).map((goal, index) => shortest(graph, stops[index], goal)),
+    solution, turns: pathTurns(maze, solution.path), branches,
+    routes: stops.slice(1).map((goal, index) => {
+      const route = shortest(graph, stops[index], goal)
+      return { ...route, turns: pathTurns(maze, route.path) }
+    }),
     deadEnds: [...graph.links.values()].filter(list => list.length === 1).length,
     junctions: [...graph.links.values()].filter(list => list.length >= 3).length,
   }

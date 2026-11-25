@@ -6,7 +6,7 @@ export const saveKey = 'game:firetruck-maze:r2'
 const previousSaveKey = 'game:firetruck-maze:r1'
 export const graphs = new Map(mazes.map(maze => [maze.id, connect(maze)]))
 
-type Rotation = { remaining: string[]; last: string }
+type Rotation = { remaining: string[]; last: string; catalog?: string[] }
 export type Run = {
   version: 1; mazeId: string; mazeVersion: number; rotation: Rotation
   pose: Pose; extinguished: string[]; target: string; trail: string[]; complete: boolean
@@ -14,20 +14,34 @@ export type Run = {
 export const nextTarget = (mazeId: string, extinguished: string[]) =>
   graphs.get(mazeId)!.maze.fires[extinguished.length]?.id ?? 'station'
 
+function hasCatalog(ids: readonly string[], rotation: Rotation) {
+  return Array.isArray(rotation.catalog) && rotation.catalog.length === ids.length &&
+    new Set(rotation.catalog).size === ids.length && ids.every(id => rotation.catalog!.includes(id))
+}
+
+function validQueue(ids: readonly string[], rotation: Rotation) {
+  return Array.isArray(rotation.remaining) && new Set(rotation.remaining).size === rotation.remaining.length &&
+    rotation.remaining.every(id => id !== rotation.last && ids.includes(id))
+}
+
 export function nextMaze(ids: readonly string[], rotation?: Rotation, random = Math.random): Rotation {
-  const queue = rotation?.remaining.length ? [...rotation.remaining] : [...ids]
-  if (!rotation?.remaining.length) {
+  // A pilot or damaged queue has only the current dispatch accounted for.
+  const active = rotation && hasCatalog(ids, rotation) && validQueue(ids, rotation)
+  const continuing = active && rotation.remaining.length > 0
+  const queue = continuing ? [...rotation.remaining] : ids.filter(id => !rotation || active || id !== rotation.last)
+  if (!queue.length) queue.push(...ids)
+  if (!continuing) {
     for (let i = queue.length - 1; i > 0; i--) {
       const j = Math.floor(random() * (i + 1))
       ;[queue[i], queue[j]] = [queue[j], queue[i]]
     }
     if (queue.length > 1 && queue[0] === rotation?.last) [queue[0], queue[1]] = [queue[1], queue[0]]
   }
-  return { last: queue.shift()!, remaining: queue }
+  return { last: queue.shift()!, remaining: queue, catalog: [...ids] }
 }
 
-export function depart(previous?: Run): Run {
-  const rotation = nextMaze([...graphs.keys()], previous?.rotation)
+export function depart(previous?: Run, random = Math.random): Run {
+  const rotation = nextMaze([...graphs.keys()], previous?.rotation, random)
   const maze = graphs.get(rotation.last)!.maze
   return { version: 1, mazeId: maze.id, mazeVersion: maze.version, rotation,
     pose: parked(maze.start), extinguished: [], target: maze.fires[0]?.id ?? 'station',
@@ -55,9 +69,9 @@ export function decode(raw: unknown): Run | null {
   const nextFire = maze.fires[extinguished.length]
   if (nextFire && trail.includes(nextFire.stop) && !atStop(pose, nextFire.stop)) return null
   if (complete !== (target === 'station' && atStop(pose, maze.station.stop))) return null
-  if (!rotation || rotation.last !== maze.id || !Array.isArray(rotation.remaining) ||
-      new Set(rotation.remaining).size !== rotation.remaining.length ||
-      rotation.remaining.some(id => id === maze.id || !graphs.has(id))) return null
+  // Preserve a valid dispatch even if its selection data was lost or damaged.
+  if (!rotation || rotation.last !== maze.id || !validQueue([...graphs.keys()], rotation))
+    return { ...run, rotation: { last: maze.id, remaining: [] } }
   return run
 }
 
