@@ -5,12 +5,14 @@ import { resolve, extname } from 'node:path'
 
 const builds = process.env.PLAYGROUND_UPGRADE_BUILDS
 const jigsawBaseline = process.env.PLAYGROUND_JIGSAW_BASELINE
-const cardCount = jigsawBaseline ? 3 : 5
+const preSpotBaseline = process.env.PLAYGROUND_PRE_SPOT_BASELINE
+const hasJigsaw = Boolean(preSpotBaseline || jigsawBaseline)
+const cardCount = preSpotBaseline ? 4 : jigsawBaseline ? 3 : 5
 const playground = '/kids-game-playground/'
 const coloring = '/kids-coloring-studio/'
 const cooking = '/kids-cooking-studio/'
 const contentTypes: Record<string, string> = {
-  '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
+  '.json': 'application/json; charset=utf-8', '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
   '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json',
 }
 
@@ -23,7 +25,7 @@ test('an installed playground upgrades offline without touching independent apps
     const prefix = [playground, coloring, cooking].find(prefix => path.startsWith(prefix))
     if (!prefix) { response.writeHead(404).end(); return }
     const relative = path.slice(prefix.length)
-    const root = prefix === playground ? upgraded ? resolve('dist') : resolve(jigsawBaseline || resolve(builds!, 'baseline')) :
+    const root = prefix === playground ? upgraded ? resolve('dist') : resolve(preSpotBaseline || jigsawBaseline || resolve(builds!, 'baseline')) :
       resolve(builds!, prefix.slice(1, -1))
     const file = resolve(root, relative.endsWith('/') || !relative ? relative + 'index.html' : relative)
     if (!file.startsWith(root + '/')) { response.writeHead(404).end(); return }
@@ -62,7 +64,7 @@ test('an installed playground upgrades offline without touching independent apps
       for (const [key, value] of Object.entries(data)) localStorage.setItem(key, value)
       await navigator.serviceWorker.ready
       return data
-    }, Boolean(jigsawBaseline))
+    }, hasJigsaw)
     await old.waitForFunction(() => navigator.serviceWorker.controller)
     await art.goto(origin + coloring)
     await food.goto(origin + cooking)
@@ -78,7 +80,7 @@ test('an installed playground upgrades offline without touching independent apps
     })
     const before = await cacheInventory()
     const oldCache = Object.keys(before).find(name => name.startsWith('kids-playground-' + origin + playground + '-'))!
-    expect(before[oldCache].some(url => url.includes(jigsawBaseline ? 'assets/puzzle' : 'cooking-v2'))).toBe(true)
+    expect(before[oldCache].some(url => url.includes(hasJigsaw ? 'assets/puzzle' : 'cooking-v2'))).toBe(true)
     for (const root of ['kids-coloring-studio:', 'kids-cooking-studio:'])
       expect(Object.keys(before).some(name => name.startsWith(root))).toBe(true)
 
@@ -91,20 +93,21 @@ test('an installed playground upgrades offline without touching independent apps
     await expect(old.locator('.card')).toHaveCount(cardCount)
     await old.getByRole('button', { name: '벽돌깨기', exact: true }).click()
     await expect(old.locator('.brick-game')).toBeVisible()
+    await old.goto('about:blank')
     await old.close()
 
     // Poll names without opening a cache that activation may just have deleted.
     await expect.poll(() => art.evaluate(() => caches.keys()), { timeout: 20_000 }).not.toContain(oldCache)
     const next = await context.newPage()
     await next.goto(origin + playground)
-    await expect(next.locator('.card')).toHaveCount(4)
+    await expect(next.locator('.card')).toHaveCount(5)
     for (const [title, selector] of [['벽돌깨기', '.brick-game'], ['반짝반짝 짝꿍 카드', '.memory-game']]) {
       await next.getByRole('button', { name: title, exact: true }).click()
       await expect(next.locator(selector)).toBeVisible()
-      await next.screenshot({ path: 'test-results/review/offline-' + selector.slice(1) + '.png', fullPage: true })
+      if (!preSpotBaseline) await next.screenshot({ path: 'test-results/review/offline-' + selector.slice(1) + '.png', fullPage: true })
       await next.getByRole('button', { name: '홈으로 이동' }).click()
     }
-    if (jigsawBaseline) {
+    if (hasJigsaw) {
       await next.getByRole('button', { name: '그림 퍼즐 맞추기', exact: true }).click()
       await next.getByRole('button', { name: /^4단계/ }).click()
       await next.getByRole('button', { name: '이어하기' }).click()
@@ -118,6 +121,10 @@ test('an installed playground upgrades offline without touching independent apps
     await next.getByRole('button', { name: '출동! 소방차 미로', exact: true }).click()
     await next.getByRole('button', { name: '출동하기' }).click()
     await expect(next.locator('.maze-board')).toBeVisible()
+    await next.getByRole('button', { name: '홈으로', exact: true }).click()
+    await next.getByRole('button', { name: '찾아라! 다른 그림', exact: true }).click()
+    await next.getByRole('button', { name: /동물 친구들의 놀이터/ }).click()
+    await expect(next.locator('.spot-workspace')).toHaveAttribute('aria-hidden', 'false')
     await next.getByRole('button', { name: '홈으로', exact: true }).click()
     await next.screenshot({ path: "test-results/review/home-after.png", fullPage: true })
     const after = await cacheInventory()

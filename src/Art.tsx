@@ -22,4 +22,14 @@ export function GameArt({id}:{id:GameId}) {return <svg viewBox="0 0 240 230" ari
   <circle cx="61" cy="168" r="14" fill="#526276"/><circle cx="173" cy="168" r="14" fill="#526276"/>
   <path d="M152 106h15" stroke="#5cbbeb" strokeWidth="7" strokeLinecap="round"/>
 </>}
+{id==='spot-the-difference'&&<>
+  <g stroke="#946b9c" strokeWidth="5">
+    <rect x="20" y="62" width="99" height="107" rx="12" fill="#fdf4d9" transform="rotate(-9 70 114)"/>
+    <rect x="107" y="58" width="99" height="107" rx="12" fill="#fff6d9" transform="rotate(8 155 112)"/>
+  </g>
+  <path d="M35 139l29-43 27 33 14-12 7 21zM119 140l25-41 27 33 17-14 12 27z" fill="#77c5a3"/>
+  <circle cx="88" cy="91" r="10" fill="#ffbd64"/><path d="M167 83l4 8 10 1-7 7 1 10-9-5-9 5 2-10-7-7 10-1z" fill="#e6a357"/>
+  <path d="m161 155 32 29" stroke="#6974a1" strokeWidth="13" strokeLinecap="round"/>
+  <circle cx="142" cy="138" r="26" fill="#a7e4f4" fillOpacity=".57" stroke="#6974a1" strokeWidth="8"/>
+</>}
 </g></svg>}
