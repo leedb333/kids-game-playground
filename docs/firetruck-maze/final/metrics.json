@@ -1,0 +1,330 @@
+[
+  {
+    "id": "M01",
+    "theme": "주택가",
+    "difficulty": "중",
+    "fires": 2,
+    "nodes": 87,
+    "roads": 86,
+    "length": 3034,
+    "turns": 23,
+    "legs": [
+      {
+        "length": 1036,
+        "turns": 9
+      },
+      {
+        "length": 1110,
+        "turns": 6
+      },
+      {
+        "length": 888,
+        "turns": 6
+      }
+    ],
+    "branches": 10,
+    "complex": 5,
+    "deadEnds": 16,
+    "depth": 10,
+    "wrongDistance": 740,
+    "roadGap": 28
+  },
+  {
+    "id": "M02",
+    "theme": "공원 도시",
+    "difficulty": "중",
+    "fires": 2,
+    "nodes": 90,
+    "roads": 89,
+    "length": 3256,
+    "turns": 25,
+    "legs": [
+      {
+        "length": 1110,
+        "turns": 10
+      },
+      {
+        "length": 814,
+        "turns": 8
+      },
+      {
+        "length": 1332,
+        "turns": 5
+      }
+    ],
+    "branches": 11,
+    "complex": 5,
+    "deadEnds": 16,
+    "depth": 14,
+    "wrongDistance": 1036,
+    "roadGap": 28
+  },
+  {
+    "id": "M03",
+    "theme": "강변 도시",
+    "difficulty": "상",
+    "fires": 2,
+    "nodes": 112,
+    "roads": 111,
+    "length": 3922,
+    "turns": 31,
+    "legs": [
+      {
+        "length": 2072,
+        "turns": 14
+      },
+      {
+        "length": 518,
+        "turns": 4
+      },
+      {
+        "length": 1332,
+        "turns": 12
+      }
+    ],
+    "branches": 13,
+    "complex": 6,
+    "deadEnds": 19,
+    "depth": 12,
+    "wrongDistance": 888,
+    "roadGap": 28
+  },
+  {
+    "id": "M04",
+    "theme": "상업 지구",
+    "difficulty": "중",
+    "fires": 2,
+    "nodes": 94,
+    "roads": 93,
+    "length": 3330,
+    "turns": 24,
+    "legs": [
+      {
+        "length": 1110,
+        "turns": 9
+      },
+      {
+        "length": 1110,
+        "turns": 8
+      },
+      {
+        "length": 1110,
+        "turns": 6
+      }
+    ],
+    "branches": 11,
+    "complex": 5,
+    "deadEnds": 16,
+    "depth": 11,
+    "wrongDistance": 814,
+    "roadGap": 28
+  },
+  {
+    "id": "M05",
+    "theme": "아파트 단지",
+    "difficulty": "하",
+    "fires": 3,
+    "nodes": 67,
+    "roads": 66,
+    "length": 3611,
+    "turns": 13,
+    "legs": [
+      {
+        "length": 1104,
+        "turns": 3
+      },
+      {
+        "length": 737,
+        "turns": 3
+      },
+      {
+        "length": 811,
+        "turns": 3
+      },
+      {
+        "length": 959,
+        "turns": 4
+      }
+    ],
+    "branches": 5,
+    "complex": 3,
+    "deadEnds": 8,
+    "depth": 4,
+    "wrongDistance": 294,
+    "roadGap": 27
+  },
+  {
+    "id": "M06",
+    "theme": "학교와 병원",
+    "difficulty": "상",
+    "fires": 3,
+    "nodes": 109,
+    "roads": 108,
+    "length": 3922,
+    "turns": 29,
+    "legs": [
+      {
+        "length": 666,
+        "turns": 6
+      },
+      {
+        "length": 1258,
+        "turns": 9
+      },
+      {
+        "length": 1036,
+        "turns": 9
+      },
+      {
+        "length": 962,
+        "turns": 5
+      }
+    ],
+    "branches": 13,
+    "complex": 7,
+    "deadEnds": 21,
+    "depth": 15,
+    "wrongDistance": 1110,
+    "roadGap": 28
+  },
+  {
+    "id": "M07",
+    "theme": "고층 빌딩 도시",
+    "difficulty": "상",
+    "fires": 3,
+    "nodes": 115,
+    "roads": 114,
+    "length": 4070,
+    "turns": 30,
+    "legs": [
+      {
+        "length": 1036,
+        "turns": 10
+      },
+      {
+        "length": 1258,
+        "turns": 6
+      },
+      {
+        "length": 740,
+        "turns": 8
+      },
+      {
+        "length": 1036,
+        "turns": 4
+      }
+    ],
+    "branches": 15,
+    "complex": 6,
+    "deadEnds": 21,
+    "depth": 15,
+    "wrongDistance": 1110,
+    "roadGap": 28
+  },
+  {
+    "id": "M08",
+    "theme": "호수 주변 도시",
+    "difficulty": "상",
+    "fires": 3,
+    "nodes": 120,
+    "roads": 119,
+    "length": 4292,
+    "turns": 33,
+    "legs": [
+      {
+        "length": 1036,
+        "turns": 7
+      },
+      {
+        "length": 1110,
+        "turns": 11
+      },
+      {
+        "length": 1110,
+        "turns": 9
+      },
+      {
+        "length": 1036,
+        "turns": 4
+      }
+    ],
+    "branches": 15,
+    "complex": 7,
+    "deadEnds": 23,
+    "depth": 9,
+    "wrongDistance": 666,
+    "roadGap": 28
+  },
+  {
+    "id": "M09",
+    "theme": "대형 도심",
+    "difficulty": "최상",
+    "fires": 3,
+    "nodes": 133,
+    "roads": 132,
+    "length": 4736,
+    "turns": 39,
+    "legs": [
+      {
+        "length": 1184,
+        "turns": 10
+      },
+      {
+        "length": 1184,
+        "turns": 11
+      },
+      {
+        "length": 1184,
+        "turns": 7
+      },
+      {
+        "length": 1184,
+        "turns": 10
+      }
+    ],
+    "branches": 17,
+    "complex": 8,
+    "deadEnds": 26,
+    "depth": 11,
+    "wrongDistance": 814,
+    "roadGap": 28
+  },
+  {
+    "id": "M10",
+    "theme": "복합 대도시",
+    "difficulty": "최상",
+    "fires": 4,
+    "nodes": 143,
+    "roads": 142,
+    "length": 4736,
+    "turns": 41,
+    "legs": [
+      {
+        "length": 1258,
+        "turns": 14
+      },
+      {
+        "length": 666,
+        "turns": 5
+      },
+      {
+        "length": 888,
+        "turns": 6
+      },
+      {
+        "length": 962,
+        "turns": 8
+      },
+      {
+        "length": 962,
+        "turns": 5
+      }
+    ],
+    "branches": 17,
+    "complex": 9,
+    "deadEnds": 27,
+    "depth": 15,
+    "wrongDistance": 1110,
+    "roadGap": 28
+  }
+]

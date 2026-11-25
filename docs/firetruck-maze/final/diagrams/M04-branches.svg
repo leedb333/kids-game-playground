@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1070 776" role="img" aria-label="M04 wrong turns and dead ends">
+  <rect width="1070" height="776" rx="16" fill="#f3f5e9"/>
+
+  <path fill="none" stroke="#c1cbd0" stroke-width="22" stroke-linecap="round" d="M54 58L54 132 M128 58L202 58 M128 58L128 132 M202 58L276 58 M276 58L350 58 M350 58L424 58 M350 58L350 132 M424 58L498 58 M424 58L424 132 M498 58L572 58 M572 58L646 58 M646 58L646 132 M720 58L794 58 M794 58L794 132 M868 58L942 58 M942 58L942 132 M54 132L128 132 M54 132L54 206 M128 132L202 132 M202 132L276 132 M276 132L276 206 M424 132L498 132 M424 132L424 206 M498 132L572 132 M498 132L498 206 M646 132L720 132 M720 132L794 132 M720 132L720 206 M868 132L942 132 M868 132L868 206 M54 206L54 280 M202 206L276 206 M202 206L202 280 M276 206L276 280 M350 206L350 280 M424 206L424 280 M572 206L572 280 M646 206L720 206 M646 206L646 280 M794 206L794 280 M868 206L868 280 M54 280L128 280 M276 280L276 354 M350 280L424 280 M350 280L350 354 M424 280L498 280 M498 280L572 280 M498 280L498 354 M572 280L572 354 M646 280L720 280 M720 280L794 280 M868 280L868 354 M128 354L202 354 M128 354L128 428 M202 354L276 354 M350 354L350 428 M424 354L498 354 M498 354L498 428 M572 354L646 354 M646 354L646 428 M720 354L794 354 M720 354L720 428 M794 354L868 354 M128 428L128 502 M350 428L424 428 M572 428L646 428 M572 428L572 502 M646 428L720 428 M128 502L202 502 M202 502L202 576 M350 502L350 576 M572 502L646 502 M646 502L720 502 M720 502L720 576 M1016 502L1016 576 M202 576L202 650 M276 576L350 576 M276 576L276 650 M572 576L646 576 M572 576L572 650 M646 576L720 576 M720 576L794 576 M794 576L868 576 M868 576L942 576 M1016 576L1016 650 M202 650L276 650 M498 650L572 650 M572 650L646 650 M646 650L720 650 M720 650L794 650 M794 650L868 650 M868 650L942 650 M942 650L1016 650"/>
+  <g font-family="sans-serif">
+    <path d="M202 206L202 280 M276 206L202 206" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(276 206)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(202 280)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M54 58L54 132 M54 132L54 206 M54 206L54 280 M54 280L128 280 M128 132L54 132" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(128 132)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(54 132)"><circle r="7" fill="#207487" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(54 58)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(128 280)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M350 58L350 132" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(350 58)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(350 132)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M498 58L572 58 M572 58L646 58 M646 58L646 132 M720 58L794 58 M794 58L794 132 M646 132L720 132 M720 132L794 132 M720 132L720 206 M646 206L720 206 M646 206L646 280 M794 206L794 280 M646 280L720 280 M720 280L794 280 M424 58L498 58" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(424 58)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(720 132)"><circle r="7" fill="#207487" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(720 58)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(794 206)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M498 132L572 132 M498 132L498 206 M424 132L498 132" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(424 132)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(498 132)"><circle r="7" fill="#207487" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(572 132)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(498 206)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M350 206L350 280 M350 280L350 354 M350 354L350 428 M350 428L424 428 M424 280L350 280" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(424 280)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(350 280)"><circle r="7" fill="#207487" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(350 206)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(424 428)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M424 354L498 354 M498 354L498 428 M498 280L498 354" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(498 280)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(498 354)"><circle r="7" fill="#207487" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(424 354)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(498 428)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M572 280L572 206" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(572 280)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(572 206)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M868 58L942 58 M942 58L942 132 M868 132L942 132 M868 132L868 206 M868 206L868 280 M868 280L868 354 M720 354L794 354 M720 354L720 428 M794 354L868 354 M646 428L720 428" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(646 428)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(868 58)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M794 576L868 576 M868 576L942 576 M720 576L794 576" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(720 576)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(942 576)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <path d="M572 650L498 650" fill="none" stroke="#985543" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(572 650)"><circle r="5" fill="#526985" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(498 650)"><circle r="7" fill="#a04045" stroke="#fff" stroke-width="2"/></g>
+    <g transform="translate(350 502)"><circle r="14" fill="#2b415b" stroke="#fff" stroke-width="2"/><text y="6" text-anchor="middle" fill="#fff" font-size="18" font-weight="700">S</text></g>
+    <g transform="translate(202 132)"><circle r="14" fill="#2b415b" stroke="#fff" stroke-width="2"/><text y="6" text-anchor="middle" fill="#fff" font-size="18" font-weight="700">1</text></g>
+    <g transform="translate(572 428)"><circle r="14" fill="#2b415b" stroke="#fff" stroke-width="2"/><text y="6" text-anchor="middle" fill="#fff" font-size="18" font-weight="700">2</text></g>
+    <g transform="translate(1016 502)"><circle r="14" fill="#2b415b" stroke="#fff" stroke-width="2"/><text y="6" text-anchor="middle" fill="#fff" font-size="18" font-weight="700">F</text></g>
+    <g font-size="16" fill="#2b415b"><text x="42" y="743">Blue · entrance</text><text x="240" y="743">Teal · inner junction</text><text x="465" y="743">Red · dead end</text></g>
+  </g>
+</svg>

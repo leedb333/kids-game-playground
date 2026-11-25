@@ -10,4 +10,16 @@ export function GameArt({id}:{id:GameId}) {return <svg viewBox="0 0 240 230" ari
   <path d="M46 122h23c-9 25 29 25 19 0h23v68H46z" fill="#b5e78f"/>
   <path d="M132 134h22c-9-25 30-25 21 0h25v66h-68z" fill="#ffc575" transform="rotate(-10 165 167)"/>
 </>}
+{id==='firetruck-maze'&&<>
+  <path d="M25 181h188" stroke="#8bc783" strokeWidth="14" strokeLinecap="round"/>
+  <rect x="30" y="63" width="43" height="73" rx="7" fill="#b9d8f5"/>
+  <rect x="169" y="56" width="39" height="81" rx="6" fill="#ddc5ee"/>
+  <path d="M44 79h15m-15 15h15m125-22h10m-10 15h10" stroke="#fff5d8" strokeWidth="7"/>
+  <rect x="34" y="108" width="126" height="60" rx="12" fill="#ed565f"/>
+  <path d="M142 118h35l23 22v28h-58z" fill="#ff7477"/>
+  <path d="M156 124h19l13 15h-32z" fill="#b7ecff"/>
+  <path d="M47 124h76m-76 20h76m-70-20v20m21-20v20m21-20v20m21-20v20" stroke="#fff0c1" strokeWidth="5"/>
+  <circle cx="61" cy="168" r="14" fill="#526276"/><circle cx="173" cy="168" r="14" fill="#526276"/>
+  <path d="M152 106h15" stroke="#5cbbeb" strokeWidth="7" strokeLinecap="round"/>
+</>}
 </g></svg>}
