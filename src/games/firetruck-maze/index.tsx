@@ -7,7 +7,7 @@ import { Play } from './Play'
 import './maze.css'
 
 export default function FiretruckMaze() {
-  const [saved] = useState(load)
+  const [{ run: saved, reportMapUpdate }] = useState(load)
   const [session, setSession] = useState<{ run: Run; attempt: number } | null>(null)
   const confirm = useRef<HTMLDialogElement>(null)
   const home = useContext(GameHomeContext)
@@ -25,6 +25,7 @@ export default function FiretruckMaze() {
         <div>
           <h2>출동! 소방차 미로</h2>
           <p>불을 끄고 소방서로 돌아와요!</p>
+          {reportMapUpdate && <p className="maze-update-note">새 도로가 열렸어요! 새 미로에서는 출발점부터 시작해요.</p>}
           <div className="maze-start-actions">
             {saved ? <>
               <button className="maze-primary" onClick={() => setSession({ run: saved, attempt: 1 })}>이어하기</button>

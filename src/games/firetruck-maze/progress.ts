@@ -1,8 +1,9 @@
 import { read, write } from '../../storage'
 import { mazes } from './maps'
-import { connect, distance, parked, type Pose } from './roads'
+import { atStop, connect, distance, parked, type Pose } from './roads'
 
-export const saveKey = 'game:firetruck-maze:r1'
+export const saveKey = 'game:firetruck-maze:r2'
+const previousSaveKey = 'game:firetruck-maze:r1'
 export const graphs = new Map(mazes.map(maze => [maze.id, connect(maze)]))
 
 type Rotation = { remaining: string[]; last: string }
@@ -51,12 +52,20 @@ export function decode(raw: unknown): Run | null {
   if (!Array.isArray(extinguished) || extinguished.length > maze.fires.length ||
       extinguished.some((id, i) => id !== maze.fires[i].id) ||
       target !== nextTarget(maze.id, extinguished)) return null
-  if (complete !== (target === 'station' && pose.from === maze.station.stop && pose.to === null)) return null
+  const nextFire = maze.fires[extinguished.length]
+  if (nextFire && trail.includes(nextFire.stop) && !atStop(pose, nextFire.stop)) return null
+  if (complete !== (target === 'station' && atStop(pose, maze.station.stop))) return null
   if (!rotation || rotation.last !== maze.id || !Array.isArray(rotation.remaining) ||
       new Set(rotation.remaining).size !== rotation.remaining.length ||
       rotation.remaining.some(id => id === maze.id || !graphs.has(id))) return null
   return run
 }
 
-export const load = () => decode(read<unknown>(saveKey, null))
+export function load() {
+  const raw = read<Run | null>(saveKey, null)
+  const run = decode(raw)
+  const previous = raw ?? read<Run | null>(previousSaveKey, null)
+  const maze = previous ? graphs.get(previous.mazeId)?.maze : undefined
+  return { run, reportMapUpdate: !run && !!maze && previous?.mazeVersion !== maze.version }
+}
 export const save = (run: Run) => write(saveKey, run)

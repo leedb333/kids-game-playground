@@ -16,6 +16,8 @@ export function connect(maze: Maze) {
   return { maze, links }
 }
 
+export const atStop = (pose: Pose, node: string) => pose.from === node && pose.to === null
+
 export const parked = (from: string, heading = 0): Pose => ({ from, to: null, offset: 0, heading })
 
 export function position(graph: Graph, pose: Pose): Point {
@@ -127,16 +129,25 @@ export function hintRoute(graph: Graph, pose: Pose, goal: string): Point[] {
   return result
 }
 
+function reachable(graph: Graph, start: string, blocked?: string) {
+  const visited = new Set([start])
+  // Set iteration also visits entries added while walking the graph.
+  for (const node of visited) {
+    for (const neighbor of graph.links.get(node)!) {
+      if (neighbor !== blocked) visited.add(neighbor)
+    }
+  }
+  return visited
+}
+
 export function validateMaze(maze: Maze) {
   const graph = connect(maze)
   const stops = [maze.start, ...maze.fires.map(f => f.stop), maze.station.stop]
   if (new Set(stops).size !== stops.length || stops.some(id => !graph.links.has(id) || !graph.links.get(id)!.length))
     throw Error('Invalid or repeated maze destinations')
   if (new Set(maze.fires.map(f => f.id)).size !== maze.fires.length) throw Error('Duplicate building')
-  const routes = stops.slice(1).map((goal, index) => shortest(graph, stops[index], goal))
-  if (routes.some(route => !route.path.length) ||
-      [...graph.links].some(([id]) => !shortest(graph, maze.start, id).path.length))
-    throw Error('Unreachable road or destination')
+  if (reachable(graph, maze.start).size !== graph.links.size) throw Error('Unreachable road')
+  if (maze.roads.length !== graph.links.size - 1) throw Error('The road network must be a tree')
   for (const [i, [a, b]] of maze.roads.entries()) {
     const [p, q] = [maze.nodes[a], maze.nodes[b]]
     for (const [c, d] of maze.roads.slice(i + 1)) {
@@ -148,6 +159,33 @@ export function validateMaze(maze: Maze) {
         throw Error('Visually connected roads must share a single node')
     }
   }
-  return { routes, deadEnds: [...graph.links.values()].filter(list => list.length === 1).length,
-    junctions: [...graph.links.values()].filter(list => list.length >= 3).length }
+
+  const solution = shortest(graph, maze.start, maze.station.stop)
+  const onSolution = new Set(solution.path)
+  const orderedStops = solution.path.filter(node => stops.includes(node))
+  if (orderedStops.length !== stops.length || orderedStops.some((node, i) => node !== stops[i]))
+    throw Error('Fire stops must be on the unique solution in order')
+  for (let i = 1; i < stops.length - 1; i++) {
+    const before = reachable(graph, stops[i - 1], stops[i])
+    if (stops.slice(i + 1).some(stop => before.has(stop)))
+      throw Error('A fire stop can be bypassed')
+  }
+
+  const branches = solution.path.flatMap(from => graph.links.get(from)!
+    .filter(entry => !onSolution.has(entry))
+    .map(entry => {
+      const nodes = [...reachable(graph, entry, from)]
+      return { from, entry, nodes, junctions: nodes.filter(node => graph.links.get(node)!.length >= 3),
+        deadEnds: nodes.filter(node => graph.links.get(node)!.length === 1) }
+    }))
+  const turns = solution.path.slice(1, -1).filter((node, index) =>
+    bearing(maze.nodes[solution.path[index]], maze.nodes[node]) !==
+    bearing(maze.nodes[node], maze.nodes[solution.path[index + 2]])).length
+
+  return {
+    solution, turns, branches,
+    routes: stops.slice(1).map((goal, index) => shortest(graph, stops[index], goal)),
+    deadEnds: [...graph.links.values()].filter(list => list.length === 1).length,
+    junctions: [...graph.links.values()].filter(list => list.length >= 3).length,
+  }
 }

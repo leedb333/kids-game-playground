@@ -40,13 +40,40 @@ async function tapRoute(page: Page, from: string, goal: string) {
 }
 
 test('M05 road geometry, ordered routes and clipped hint are valid', () => {
-  expect(mazes.map(m => [m.id, m.version, m.difficulty, m.theme])).toEqual([['M05', 1, 7, '아파트 단지']])
+  expect(mazes.map(m => [m.id, m.version, m.difficulty, m.theme])).toEqual([['M05', 2, 7, '아파트 단지']])
   const review = validateMaze(maze)
-  expect([review.deadEnds, review.junctions]).toEqual([6, 21])
-  expect(review.routes.map(route => route.length)).toEqual([1104, 956, 812, 736])
-  expect(Object.keys(maze.nodes)).toHaveLength(66)
-  expect(maze.roads).toHaveLength(74)
-  expect(() => validateMaze({ ...maze, roads: [...maze.roads, ['1,1', '3,1']] })).toThrow()
+  expect([review.deadEnds, review.junctions, review.turns]).toEqual([10, 8, 13])
+  expect(review.routes.map(route => route.length)).toEqual([1104, 737, 811, 959])
+  expect(Object.keys(maze.nodes)).toHaveLength(67)
+  expect(maze.roads).toHaveLength(66)
+  expect(review.solution.length).toBe(3611)
+  expect(review.solution.path).toHaveLength(50)
+  expect(review.branches).toHaveLength(5)
+  expect(review.branches.filter(branch => branch.junctions.length > 0)).toHaveLength(3)
+  expect(review.branches.flatMap(branch => branch.deadEnds)).toHaveLength(8)
+  expect(() => validateMaze({ ...maze, roads: [...maze.roads, ['3,3', '3,4']] })).toThrow('must be a tree')
+  expect(() => validateMaze({ ...maze, roads: [...maze.roads, maze.roads[0]] })).toThrow('Invalid road')
+  expect(() => validateMaze({ ...maze, roads: [...maze.roads, [maze.start, maze.start]] })).toThrow('Invalid road')
+  expect(() => validateMaze({ ...maze, roads: maze.roads.slice(0, -1) })).toThrow('Unreachable road')
+  expect(() => validateMaze({ ...maze, nodes: { ...maze.nodes, '0,6': maze.nodes['3,6'] } })).toThrow('Visually connected')
+  expect(() => validateMaze({ ...maze, fires: [maze.fires[1], maze.fires[0], maze.fires[2]] })).toThrow('in order')
+  expect(() => validateMaze({ ...maze, fires: [{ ...maze.fires[0], stop: '3,4' }, ...maze.fires.slice(1)] })).toThrow('in order')
+
+  const terminals = [maze.start, ...maze.fires.map(fire => fire.stop), maze.station.stop]
+  expect(review.solution.path.filter(id => terminals.includes(id))).toEqual(terminals)
+  for (let i = 1; i < terminals.length - 1; i++) {
+    const blocked = terminals[i]
+    const cut = connect({ ...maze, roads: maze.roads.filter(edge => !edge.includes(blocked)) })
+    for (const subsequent of terminals.slice(i + 1))
+      expect(shortest(cut, terminals[i - 1], subsequent).path).toEqual([])
+  }
+  for (const branch of review.branches) {
+    for (const leaf of branch.deadEnds) {
+      const path = shortest(graph, leaf, maze.fires[0].stop).path
+      expect(hintRoute(graph, parked(leaf), maze.fires[0].stop)[1]).toEqual(maze.nodes[path[1]])
+      expect(shortest(graph, leaf, maze.station.stop).path).toContain(branch.from)
+    }
+  }
   for (const { path } of review.routes) {
     const hint = hintRoute(graph, parked(path[0]), path.at(-1)!)
     expect(hint).toEqual(path.slice(0, hint.length).map(id => maze.nodes[id]))
@@ -70,13 +97,16 @@ test('M05 road geometry, ordered routes and clipped hint are valid', () => {
       const x = Math.max(Math.min(p.x, q.x) - lot.x, lot.x - Math.max(p.x, q.x), 0)
       const y = Math.max(Math.min(p.y, q.y) - lot.y, lot.y - Math.max(p.y, q.y), 0)
       expect(distance({ x: Math.max(0, x - lot.width / 2), y: Math.max(0, y - lot.height / 2) }, { x: 0, y: 0 }))
-        .toBeGreaterThanOrEqual(maze.roadWidth / 2)
+        .toBeGreaterThanOrEqual(maze.roadWidth / 2 + 6)
     }
   }
 })
 
 test('versioned saves validate partial travel, ordered targets, completion and rotation', () => {
   const first = depart()
+  const pastFirst = shortest(graph, maze.start, maze.fires[1].stop).path
+  expect(decode({ ...first, pose: parked(pastFirst.at(-1)!), trail: pastFirst })).toBeNull()
+  expect(decode({ ...first, mazeVersion: 1 })).toBeNull()
   const partial = { ...first, pose: { from: '1,7', to: '1,6', offset: 30, heading: 270 } }
   expect(decode(partial)).toEqual(partial)
   for (const invalid of [null, 1, {}, { ...first, mazeVersion: 0 }, { ...first, mazeId: 'M10' },
@@ -155,22 +185,35 @@ test('full dispatch uses ordered objectives, timed spray, hints, completion and 
   await expect(water(page)).toBeDisabled()
   await capture(page, '04-board')
   const [first, second, third] = maze.fires
-  await tapRoute(page, maze.start, second.stop)
-  await expect(page.getByText('먼저 1번 건물로 가요!')).toBeVisible()
+  const wrongTurn = '3,4'
+  await tapRoute(page, maze.start, wrongTurn)
   await expect(water(page)).toBeDisabled()
   await capture(page, '05-trail')
   await page.getByRole('button', { name: '힌트' }).tap()
-  await expect(page.locator('[data-hint]')).toHaveCount(1)
+  const hint = page.locator('[data-hint]')
+  const [from, back] = hintRoute(graph, parked(wrongTurn), first.stop)
+  await expect(hint).toHaveAttribute('points', new RegExp(`^${from.x},${from.y} ${back.x},${back.y}( |$)`))
   await capture(page, '06-hint')
-  await expect(page.locator('[data-hint]')).toHaveCount(0, { timeout: 6500 })
+  await expect(hint).toHaveCount(0, { timeout: 6500 })
   await page.getByRole('button', { name: '힌트' }).tap()
-  await tapRoute(page, second.stop, maze.station.stop)
-  await expect(page.locator('[data-hint]')).toHaveCount(0)
-  await expect(page.getByText('아직 불이 난 건물이 있어요!')).toBeVisible()
-  await tapRoute(page, maze.station.stop, first.stop)
+  const beforeFirst = shortest(graph, maze.start, first.stop).path.at(-2)!
+  await tapRoute(page, wrongTurn, beforeFirst)
+  await expect(hint).toHaveCount(0)
+  const before = await screen(page, beforeFirst)
+  const beyond = await screen(page, '11,1')
+  await page.mouse.move(before.x, before.y)
+  await page.mouse.down()
+  await page.mouse.move(beyond.x, beyond.y)
+  await expect(truck(page)).toHaveAttribute('data-node', first.stop)
+  expect((await saved(page)).pose.from).toBe(first.stop)
+  await page.mouse.move(beyond.x + 60, beyond.y)
+  await expect(truck(page)).toHaveAttribute('data-node', first.stop)
+  await board(page).focus()
+  await page.keyboard.press('ArrowRight')
+  await expect(truck(page)).toHaveAttribute('data-node', first.stop)
   await expect(water(page)).toBeEnabled()
   await capture(page, '07-ready')
-  await water(page).tap()
+  await water(page).evaluate((button: HTMLButtonElement) => button.click())
   await expect(water(page)).toBeDisabled()
   const jet = page.locator('.maze-water path').first()
   await expect(jet).toBeVisible()
@@ -189,6 +232,9 @@ test('full dispatch uses ordered objectives, timed spray, hints, completion and 
   await expect(page.locator('[data-building="1"] .maze-flame')).toHaveCount(0)
   await expect(page.locator('.maze-water')).toHaveCount(0)
   await expect(page.locator('[data-target="2"]')).toHaveCount(1)
+  await page.mouse.move(beyond.x, beyond.y)
+  await expect(truck(page)).toHaveAttribute('data-node', first.stop)
+  await page.mouse.up()
   await expect(page.locator('[data-building="1"] .maze-clear-check')).toHaveCSS('opacity', '1')
   await capture(page, '09-clear')
   await page.getByRole('button', { name: '홈으로', exact: true }).tap()
@@ -200,6 +246,8 @@ test('full dispatch uses ordered objectives, timed spray, hints, completion and 
   await expect(page.locator('[data-fire="false"]')).toHaveCount(1)
   for (const [index, from, to] of [[2, first.stop, second.stop], [3, second.stop, third.stop]] as const) {
     await tapRoute(page, from, to)
+    await expect(water(page)).toBeEnabled()
+    await capture(page, String(index + 12) + '-fire-' + index)
     await water(page).tap()
     await expect(page.getByRole('status', { name: '진압 수량' })).toHaveText('화재 진압 ' + index + ' / 3')
   }
@@ -256,6 +304,11 @@ test('interruption restores the unextinguished fire and game reset only writes i
   await expect(page.locator('[data-fire="true"]')).toHaveCount(3)
   await expect(water(page)).toBeEnabled()
   expect(await saved(page)).toEqual(run)
+  const next = await screen(page, '11,1')
+  await page.touchscreen.tap(next.x, next.y)
+  await board(page).focus()
+  await page.keyboard.press('ArrowRight')
+  await expect(truck(page)).toHaveAttribute('data-node', first)
   await page.getByRole('button', { name: '홈으로', exact: true }).tap()
   await intro(page)
   await page.getByRole('button', { name: '새로 시작하기' }).tap()
@@ -269,6 +322,23 @@ test('interruption restores the unextinguished fire and game reset only writes i
   await page.reload()
   await intro(page)
   await expect(page.getByRole('button', { name: '출동하기' })).toBeVisible()
+})
+
+test('v1 progress is kept and prompts a fresh start on the revised map', async ({ page }) => {
+  await page.goto('./')
+  const legacyKey = key.replace(/r2$/, 'r1')
+  const legacy = { ...depart(), mazeVersion: 1 }
+  await page.evaluate(({ legacyKey, legacy, key }) => {
+    localStorage.setItem(legacyKey, JSON.stringify(legacy))
+    localStorage.setItem(key, JSON.stringify(legacy))
+  }, { legacyKey, legacy, key })
+  await intro(page)
+  await expect(page.getByText(/새 도로가 열렸어요!/)).toBeVisible()
+  await expect(page.getByRole('button', { name: '이어하기' })).toHaveCount(0)
+  await capture(page, '16-map-update')
+  await go(page)
+  expect(await saved(page)).toEqual(depart())
+  expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(JSON.stringify(legacy))
 })
 
 test('rotation keeps the board proportional and controls visible at all requested sizes', async ({ page }) => {

@@ -60,6 +60,7 @@
 }
 .maze-welcome h2, .maze-finished h2 { margin: 0; font-size: clamp(24px, 3.8vw, 48px); letter-spacing: -.05em; }
 .maze-welcome p { margin: 8px 0; font-size: clamp(16px, 2vw, 24px); }
+.maze-welcome .maze-update-note { font-size: 1rem; }
 .maze-welcome > svg { width: 100%; display: block; }
 .fire-maze dialog { color: #253d57; border-radius: 18px; border: 2px solid #a1b3d1; max-width: calc(100% - 22px); }
 .fire-maze dialog button { margin: 3px; }

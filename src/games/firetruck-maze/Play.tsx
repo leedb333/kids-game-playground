@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent
 import { Building, City, Flame, Truck, Water, flamePoint } from './Art'
 import type { Point } from './maps'
 import { graphs, nextTarget, save, type Run } from './progress'
-import { adjacentStops, distance, hintRoute, position, remember, stepTo, travel, type Pose } from './roads'
+import { adjacentStops, atStop, distance, hintRoute, position, remember, stepTo, travel, type Pose } from './roads'
 import type { useMazeAudio } from './audio'
 
 const sprayDuration = 2350
@@ -36,9 +36,7 @@ export function Play({ initial, home, again, audio }: {
   const at = position(graph, run.pose)
   const active = maze.fires.find(fire => fire.id === run.target)
   const goal = active?.stop ?? maze.station.stop
-  const ready = run.pose.from === goal && run.pose.to === null
-  const premature = !run.complete && run.target !== 'station' && run.pose.from === maze.station.stop && !run.pose.to
-  const other = maze.fires.find(fire => fire.stop === run.pose.from && !run.pose.to && !run.extinguished.includes(fire.id))
+  const ready = !!active && atStop(run.pose, goal)
   const trail = run.trail.map(id => maze.nodes[id])
   if (run.pose.to) trail.push(at)
 
@@ -77,18 +75,32 @@ export function Play({ initial, home, again, audio }: {
     if (hint.length) setHint([])
   }
 
+  function canMove() {
+    const current = live.current
+    const fire = maze.fires[current.extinguished.length]
+    return !lock.current && !current.complete && !(fire && atStop(current.pose, fire.stop))
+  }
+
+  function endDrag() {
+    const held = drag.current
+    drag.current = null
+    if (held && svg.current?.hasPointerCapture(held.id)) svg.current.releasePointerCapture(held.id)
+  }
+
   function move(pose: Pose, visited: string[], saveNow = false) {
     const current = live.current
-    if (lock.current || current.complete) return
+    if (!canMove()) return
     const before = current.pose
     if (pose.from === before.from && pose.to === before.to && pose.offset === before.offset) return
     clearHint()
-    const reached = pose.from === goal && !pose.to
+    const reached = atStop(pose, goal)
     const complete = current.target === 'station' && reached
     update({ ...current, pose, trail: remember(current.trail, visited), complete })
-    if (complete) audio.play('complete')
-    else if (reached && (before.from !== goal || before.to)) audio.play('arrived')
-    if (saveNow || complete) persist()
+    if (reached) {
+      endDrag()
+      audio.play(complete ? 'complete' : 'arrived')
+    }
+    if (saveNow || reached) persist()
   }
 
   function showHint() {
@@ -100,9 +112,9 @@ export function Play({ initial, home, again, audio }: {
   function extinguish() {
     const current = live.current
     const fire = maze.fires.find(f => f.id === current.target)
-    if (lock.current || !fire || current.pose.from !== fire.stop || current.pose.to) return
+    if (lock.current || !fire || !atStop(current.pose, fire.stop)) return
     lock.current = true
-    drag.current = null
+    endDrag()
     clearHint()
     setSpray(fire.id)
     audio.play('spray')
@@ -124,7 +136,7 @@ export function Play({ initial, home, again, audio }: {
   function hold(event: PointerEvent<SVGSVGElement>) {
     if (!event.isPrimary || event.button !== 0) return
     truckClick.current = (event.target as Element).closest('[data-truck]') !== null
-    if (!truckClick.current || lock.current || drag.current) return
+    if (!truckClick.current || drag.current || !canMove()) return
     const p = local(event.clientX, event.clientY)
     if (!p) return
     const truck = position(graph, live.current.pose)
@@ -134,7 +146,7 @@ export function Play({ initial, home, again, audio }: {
 
   function pull(event: PointerEvent<SVGSVGElement>) {
     const held = drag.current
-    if (!held || held.id !== event.pointerId || lock.current) return
+    if (!held || held.id !== event.pointerId || !canMove()) return
     const p = local(event.clientX, event.clientY)
     if (!p) return
     const result = travel(graph, live.current.pose, { x: p.x + held.dx, y: p.y + held.dy }, goal)
@@ -153,7 +165,7 @@ export function Play({ initial, home, again, audio }: {
   }
 
   function tapRoad(event: MouseEvent<SVGSVGElement>) {
-    if (truckClick.current || drag.current || lock.current) return
+    if (truckClick.current || drag.current || !canMove()) return
     const p = local(event.clientX, event.clientY)
     if (!p) return
     const neighbor = adjacentStops(graph, live.current.pose).find(id => distance(p, maze.nodes[id]) <= Math.min(radius, 34))
@@ -164,7 +176,7 @@ export function Play({ initial, home, again, audio }: {
     const vector = vectors[event.key]
     if (!vector) return
     event.preventDefault()
-    if (lock.current || drag.current) return
+    if (drag.current || !canMove()) return
     const truck = position(graph, live.current.pose)
     const neighbor = adjacentStops(graph, live.current.pose).find(id => {
       const node = maze.nodes[id]
@@ -249,9 +261,8 @@ export function Play({ initial, home, again, audio }: {
     </div>
     <p className="maze-message" role="status">
       {!stored ? '이 기기에 진행을 저장할 수 없어요.' :
-        premature ? '아직 불이 난 건물이 있어요!' :
-        other && active && other.id !== active.id ? `먼저 ${active.id}번 건물로 가요!` :
-        spray ? '물을 뿌리고 있어요!' : ''}
+        spray ? '물을 뿌리고 있어요!' :
+        ready ? '불끄기 버튼을 눌러요!' : ''}
     </p>
   </div>
 }
