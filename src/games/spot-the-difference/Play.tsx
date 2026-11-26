@@ -14,9 +14,10 @@ function clampCenter(value: number, scale: number) {
   return Math.max(.5 / scale, Math.min(1 - .5 / scale, value))
 }
 
-export function Play({ picture, data, urls, restart, home, gallery, onProgress }: {
+export function Play({ picture, data, urls, restart, home, gallery, onProgress, onReady, onRetry }: {
   picture: Picture; data: Data; urls: Record<Side, string>; restart: boolean
   home: () => void; gallery: () => void; onProgress: (progress: Progress) => void
+  onReady?: () => Promise<void>; onRetry?: () => void
 }) {
   const [entry] = useState(() => progress(picture, data.answers))
   const [state, setState] = useState(() => restart ? { ...entry, found: [] } : entry)
@@ -59,7 +60,8 @@ export function Play({ picture, data, urls, restart, home, gallery, onProgress }
     started.current = true
     if (restart) setStorageError(!save(live.current))
     onProgress(live.current)
-  }, [ready, restart, onProgress])
+    void onReady?.()
+  }, [ready, restart, onProgress, onReady])
 
   useEffect(() => {
     if (!ready || !done) return
@@ -181,7 +183,7 @@ export function Play({ picture, data, urls, restart, home, gallery, onProgress }
     </header>
     {!ready && <div className="spot-loading">
       <p role={imageError ? 'alert' : 'status'}>{imageError ? '그림을 열지 못했어요.' : '두 그림을 준비하고 있어요…'}</p>
-      {imageError && <button onClick={() => { setLoaded({}); setImageError(false); setAttempt(value => value + 1) }}>다시 불러오기</button>}
+      {imageError && <button onClick={onRetry ?? (() => { setLoaded({}); setImageError(false); setAttempt(value => value + 1) })}>다시 불러오기</button>}
       <button onClick={gallery}>그림 선택</button>
     </div>}
     <div className={`spot-workspace${ready ? '' : ' spot-awaiting'}`} aria-hidden={!ready} inert={!ready}>

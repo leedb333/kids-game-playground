@@ -1,10 +1,11 @@
 import { createHash } from 'node:crypto'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { expect, test, type Page } from '@playwright/test'
-import { pictureFiles, pictures } from '../src/games/spot-the-difference/catalog'
+import { pictureFiles, pictures, type Picture } from '../src/games/spot-the-difference/catalog'
+import { pictureCacheName } from '../src/games/spot-the-difference/picture-loader'
 import { answerAt, contains, display, parseData, regionBounds, touch, type Point, type Region, type Side } from '../src/games/spot-the-difference/model'
 
-const picture = pictures[0]
+const picture = pictures.find(picture => picture.id === 'D01')!
 const paths = pictureFiles(picture.id)
 const raw = JSON.parse(readFileSync('public/' + paths.data, 'utf8'))
 const data = parseData(raw, picture)
@@ -101,9 +102,11 @@ test('gallery requests thumbnail only, gates input on both decodes, and safely r
     page.on('request', request => { if (request.url().includes('/assets/spot-the-difference/')) requests.push(request.url()) })
     await page.goto('./')
     await gallery(page)
-    await expect.poll(() => page.locator('.spot-card img').evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(384)
-    expect(requests.map(url => url.split('/').at(-1))).toEqual(['D01-thumbnail.webp'])
-    await expect(page.locator('.spot-pending[aria-disabled=true]')).toHaveCount(9)
+    await expect.poll(() => page.locator('.spot-card img[src$="D01-thumbnail.webp"]').evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(384)
+    await expect.poll(() => requests.map(url => url.split('/').at(-1)).sort()).toEqual(
+      pictures.map(picture => picture.id + '-thumbnail.webp').sort(),
+    )
+    await expect(page.locator('.spot-card-main')).toHaveCount(10)
     await page.route('**/D01-modified.webp', route => route.abort())
     await page.getByRole('button', { name: /동물 친구들의 놀이터/ }).tap()
     await expect(page.getByRole('alert')).toHaveText('그림을 열지 못했어요.')
@@ -293,7 +296,7 @@ test('all four D01 assets precached and newly controlled session plays offline',
   await context.setOffline(true)
   await page.reload()
   await gallery(page)
-  await expect.poll(() => page.locator('.spot-card img').evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(384)
+  await expect.poll(() => page.locator('.spot-card img[src$="D01-thumbnail.webp"]').evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(384)
   await start(page)
   await tap(page, 'modified', midpoint(touch(data.answers[6], 'modified')))
   await expect(score(page)).toHaveText('1 / 7개 찾았어요!')
@@ -398,4 +401,292 @@ test('native touch pans both zoomed pictures and can scroll the page at 1×', as
   expect(original).toBe(modified)
   await expect(score(page)).toHaveText('0 / 7개 찾았어요!')
   await expect(page.locator('.spot-miss')).toHaveCount(0)
+})
+
+const finalEvidence = 'test-results/spot-v2'
+const contents = pictures.map(entry => ({ entry, data: parseData(
+  JSON.parse(readFileSync('public/' + pictureFiles(entry.id).data, 'utf8')), entry,
+) }))
+const playing = (page: Page) => expect(page.locator('.spot-workspace')).toHaveAttribute('aria-hidden', 'false')
+
+function card(page: Page, entry: Picture) {
+  return page.getByRole('button', { name: new RegExp(entry.title) })
+}
+
+async function review(page: Page, name: string) {
+  await page.screenshot({ path: finalEvidence + '/' + name + '.png' })
+}
+
+function countText(found: number, count: number) {
+  return `${found} / ${count}개 찾았어요!`
+}
+
+test('final inventory has all 80 answers and 160 independent normalized hit cases', () => {
+  expect(pictures.map(entry => entry.id)).toEqual(['D02', 'D03', 'D01', 'D04', 'D05', 'D06', 'D07', 'D08', 'D09', 'D10'])
+  expect(pictures.map(entry => entry.count)).toEqual([6, 6, 7, 7, 8, 8, 9, 9, 10, 10])
+  expect(pictures.every(entry => entry.enabled)).toBe(true)
+  expect(pictures.filter(entry => entry.offline).map(entry => entry.id)).toEqual(['D01'])
+  const ids = contents.flatMap(({ data }) => data.answers.map(answer => answer.id))
+  expect(ids).toHaveLength(80)
+  expect(new Set(ids).size).toBe(80)
+  let pairs = 0, hits = 0, bytes = 0
+  const report = []
+  for (const { entry, data } of contents) {
+    const files = Object.values(pictureFiles(entry.id))
+    const hashes = Object.fromEntries(files.map(path => {
+      const file = readFileSync('public/' + path)
+      bytes += file.length
+      if (path.endsWith('.webp')) expect(file.toString('ascii', 12, 16)).toBe('VP8L')
+      return [path, createHash('sha256').update(file).digest('hex')]
+    }))
+    for (const side of sides) {
+      const regions = data.answers.map(answer => touch(answer, side))
+      for (const [i, region] of regions.entries()) {
+        const coordinates = midpoint(region)
+        expect(answerAt(data.answers, side, coordinates)?.id).toBe(data.answers[i].id)
+        hits++
+        const a = regionBounds(region)
+        for (const other of regions.slice(i + 1)) {
+          pairs++
+          const b = regionBounds(other)
+          const left = Math.ceil(1254 * Math.max(a.left, b.left)), right = Math.floor(1254 * Math.min(a.right, b.right))
+          const top = Math.ceil(1254 * Math.max(a.top, b.top)), bottom = Math.floor(1254 * Math.min(a.bottom, b.bottom))
+          let overlap = false
+          for (let x = left; x <= right && !overlap; x++) for (let y = top; y <= bottom && !overlap; y++) {
+            const point: Point = [x / 1254, y / 1254]
+            overlap = contains(region, point) && contains(other, point)
+          }
+          expect(overlap, `${entry.id} ${side} ${i}`).toBe(false)
+        }
+      }
+    }
+    report.push({ id: entry.id, title: entry.title, count: entry.count, modelHits: entry.count * 2, hashes })
+  }
+  expect(pairs).toBe(580)
+  expect(hits).toBe(160)
+  expect(bytes).toBe(55_361_562)
+  mkdirSync(finalEvidence, { recursive: true })
+  writeFileSync(finalEvidence + '/asset-audit.json', JSON.stringify(report, null, 2) + '\n')
+})
+
+test.describe('new content browser touches', () => {
+  test.describe.configure({ mode: 'parallel' })
+  test.use({ serviceWorkers: 'block' })
+  for (const { entry, data } of contents.filter(item => item.entry.id !== 'D01')) for (const side of sides) {
+    test(`${entry.id} ${side} recognizes and completes all ${entry.count} using real touch input`, async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 800 })
+      await page.goto('./')
+      await gallery(page)
+      await card(page, entry).tap()
+      await playing(page)
+      expect(await page.locator('.spot-layer img').evaluateAll(images => images.map(image => {
+        const img = image as HTMLImageElement
+        return [img.naturalWidth, img.naturalHeight]
+      }))).toEqual([[1254, 1254], [1254, 1254]])
+      await expect(score(page)).toHaveText(countText(0, entry.count))
+      if (side === 'original' && ['D02', 'D05', 'D10'].includes(entry.id)) await review(page, `play-${entry.count}`)
+      await button(page, '힌트').tap()
+      await expect(page.locator('.spot-hint')).toHaveCount(2)
+      await expect(score(page)).toHaveText(countText(0, entry.count))
+      for (const [i, answer] of data.answers.entries()) {
+        await expect(page.getByRole('heading', { name: '모두 찾았어요!' })).toHaveCount(0)
+        await tap(page, side, midpoint(touch(answer, side)))
+        await expect(score(page)).toHaveText(countText(i + 1, entry.count))
+        for (const image of sides) {
+          const marker = page.locator(`[data-side="${image}"] [data-answer="${answer.id}"]`)
+          const expected = display(answer, image)
+          expect(await marker.evaluate(node => node.tagName)).toBe(expected.shape)
+          const attributes = expected.shape === 'polygon' ? { points: expected.points.map(p => p.join(',')).join(' ') } :
+            expected.shape === 'ellipse' ? { cx: expected.cx, cy: expected.cy, rx: expected.rx, ry: expected.ry } :
+              { cx: expected.cx, cy: expected.cy, r: expected.r }
+          for (const [name, value] of Object.entries(attributes)) await expect(marker).toHaveAttribute(name, String(value))
+        }
+        if (i === 0) {
+          const opposite = side === 'original' ? 'modified' : 'original'
+          await tap(page, opposite, midpoint(touch(answer, opposite)))
+          await expect(score(page)).toHaveText(countText(1, entry.count))
+        }
+        if (entry.id === 'D05' && side === 'original' && i === 3) await review(page, 'new-answers')
+      }
+      await expect(button(page, '힌트')).toBeDisabled()
+      await expect(page.getByRole('heading', { name: '모두 찾았어요!' })).toBeVisible()
+      if (entry.id === 'D10' && side === 'original') await review(page, 'complete')
+      await button(page, '다시 하기').tap()
+      await expect(card(page, entry)).toContainText('다시 도전')
+      await button(page, '홈으로 이동').tap()
+      await expect(page.getByRole('heading', { level: 1 })).toBeFocused()
+    })
+  }
+})
+
+test('D01 pilot storage and D02 progress survive reorder, reload and a D02-only reset', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 })
+  await page.goto('./')
+  const legacy = { imageId: 'D01', dataVersion: 'D01-1.0.0', total: 7, found: ['D01-01'], completedEver: false }
+  await page.evaluate(({ key, legacy }) => localStorage.setItem(key, JSON.stringify(legacy)), { key, legacy })
+  await gallery(page)
+  const other = contents.find(item => item.entry.id === 'D02')!
+  await card(page, other.entry).tap()
+  await playing(page)
+  for (const answer of other.data.answers.slice(0, 2))
+    await tap(page, 'modified', midpoint(touch(answer, 'modified')))
+  await button(page, '그림 선택').tap()
+  await expect(card(page, picture)).toContainText('1 / 7개 발견')
+  await expect(card(page, other.entry)).toContainText('2 / 6개 발견')
+  await review(page, 'independent-progress')
+  await button(page, '홈으로 이동').tap()
+  await page.reload()
+  await gallery(page)
+  await card(page, picture).tap()
+  await playing(page)
+  await expect(score(page)).toHaveText(countText(1, 7))
+  await expect(marks(page)).toHaveCount(2)
+  await button(page, '그림 선택').tap()
+  await card(page, other.entry).tap()
+  await playing(page)
+  await expect(score(page)).toHaveText(countText(2, 6))
+  await button(page, '그림 선택').tap()
+  await page.locator('.spot-card').filter({ has: card(page, other.entry) }).getByRole('button', { name: '새로 시작하기' }).tap()
+  await page.getByRole('dialog').getByRole('button', { name: '새로 시작하기' }).tap()
+  await playing(page)
+  await expect(score(page)).toHaveText(countText(0, 6))
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), key)).toEqual(legacy)
+})
+
+test('D09 zoom and hint follow both sides across phone rotation and exact touch hit', async ({ page }) => {
+  await page.setViewportSize({ width: 800, height: 360 })
+  await page.goto('./')
+  await gallery(page)
+  const { entry, data } = contents.find(item => item.entry.id === 'D09')!
+  await card(page, entry).tap()
+  await playing(page)
+  await review(page, 'phone-landscape')
+  const zoom = page.getByRole('button', { name: /확대·축소/ })
+  await zoom.tap()
+  await zoom.tap()
+  const view = (await frame(page, 'original').boundingBox())!
+  const p = midpoint(touch(data.answers[0], 'original'))
+  await page.mouse.move(view.x + view.width * .2, view.y + view.height * .2)
+  await page.mouse.down()
+  await page.mouse.move(view.x + view.width * .77, view.y + view.height * .77, { steps: 6 })
+  await page.mouse.up()
+  await button(page, '힌트').tap()
+  await expect(page.locator('.spot-hint')).toHaveCount(2)
+  await review(page, 'zoom-hint')
+  await tap(page, 'modified', p)
+  await expect(score(page)).toHaveText(countText(1, 10))
+  await expect(marks(page)).toHaveCount(2)
+  await page.setViewportSize({ width: 360, height: 800 })
+  await expect(zoom).toContainText('2배')
+  await expect(score(page)).toHaveText(countText(1, 10))
+  await expect(marks(page)).toHaveCount(2)
+  const transformations = await page.locator('.spot-layer').evaluateAll(nodes => nodes.map(node => (node as HTMLElement).style.transform))
+  expect(transformations[0]).toEqual(transformations[1])
+  await zoom.tap()
+  await expect(zoom).toContainText('1배')
+  await review(page, 'phone-portrait')
+})
+
+test('precache only D01 and all thumbs, retain only played sets for offline use and measure storage', async ({ page, context }) => {
+  test.setTimeout(95_000)
+  await page.setViewportSize({ width: 1280, height: 800 })
+  const requested: string[] = []
+  page.on('request', request => {
+    if (request.url().includes('/assets/spot-the-difference/')) requested.push(request.url())
+  })
+  await page.goto('./')
+  await page.evaluate(() => navigator.serviceWorker.ready.then(() => undefined))
+  await page.waitForFunction(() => !!navigator.serviceWorker.controller)
+  const scope = page.url()
+  const runtime = pictureCacheName(scope)
+  const initial = await page.evaluate(async scope => {
+    const key = (await caches.keys()).find(name => name.startsWith('kids-playground-' + scope) && /[a-f0-9]{16}$/.test(name))!
+    const cache = await caches.open(key)
+    const urls = await cache.keys()
+    const sizes = await Promise.all(urls.map(async request => [request.url.slice(scope.length), (await (await cache.match(request, { ignoreVary: true }))!.blob()).size] as const))
+    return Object.fromEntries(sizes)
+  }, scope)
+  expect(Object.keys(initial).filter(path => path.includes('spot-the-difference')).sort()).toEqual([
+    ...Object.values(paths), ...pictures.filter(entry => entry.id !== 'D01').map(entry => pictureFiles(entry.id).thumb),
+  ].sort())
+  const initialBytes = Object.values(initial).reduce((sum, bytes) => sum + bytes, 0)
+  await gallery(page)
+  await expect(page.locator('.spot-card-main strong')).toHaveText(pictures.map(entry => entry.title))
+  await expect.poll(() => page.locator('.spot-card img').evaluateAll(nodes => nodes.map(img => (img as HTMLImageElement).naturalWidth))).toEqual(Array(10).fill(384))
+  const cards = await page.locator('.spot-card').evaluateAll(nodes => nodes.map(node => {
+    const r = node.getBoundingClientRect()
+    return { x: r.x, y: r.y, w: r.width, h: r.height }
+  }))
+  expect(new Set(cards.map(c => c.y)).size).toBe(2)
+  expect(new Set(cards.map(c => c.w)).size).toBe(1)
+  expect(new Set(cards.map(c => c.h)).size).toBe(1)
+  expect(requested.every(url => url.endsWith('-thumbnail.webp'))).toBe(true)
+  await review(page, 'gallery')
+  const d02 = pictures[0]
+  const staleUrl = scope + pictureFiles(d02.id).data + '?v=previous'
+  await page.evaluate(async ([name, url]) => {
+    await (await caches.open(name)).put(url, new Response('{}'))
+  }, [runtime, staleUrl])
+  await context.setOffline(true)
+  await card(page, d02).tap()
+  await expect(page.getByRole('alert')).toHaveText('인터넷에 연결하면 이 그림을 할 수 있어요.')
+  await review(page, 'offline-not-downloaded')
+  await button(page, '그림 선택').tap()
+  await context.setOffline(false)
+
+  const names = () => page.evaluate(async name => (await (await caches.open(name)).keys()).map(request => request.url), runtime)
+  for (const [i, entry] of pictures.filter(entry => !entry.offline).entries()) {
+    const offset = requested.length
+    await card(page, entry).tap()
+    await playing(page)
+    const paths = pictureFiles(entry.id)
+    expect(requested.slice(offset).sort()).toEqual([paths.data, paths.original, paths.modified]
+      .map(path => scope + path + '?v=' + entry.version).sort())
+    await expect.poll(async () => (await names()).length).toBe((i + 1) * 3)
+    await button(page, '그림 선택').tap()
+  }
+  const cached = await page.evaluate(async name => {
+    const cache = await caches.open(name)
+    const keys = await cache.keys()
+    const sizes = await Promise.all(keys.map(async key => (await (await cache.match(key))!.blob()).size))
+    return { entries: keys.length, bytes: sizes.reduce((sum, size) => sum + size, 0) }
+  }, runtime)
+  expect(cached.entries).toBe(27)
+  expect(await names()).not.toContain(staleUrl)
+  const target = new URL(pictureFiles(d02.id).modified, scope)
+  target.searchParams.set('v', d02.version)
+  await page.evaluate(async ([name, url]) => (await caches.open(name)).delete(url), [runtime, target.href])
+  await context.setOffline(true)
+  await card(page, d02).tap()
+  await expect(page.getByRole('alert')).toHaveText('인터넷에 연결하면 이 그림을 할 수 있어요.')
+  await button(page, '그림 선택').tap()
+
+  await context.setOffline(false)
+  const offset = requested.length
+  await card(page, d02).tap()
+  await playing(page)
+  expect(requested.slice(offset)).toEqual([target.href])
+  await expect.poll(async () => (await names()).length).toBe(27)
+  await context.setOffline(true)
+  await page.reload()
+  await gallery(page)
+  const offsetOffline = requested.length
+  await card(page, d02).tap()
+  await playing(page)
+  expect(requested.slice(offsetOffline)).toEqual([])
+  await tap(page, 'modified', midpoint(touch(contents[0].data.answers[0], 'modified')))
+  await expect(score(page)).toHaveText(countText(1, 6))
+  for (const entry of pictures.filter(entry => !entry.offline && entry.id !== d02.id)) {
+    await button(page, '그림 선택').tap()
+    await card(page, entry).tap()
+    await playing(page)
+    await expect(score(page)).toHaveText(countText(0, entry.count))
+  }
+  expect(requested.slice(offsetOffline).every(url => url.endsWith('-thumbnail.webp'))).toBe(true)
+  mkdirSync(finalEvidence, { recursive: true })
+  writeFileSync(finalEvidence + '/cache.json', JSON.stringify({
+    initialEntries: Object.keys(initial).length, initialBytes,
+    initialSpotBytes: Object.entries(initial).filter(([path]) => path.includes('spot-the-difference')).reduce((sum, [, size]) => sum + size, 0),
+    onDemandEntries: cached.entries, onDemandBytes: cached.bytes, totalBytes: initialBytes + cached.bytes,
+  }, null, 2) + '\n')
 })

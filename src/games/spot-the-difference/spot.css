@@ -67,22 +67,6 @@
 }
 .spot-card-main progress { width: 100%; accent-color: #566bb0; }
 .spot-restart { width: 100%; margin-top: 5px; }
-.spot-pending {
-  display: grid;
-  align-content: start;
-  gap: 5px;
-  border-style: dashed;
-  background: #f6f7ef;
-  color: #54657a;
-}
-.spot-pending span {
-  display: grid;
-  place-items: center;
-  border-radius: 11px;
-  aspect-ratio: 1;
-  background: #e8f2ee;
-}
-.spot-pending svg { width: 34%; color: #748fa4; }
 .spot-game dialog {
   max-width: calc(100% - 24px);
   border-radius: 18px;

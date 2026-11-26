@@ -6,8 +6,9 @@ import { resolve, extname } from 'node:path'
 const builds = process.env.PLAYGROUND_UPGRADE_BUILDS
 const jigsawBaseline = process.env.PLAYGROUND_JIGSAW_BASELINE
 const preSpotBaseline = process.env.PLAYGROUND_PRE_SPOT_BASELINE
-const hasJigsaw = Boolean(preSpotBaseline || jigsawBaseline)
-const cardCount = preSpotBaseline ? 4 : jigsawBaseline ? 3 : 5
+const spotPilot = process.env.PLAYGROUND_SPOT_PILOT_BASELINE
+const hasJigsaw = Boolean(spotPilot || preSpotBaseline || jigsawBaseline)
+const cardCount = spotPilot ? 5 : preSpotBaseline ? 4 : jigsawBaseline ? 3 : 5
 const playground = '/kids-game-playground/'
 const coloring = '/kids-coloring-studio/'
 const cooking = '/kids-cooking-studio/'
@@ -25,7 +26,7 @@ test('an installed playground upgrades offline without touching independent apps
     const prefix = [playground, coloring, cooking].find(prefix => path.startsWith(prefix))
     if (!prefix) { response.writeHead(404).end(); return }
     const relative = path.slice(prefix.length)
-    const root = prefix === playground ? upgraded ? resolve('dist') : resolve(preSpotBaseline || jigsawBaseline || resolve(builds!, 'baseline')) :
+    const root = prefix === playground ? upgraded ? resolve('dist') : resolve(spotPilot || preSpotBaseline || jigsawBaseline || resolve(builds!, 'baseline')) :
       resolve(builds!, prefix.slice(1, -1))
     const file = resolve(root, relative.endsWith('/') || !relative ? relative + 'index.html' : relative)
     if (!file.startsWith(root + '/')) { response.writeHead(404).end(); return }
@@ -45,7 +46,7 @@ test('an installed playground upgrades offline without touching independent apps
     await old.goto(origin + playground)
     await expect(old.locator('.card')).toHaveCount(cardCount)
     await old.screenshot({ path: 'test-results/review/home-before.png', fullPage: true })
-    const protectedValues = await old.evaluate(async includePuzzle => {
+    const protectedValues = await old.evaluate(async ({ includePuzzle, includeSpot }) => {
       const data: Record<string, string> = {}
       const prefix = 'kids-game-playground:v1:game:'
       for (const id of ['police-car-robot', 'fire-robot', 'baby-dinosaur', 'garden-butterfly'])
@@ -61,11 +62,19 @@ test('an installed playground upgrades offline without touching independent apps
         rows: 4, columns: 5, pieceCount: 20, placed: [0],
         remaining: Array.from({ length: 19 }, (_, index) => index + 1), complete: false,
       })
+      if (includeSpot) data[prefix + 'spot-the-difference:r1:D01'] = JSON.stringify({
+        imageId: 'D01', dataVersion: 'D01-1.0.0', total: 7, found: ['D01-01'], completedEver: false,
+      })
       for (const [key, value] of Object.entries(data)) localStorage.setItem(key, value)
       await navigator.serviceWorker.ready
       return data
-    }, hasJigsaw)
+    }, { includePuzzle: hasJigsaw, includeSpot: Boolean(spotPilot) })
     await old.waitForFunction(() => navigator.serviceWorker.controller)
+    if (spotPilot) await old.evaluate(async () => {
+      const scope = (await navigator.serviceWorker.getRegistration())!.scope
+      const cache = await caches.open('kids-playground-' + scope + '-spot-pictures-v1')
+      await cache.put(scope + 'assets/spot-the-difference/D02/D02.json?v=older', new Response('{}'))
+    })
     await art.goto(origin + coloring)
     await food.goto(origin + cooking)
     await expect(art.getByRole('heading', { name: '알록달록 색칠놀이터' })).toBeVisible()
@@ -79,7 +88,7 @@ test('an installed playground upgrades offline without touching independent apps
       ])))
     })
     const before = await cacheInventory()
-    const oldCache = Object.keys(before).find(name => name.startsWith('kids-playground-' + origin + playground + '-'))!
+    const oldCache = Object.keys(before).find(name => name.startsWith('kids-playground-' + origin + playground + '-') && /[a-f0-9]{16}$/.test(name))!
     expect(before[oldCache].some(url => url.includes(hasJigsaw ? 'assets/puzzle' : 'cooking-v2'))).toBe(true)
     for (const root of ['kids-coloring-studio:', 'kids-cooking-studio:'])
       expect(Object.keys(before).some(name => name.startsWith(root))).toBe(true)
@@ -125,13 +134,17 @@ test('an installed playground upgrades offline without touching independent apps
     await next.getByRole('button', { name: '찾아라! 다른 그림', exact: true }).click()
     await next.getByRole('button', { name: /동물 친구들의 놀이터/ }).click()
     await expect(next.locator('.spot-workspace')).toHaveAttribute('aria-hidden', 'false')
+    if (spotPilot) {
+      await expect(next.locator('.spot-progress [role=status]')).toHaveText('1 / 7개 찾았어요!')
+      await expect(next.locator('[data-answer="D01-01"]')).toHaveCount(2)
+    }
     await next.getByRole('button', { name: '홈으로', exact: true }).click()
     await next.screenshot({ path: "test-results/review/home-after.png", fullPage: true })
     const after = await cacheInventory()
     for (const [name, urls] of Object.entries(before)) {
       if (name !== oldCache) expect(after[name]).toEqual(urls)
     }
-    const newCache = Object.keys(after).find(name => name.startsWith('kids-playground-' + origin + playground + '-'))!
+    const newCache = Object.keys(after).find(name => name.startsWith('kids-playground-' + origin + playground + '-') && /[a-f0-9]{16}$/.test(name))!
     expect(after[newCache].every(url => !/cooking-v2|coloring-v4/.test(url))).toBe(true)
     const readProtected = () => next.evaluate(keys =>
       Object.fromEntries(keys.map(key => [key, localStorage.getItem(key)])), Object.keys(protectedValues))

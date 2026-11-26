@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
 import { GameHomeContext } from '../GameSettings'
 import { pictures, pictureFiles, type Picture } from './catalog'
-import { parseData, progress, type Data, type Progress } from './model'
-import { Play, SymbolIcon } from './Play'
+import { progress, type Progress } from './model'
+import { loadPicture, type LoadedPicture } from './picture-loader'
+import { Play } from './Play'
 import './spot.css'
 
 const available = pictures.filter(picture => picture.enabled)
@@ -42,11 +43,6 @@ export default function SpotTheDifference() {
             {partial && <button type="button" className="spot-restart" onClick={() => setConfirm(picture)}>새로 시작하기</button>}
           </article>
         })}
-        {Array.from({ length: Math.max(0, 10 - available.length) }, (_, index) =>
-          <article key={index} className="spot-card spot-pending" aria-disabled="true">
-            <span><SymbolIcon kind="picture" /></span><strong>준비 중</strong>
-          </article>,
-        )}
       </div>
     </section>}
     {confirm && <dialog ref={element => { if (element && !element.open) element.showModal() }}
@@ -65,28 +61,39 @@ function PictureLoader({ picture, restart, home, gallery, onProgress }: {
   picture: Picture; restart: boolean; home: () => void; gallery: () => void; onProgress: (progress: Progress) => void
 }) {
   const [retry, setRetry] = useState(0)
-  const [data, setData] = useState<Data>()
+  const [loaded, setLoaded] = useState<LoadedPicture>()
   const [failed, setFailed] = useState(false)
-  const files = pictureFiles(picture.id)
   useEffect(() => {
     const controller = new AbortController()
-    fetch(base + pictureFiles(picture.id).data, { signal: controller.signal })
-      .then(response => {
-        if (!response.ok) throw new Error('Picture data unavailable')
-        return response.json()
+    let dispose: (() => void) | undefined
+    loadPicture(picture, base, controller.signal, retry > 0)
+      .then(result => {
+        if (controller.signal.aborted) result.release?.()
+        else {
+          dispose = result.release
+          setLoaded(result)
+        }
       })
-      .then(raw => parseData(raw, picture))
-      .then(result => { if (!controller.signal.aborted) setData(result) })
       .catch(() => { if (!controller.signal.aborted) setFailed(true) })
-    return () => controller.abort()
+    return () => {
+      controller.abort()
+      dispose?.()
+    }
   }, [picture, retry])
 
+  function reload() {
+    setLoaded(undefined)
+    setFailed(false)
+    setRetry(value => value + 1)
+  }
+
   if (failed) return <section className="spot-loading">
-    <p role="alert">그림을 열지 못했어요.</p>
-    <button onClick={() => { setFailed(false); setRetry(value => value + 1) }}>다시 불러오기</button>
+    <p role="alert">{navigator.onLine ? '그림을 열지 못했어요.' : '인터넷에 연결하면 이 그림을 할 수 있어요.'}</p>
+    <button onClick={reload}>다시 불러오기</button>
     <button onClick={gallery}>그림 선택</button>
   </section>
-  if (!data) return <section className="spot-loading"><p role="status">그림을 준비하고 있어요…</p><button onClick={gallery}>그림 선택</button></section>
-  return <Play picture={picture} data={data} urls={{ original: base + files.original, modified: base + files.modified }}
+  if (!loaded) return <section className="spot-loading"><p role="status">그림을 준비하고 있어요…</p><button onClick={gallery}>그림 선택</button></section>
+  return <Play picture={picture} data={loaded.data} urls={loaded.urls}
+    onReady={loaded.persist} onRetry={picture.offline ? undefined : reload}
     restart={restart} home={home} gallery={gallery} onProgress={onProgress} />
 }

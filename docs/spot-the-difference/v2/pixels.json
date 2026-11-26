@@ -1,0 +1,162 @@
+[
+  {
+    "id": "D01",
+    "bytes": 5375179,
+    "answers": 7,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      9255,
+      7228,
+      2162,
+      48115,
+      14022,
+      5923,
+      46091
+    ]
+  },
+  {
+    "id": "D02",
+    "bytes": 5614509,
+    "answers": 6,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      13960,
+      10216,
+      56023,
+      6680,
+      88153,
+      9070
+    ]
+  },
+  {
+    "id": "D03",
+    "bytes": 4939745,
+    "answers": 6,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      7001,
+      49238,
+      13320,
+      12921,
+      59808,
+      12639
+    ]
+  },
+  {
+    "id": "D04",
+    "bytes": 5763323,
+    "answers": 7,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      19597,
+      24737,
+      153536,
+      10461,
+      5220,
+      52663,
+      34872
+    ]
+  },
+  {
+    "id": "D05",
+    "bytes": 5714578,
+    "answers": 8,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      50658,
+      9217,
+      29875,
+      4577,
+      31293,
+      54497,
+      5895,
+      11381
+    ]
+  },
+  {
+    "id": "D06",
+    "bytes": 5384743,
+    "answers": 8,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      23252,
+      39052,
+      17735,
+      51664,
+      63970,
+      14426,
+      13040,
+      13667
+    ]
+  },
+  {
+    "id": "D07",
+    "bytes": 6123335,
+    "answers": 9,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      15186,
+      28269,
+      30818,
+      8838,
+      8427,
+      21355,
+      21455,
+      42256,
+      17257
+    ]
+  },
+  {
+    "id": "D08",
+    "bytes": 5503126,
+    "answers": 9,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      8256,
+      46607,
+      23583,
+      14664,
+      10172,
+      18152,
+      48890,
+      28678,
+      32852
+    ]
+  },
+  {
+    "id": "D09",
+    "bytes": 5302732,
+    "answers": 10,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      31844,
+      53421,
+      20560,
+      38887,
+      24129,
+      6196,
+      7785,
+      16783,
+      81811,
+      21503
+    ]
+  },
+  {
+    "id": "D10",
+    "bytes": 5640292,
+    "answers": 10,
+    "outsideEditBoxes": 0,
+    "changedWithinAnswers": [
+      26654,
+      20806,
+      7131,
+      42660,
+      80399,
+      111453,
+      58318,
+      19342,
+      31624,
+      25076
+    ]
+  }
+]

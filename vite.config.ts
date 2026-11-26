@@ -7,7 +7,10 @@ import { levels } from './src/games/jigsaw-puzzle/catalog'
 import { pictures, pictureFiles } from './src/games/spot-the-difference/catalog'
 
 const installFiles = ['icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest',
-  ...pictures.filter(picture => picture.enabled && picture.offline).flatMap(picture => Object.values(pictureFiles(picture.id))),
+  ...pictures.filter(picture => picture.enabled).flatMap(picture => {
+    const files = pictureFiles(picture.id)
+    return picture.offline ? Object.values(files) : [files.thumb]
+  }),
   ...levels.flatMap(level => level.pictures.map(picture => picture.path)),
 ]
 
