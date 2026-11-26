@@ -193,7 +193,7 @@ test('full dispatch uses ordered objectives, timed spray, hints, completion and 
   test.setTimeout(65_000)
   await page.setViewportSize({ width: 1280, height: 800 })
   await page.goto('./')
-  await expect(page.locator('.card')).toHaveCount(4)
+  await expect(page.locator('.card')).toHaveCount(5)
   await capture(page, '01-home')
   await intro(page)
   await capture(page, '02-welcome')

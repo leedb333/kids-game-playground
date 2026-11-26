@@ -3,9 +3,9 @@ for(const [name,width,height] of [['tablet-16x9',1280,720],['tablet',1280,800],[
  test(name,async({page})=>{
   await page.setViewportSize({width,height});const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message))
   await page.goto('./');await expect(page.getByRole('heading',{name:'어린이 게임 놀이터'})).toBeVisible()
-  await expect(page.locator('.card')).toHaveCount(4)
+  await expect(page.locator('.card')).toHaveCount(5)
   await expect(page.getByRole('button',{name:'다음 게임 보기'})).toHaveCount(0)
-  for(const title of ['벽돌깨기','반짝반짝 짝꿍 카드','그림 퍼즐 맞추기','출동! 소방차 미로']){
+  for(const title of ['벽돌깨기','반짝반짝 짝꿍 카드','그림 퍼즐 맞추기','출동! 소방차 미로','찾아라! 다른 그림']){
    await page.getByRole('button',{name:title,exact:true}).tap()
    await expect(page.getByRole('region',{name:title,exact:true})).toBeVisible()
    await page.getByRole('button',{name:'홈으로 이동'}).tap()
